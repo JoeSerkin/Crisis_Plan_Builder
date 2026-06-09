@@ -1,5 +1,5 @@
 {
-  "version": "1.5.0",
+  "version": "2.0.0",
   "updated": "2026-06-09",
-  "notes": "Catalog expansion (IT/OT, travel, third parties), Canada/UAE/China jurisdictions, golden discovery tests"
+  "notes": "V2 FastAPI server, consultant web UI, knowledge search, and DOCX export"
 }

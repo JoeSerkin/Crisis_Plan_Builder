@@ -22,7 +22,7 @@ AI-powered agent system that assists consultants in creating professional crisis
 ```bash
 python -m venv .venv
 .venv\Scripts\activate          # Windows
-pip install -e ".[dev]"
+pip install -e ".[test]"
 
 # Run Milestone 1 — Client Discovery
 python -m cmp.workflows.discovery_cli ^
@@ -65,7 +65,7 @@ Full planner runs write Markdown files to `output/{engagement_id}/`:
 
 ## Demo: sparse → enriched → full plan
 
-Requires `pip install -e ".[dev,workflow]"`.
+Requires `pip install -e ".[test,v2]"`.
 
 ```bash
 # 1. Sparse discovery (score ~5, blocked at readiness gate)
@@ -135,7 +135,7 @@ Never use `--resolve` to skip gaps without consultant sign-off. Resolved IDs are
 Requires readiness score ≥ 60 and `workflow` extra:
 
 ```bash
-pip install -e ".[dev,workflow]"
+pip install -e ".[test,v2]"
 python -m cmp.workflows.planner_cli --engagement example-mfg --input path/to/intake.json
 ```
 
@@ -155,6 +155,46 @@ tests/             Pytest suite
 ```bash
 pytest
 ```
+
+## V2 API and web UI (Build 5)
+
+Requires the V2 optional dependencies:
+
+```bash
+pip install -e ".[v2]"
+cmp-api --host 127.0.0.1 --port 8000
+```
+
+Open http://127.0.0.1:8000 for the consultant UI, or call the REST API directly:
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/api/health` | Health check |
+| POST | `/api/v1/engagements` | Create engagement + intake |
+| POST | `/api/v1/engagements/{id}/discovery` | Run discovery |
+| POST | `/api/v1/engagements/{id}/merge` | Merge consultant answers |
+| POST | `/api/v1/engagements/{id}/plan` | Full planner workflow |
+| GET | `/api/v1/engagements/{id}/deliverables` | List markdown deliverables |
+| POST | `/api/v1/engagements/{id}/export/docx` | Export deliverables to DOCX |
+| GET | `/api/v1/knowledge/search?q=…` | Search knowledge base |
+
+DOCX files are written to `output/{engagement_id}/docx/`.
+
+### Install Cursor skill globally
+
+Copy or symlink this repo's skill into your user skills folder so other projects can invoke it:
+
+```powershell
+# Windows — junction (no admin required)
+New-Item -ItemType Junction -Path "$env:USERPROFILE\.cursor\skills\crisis-management-planner" `
+  -Target "$PWD\.cursor\skills\crisis-management-planner"
+```
+
+### V2 roadmap (remaining)
+
+- PDF export
+- Vector embeddings RAG (current search is keyword-based)
+- travel-risk-map overlay integration (`knowledge/risk_assessment/travel_overlay.yaml` stub in place)
 
 ## License
 

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crisis Management Planner</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Crisis Management Planner</h1>
+    <p>Consultant workflow — discovery, readiness gate, full plan</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>New engagement</h2>
+      <form id="create-form">
+        <label>
+          Engagement ID
+          <input name="engagement_id" required pattern="[a-zA-Z0-9_-]+" placeholder="example-mfg" />
+        </label>
+        <label>
+          Company name
+          <input name="company_name" required />
+        </label>
+        <label>
+          Industry
+          <input name="industry" required placeholder="Manufacturing" />
+        </label>
+        <label>
+          Countries (comma-separated)
+          <input name="countries" required placeholder="Germany, Mexico" />
+        </label>
+        <button type="submit">Create engagement</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Run workflow</h2>
+      <label>
+        Engagement ID
+        <input id="workflow-id" placeholder="example-mfg" />
+      </label>
+      <div class="actions">
+        <button id="btn-discovery">Run discovery</button>
+        <button id="btn-plan">Run full plan</button>
+        <button id="btn-docx">Export DOCX</button>
+      </div>
+      <pre id="output">Select or create an engagement to begin.</pre>
+    </section>
+
+    <section class="panel">
+      <h2>Knowledge search</h2>
+      <form id="search-form">
+        <input name="q" placeholder="Search knowledge base…" required />
+        <button type="submit">Search</button>
+      </form>
+      <ul id="search-results"></ul>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

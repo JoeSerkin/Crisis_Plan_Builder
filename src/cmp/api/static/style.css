@@ -1,0 +1,91 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  background: #f4f6f8;
+  color: #1a1a1a;
+}
+
+header {
+  background: #1e3a5f;
+  color: #fff;
+  padding: 1.5rem 2rem;
+}
+
+header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+}
+
+main {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  max-width: 960px;
+}
+
+.panel {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+input {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  border: 1px solid #ccd3db;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  background: #1e3a5f;
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #2a5080;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+
+pre {
+  background: #0f1720;
+  color: #e8eef4;
+  padding: 1rem;
+  border-radius: 6px;
+  overflow: auto;
+  max-height: 360px;
+  font-size: 0.85rem;
+}
+
+#search-results {
+  list-style: none;
+  padding: 0;
+}
+
+#search-results li {
+  border-top: 1px solid #e5e9ef;
+  padding: 0.75rem 0;
+}
+
+#search-results strong {
+  display: block;
+}

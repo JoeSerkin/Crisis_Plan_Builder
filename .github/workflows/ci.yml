@@ -22,7 +22,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: pip install -e ".[dev,workflow]"
+        run: |
+          pip install -e .
+          pip install pytest ruff "fastapi>=0.115" "uvicorn>=0.32" httpx python-docx langgraph langchain-core
 
       - name: Run tests
         run: pytest -q

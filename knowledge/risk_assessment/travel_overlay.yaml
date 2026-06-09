@@ -1,0 +1,12 @@
+version: 1
+status: stub
+description: >-
+  Future integration with travel-risk-map for traveler crisis overlays.
+  When active, boosts travel-related requirements for clients with material travel exposure.
+priority_boost:
+  OPS-026: high
+  ORG-018: high
+  RISK-029: high
+  COM-016: high
+context_notes:
+  - Travel overlay activates enhanced duty-of-care and stranded-traveler procedures when business travel is material.

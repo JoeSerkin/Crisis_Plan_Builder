@@ -110,6 +110,26 @@ class EngagementStore:
             notes=row["notes"] or "",
         )
 
+    def list_engagements(self) -> list[EngagementRecord]:
+        with sqlite3.connect(self.db_path) as conn:
+            conn.row_factory = sqlite3.Row
+            rows = conn.execute(
+                "SELECT * FROM engagements ORDER BY updated_at DESC"
+            ).fetchall()
+        return [
+            EngagementRecord(
+                engagement_id=row["engagement_id"],
+                client_name=row["client_name"],
+                industry=row["industry"],
+                status=row["status"],
+                created_at=row["created_at"],
+                updated_at=row["updated_at"],
+                resolved_requirement_ids=json.loads(row["resolved_requirement_ids"]),
+                notes=row["notes"] or "",
+            )
+            for row in rows
+        ]
+
     def save_intake(self, engagement_id: str, intake: ClientIntake) -> Path:
         path = self.engagement_dir(engagement_id) / "intake.json"
         path.write_text(

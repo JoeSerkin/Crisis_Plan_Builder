@@ -79,13 +79,20 @@ Full planner output (v1.4+):
 cd crisis-management-planner
 python -m venv .venv
 .venv\Scripts\activate   # Windows
-pip install -e ".[dev]"
+pip install -e ".[test]"
 ```
 
 Optional workflow (full planner):
 
 ```bash
-pip install -e ".[dev,workflow]"
+pip install -e ".[workflow]"
+```
+
+V2 API, web UI, DOCX export, and knowledge search:
+
+```bash
+pip install -e ".[v2]"
+cmp-api --port 8000
 ```
 
 Optional LLM question phrasing:
@@ -160,9 +167,12 @@ Fixtures: `tests/fixtures/example_ngo_intake.json`, `example_ngo_intake_enriched
 - Deliverables include "DRAFT — For consultant review. Not ISO certification."
 - Separate fact from inference in all client-facing text
 
-## Out of scope (V1)
+## Out of scope (V1 CLI-only)
 
-- FastAPI / web UI
 - Live OSINT on clients
 - ISO certification claims
 - Automatic client data upload to cloud
+
+## V2 (API)
+
+Use `pip install -e ".[v2]"` and `cmp-api` when the consultant is not working inside Cursor. Keyword knowledge search is available at `/api/v1/knowledge/search`; vector RAG and PDF export are planned next.
