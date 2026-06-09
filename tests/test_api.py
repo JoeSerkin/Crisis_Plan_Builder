@@ -47,6 +47,26 @@ def test_create_engagement_normalizes_friendly_ids(api_client: TestClient) -> No
     assert create.json()["engagement_id"] == "example.mfg"
 
 
+def test_list_engagements(api_client: TestClient) -> None:
+    empty = api_client.get("/api/v1/engagements")
+    assert empty.status_code == 200
+    assert empty.json() == []
+
+    intake = json.loads((FIXTURES / "example_manufacturing_intake.json").read_text(encoding="utf-8"))
+    create = api_client.post(
+        "/api/v1/engagements",
+        json={"engagement_id": "api-list", "intake": intake},
+    )
+    assert create.status_code == 201
+
+    listing = api_client.get("/api/v1/engagements")
+    assert listing.status_code == 200
+    body = listing.json()
+    assert len(body) == 1
+    assert body[0]["engagement_id"] == "api-list"
+    assert body[0]["client_name"] == intake["company_name"]
+
+
 def test_create_and_discover_engagement(api_client: TestClient) -> None:
     intake = json.loads((FIXTURES / "example_manufacturing_intake.json").read_text(encoding="utf-8"))
     create = api_client.post(
@@ -125,4 +145,6 @@ def test_docx_export_requires_deliverables(api_client: TestClient) -> None:
     api_client.post(f"/api/v1/engagements/{engagement_id}/plan")
     export = api_client.post(f"/api/v1/engagements/{engagement_id}/export/docx")
     assert export.status_code == 200
-    assert export.json()
+    body = export.json()
+    assert body["count"] > 0
+    assert body["files"]

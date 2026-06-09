@@ -186,12 +186,28 @@ Send clients to **http://127.0.0.1:8000/intake** (optionally `?industry=Manufact
 
 The form is generated from the requirements catalog (~90+ questions, filtered by industry) with dropdowns and multi-select where relevant. Clients can **download JSON** or **save directly to an engagement** for discovery.
 
+The consultant console (`/`) now supports the full workflow in browser tabs:
+
+| Tab | Capabilities |
+|-----|----------------|
+| **Workflow** | Stepper, readiness score, guided **Continue** action |
+| **Gaps & merge** | Review open gaps, apply values, mark N/A (resolve), paste JSON merge |
+| **Documents** | Upload PDF/DOCX/TXT/JSON, extract proposed intake answers, apply with re-discovery |
+| **Deliverables** | View markdown, download markdown/DOCX |
+
 | Method | Path | Purpose |
 |--------|------|---------|
 | GET | `/api/health` | Health check |
 | POST | `/api/v1/engagements` | Create engagement + intake |
+| GET | `/api/v1/engagements/{id}/workflow` | Workflow status, steps, and next action |
+| GET | `/api/v1/engagements/{id}/gaps` | Gap list with resolve status and questions |
 | POST | `/api/v1/engagements/{id}/discovery` | Run discovery |
-| POST | `/api/v1/engagements/{id}/merge` | Merge consultant answers |
+| POST | `/api/v1/engagements/{id}/merge` | Merge updates / resolve gaps (re-runs discovery) |
+| POST | `/api/v1/engagements/{id}/documents/upload` | Upload PDF, DOCX, TXT, MD, JSON |
+| POST | `/api/v1/engagements/{id}/documents/{doc}/extract` | Propose intake updates from document |
+| POST | `/api/v1/engagements/{id}/documents/apply` | Apply selected proposals + re-run discovery |
+| GET | `/api/v1/engagements/{id}/download/markdown/{path}` | Download markdown deliverable |
+| GET | `/api/v1/engagements/{id}/download/docx/{path}` | Download DOCX deliverable |
 | POST | `/api/v1/engagements/{id}/plan` | Full planner workflow |
 | GET | `/api/v1/engagements/{id}/deliverables` | List markdown deliverables |
 | POST | `/api/v1/engagements/{id}/export/docx` | Export deliverables to DOCX |

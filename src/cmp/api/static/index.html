@@ -5,60 +5,171 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Crisis Management Planner</title>
   <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Crisis Management Planner</h1>
-    <p>Consultant workflow — discovery, readiness gate, full plan · <a href="/intake">Client intake form</a></p>
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <h1>Crisis Management Planner</h1>
+        <p class="tagline">Consultant console</p>
+      </div>
+      <nav>
+        <a id="intake-link" href="/intake">Client intake form</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <section class="panel">
-      <h2>New engagement</h2>
-      <form id="create-form">
-        <label>
-          Engagement ID
-          <input name="engagement_id" required placeholder="example-mfg or Example Mfg" />
-          <small>Spaces and punctuation are converted to hyphens (e.g. “Example Mfg” → example-mfg).</small>
-        </label>
-        <label>
-          Company name
-          <input name="company_name" required />
-        </label>
-        <label>
-          Industry
-          <input name="industry" required placeholder="Manufacturing" />
-        </label>
-        <label>
-          Countries (comma-separated)
-          <input name="countries" required placeholder="Germany, Mexico" />
-        </label>
-        <button type="submit">Create engagement</button>
-      </form>
-    </section>
-
-    <section class="panel">
-      <h2>Run workflow</h2>
-      <label>
-        Engagement ID
-        <input id="workflow-id" placeholder="example-mfg" />
-      </label>
-      <div class="actions">
-        <button id="btn-discovery">Run discovery</button>
-        <button id="btn-plan">Run full plan</button>
-        <button id="btn-docx">Export DOCX</button>
+  <main class="layout">
+    <section class="panel workflow-panel">
+      <div class="panel-head">
+        <h2>Engagement</h2>
+        <button type="button" id="btn-refresh-engagements" class="secondary">Refresh</button>
       </div>
-      <pre id="output">Select or create an engagement to begin.</pre>
+
+      <label class="field">
+        <span class="field-label">Select engagement</span>
+        <select id="engagement-picker">
+          <option value="">Loading…</option>
+        </select>
+      </label>
+
+      <div id="workflow-empty" class="empty-state">
+        Select an engagement to manage intake, gaps, documents, and deliverables.
+      </div>
+
+      <div id="workflow-active" hidden>
+        <div class="engagement-summary">
+          <div>
+            <h3 id="summary-client">—</h3>
+            <p id="summary-meta" class="muted"></p>
+          </div>
+          <span id="summary-status" class="status-pill">—</span>
+        </div>
+
+        <nav class="tab-nav" role="tablist">
+          <button type="button" class="tab active" data-tab="workflow">Workflow</button>
+          <button type="button" class="tab" data-tab="gaps">Gaps &amp; merge</button>
+          <button type="button" class="tab" data-tab="documents">Documents</button>
+          <button type="button" class="tab" data-tab="deliverables">Deliverables</button>
+        </nav>
+
+        <div class="tab-panel active" data-panel="workflow">
+          <ol id="workflow-steps" class="stepper"></ol>
+          <div class="readiness-card">
+            <div class="readiness-score">
+              <span id="readiness-value">—</span>
+              <span class="readiness-label">Readiness</span>
+            </div>
+            <div class="readiness-detail">
+              <p id="readiness-detail">Run discovery to calculate readiness.</p>
+              <p id="next-action-copy" class="muted"></p>
+            </div>
+          </div>
+          <div class="actions primary-actions">
+            <button type="button" id="btn-next" class="primary">Continue</button>
+            <button type="button" id="btn-discovery" class="secondary">Discovery</button>
+            <button type="button" id="btn-plan" class="secondary">Generate plan</button>
+            <button type="button" id="btn-docx" class="secondary">Export DOCX</button>
+          </div>
+        </div>
+
+        <div class="tab-panel" data-panel="gaps" hidden>
+          <div class="panel-toolbar">
+            <p id="gaps-summary" class="muted">Run discovery to load gaps.</p>
+            <div class="actions">
+              <button type="button" id="btn-refresh-gaps" class="secondary">Refresh gaps</button>
+              <button type="button" id="btn-resolve-selected" class="secondary">Mark selected N/A</button>
+              <button type="button" id="btn-open-intake" class="secondary">Open client intake</button>
+            </div>
+          </div>
+          <div id="gaps-list" class="gap-list"></div>
+          <details class="details-block" open>
+            <summary>Manual merge (JSON updates)</summary>
+            <p class="muted">Paste field updates from consultant notes or external sources. Discovery re-runs automatically.</p>
+            <textarea id="merge-json" rows="8" placeholder='{"headquarters_country": "Germany", "cmt_leader_name": "Jane Doe"}'></textarea>
+            <div class="actions">
+              <button type="button" id="btn-apply-merge" class="primary">Apply merge</button>
+            </div>
+          </details>
+        </div>
+
+        <div class="tab-panel" data-panel="documents" hidden>
+          <div class="panel-toolbar">
+            <p class="muted">Upload policies, org charts, PDFs, or JSON intake files. Extract proposed answers for open gaps.</p>
+          </div>
+          <label class="upload-field">
+            <span class="field-label">Upload document</span>
+            <input type="file" id="document-upload" accept=".pdf,.docx,.txt,.md,.json,.csv" />
+          </label>
+          <div id="documents-list" class="file-list"></div>
+          <div id="proposals-panel" class="proposals-panel" hidden>
+            <h3>Extracted proposals</h3>
+            <p id="proposals-meta" class="muted"></p>
+            <div id="proposals-list" class="gap-list"></div>
+            <div class="actions">
+              <button type="button" id="btn-apply-proposals" class="primary">Apply selected proposals</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" data-panel="deliverables" hidden>
+          <div class="panel-toolbar">
+            <div class="actions">
+              <button type="button" id="btn-refresh-deliverables" class="secondary">Refresh list</button>
+              <button type="button" id="btn-export-docx-panel" class="secondary">Export DOCX</button>
+            </div>
+          </div>
+          <div id="deliverables-browser" class="deliverables-browser"></div>
+          <article id="deliverable-viewer" class="deliverable-viewer" hidden>
+            <div class="viewer-head">
+              <h3 id="viewer-title">Deliverable</h3>
+              <a id="viewer-download" class="text-button" href="#" download>Download</a>
+            </div>
+            <div id="viewer-content" class="viewer-content"></div>
+          </article>
+        </div>
+
+        <details class="details-block">
+          <summary>Activity log</summary>
+          <pre id="output" class="raw-output">No actions run yet.</pre>
+        </details>
+      </div>
     </section>
 
-    <section class="panel">
-      <h2>Knowledge search</h2>
-      <form id="search-form">
-        <input name="q" placeholder="Search knowledge base…" required />
-        <button type="submit">Search</button>
-      </form>
-      <ul id="search-results"></ul>
-    </section>
+    <aside class="sidebar">
+      <details class="panel collapsible" open>
+        <summary>New engagement</summary>
+        <form id="create-form" class="compact-form">
+          <label class="field">
+            <span class="field-label">Engagement ID</span>
+            <input name="engagement_id" required placeholder="example-mfg" />
+          </label>
+          <label class="field">
+            <span class="field-label">Company name</span>
+            <input name="company_name" required />
+          </label>
+          <label class="field">
+            <span class="field-label">Industry</span>
+            <input name="industry" required placeholder="Manufacturing" />
+          </label>
+          <label class="field">
+            <span class="field-label">Countries</span>
+            <input name="countries" required placeholder="Germany, Mexico" />
+          </label>
+          <button type="submit" class="primary">Create</button>
+        </form>
+      </details>
+
+      <details class="panel collapsible">
+        <summary>Knowledge search</summary>
+        <form id="search-form" class="search-form">
+          <input name="q" placeholder="Search knowledge base…" required />
+          <button type="submit">Search</button>
+        </form>
+        <ul id="search-results" class="search-results"></ul>
+      </details>
+    </aside>
   </main>
 
   <script src="/static/app.js"></script>

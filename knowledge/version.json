@@ -1,5 +1,5 @@
 {
-  "version": "2.1.0",
+  "version": "2.2.0",
   "updated": "2026-06-09",
-  "notes": "Catalog-driven client intake form with API and web UI; engagement ID validation improvements"
+  "notes": "Full UI workflow: gaps/merge/resolve, document upload and extraction, deliverable viewer, enhanced DOCX export"
 }
