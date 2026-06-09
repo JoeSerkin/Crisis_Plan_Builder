@@ -237,6 +237,16 @@
     "crisis_comms_training": "Spokesperson media training completed 2024 Q1; refresher scheduled Q3 2026",
     "monitoring_alert_services": "Meltwater media monitoring; 24/7 alert to Communications Lead",
     "social_media_monitoring": "Communications team monitors branded channels during Level 2+ events",
-    "insurance_program": "Property, liability, and cyber policies via broker; crisis hotline on policy documents"
+    "insurance_program": "Property, liability, and cyber policies via broker; crisis hotline on policy documents",
+    "ot_ics_security": "SCADA/MES segmented per Purdue Level 3; IT-OT IR bridge weekly; Plant Director leads OT incidents",
+    "traveler_tracking": "International SOS platform; weekly traveler report; welfare checks within 4 hours overseas",
+    "travel_risk_program": "Pre-travel risk assessment required for high-risk destinations; COO approves Level 3+ travel",
+    "critical_third_parties": "Azure (cloud), Supplier X (sole-source), logistics vendor; MSP for IT support",
+    "third_party_crisis_coordination": "Procurement notifies tier-1 third parties; MSP on crisis bridge within 2 hours",
+    "cyber_physical_incidents": "2023 Q4 tabletop covered OT ransomware; IR playbook v2.1 section 4",
+    "third_party_breach_cascade": "Vendor cyber monitoring via questionnaire; legal assesses cascade within 24h",
+    "traveler_emergency_comms": "International SOS app + SMS; satellite phone for high-risk field locations",
+    "ot_ics_backup_recovery": "Manual safe-state procedures at Plant A and B; quarterly OT fallback drill",
+    "travel_disruption_response": "Travel desk and International SOS coordinate rebooking; stranded traveler protocol v2"
   }
 }

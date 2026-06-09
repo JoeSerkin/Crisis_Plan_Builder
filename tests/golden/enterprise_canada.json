@@ -1,0 +1,19 @@
+{
+  "intake": {
+    "company_name": "Golden Corp",
+    "industry": "Professional Services",
+    "countries": ["Canada"],
+    "employees": 6000,
+    "headquarters_country": "Canada"
+  },
+  "expected": {
+    "size_tier": "enterprise",
+    "readiness_score": 4,
+    "critical_gap_count": 14,
+    "total_gap_count": 87,
+    "gaps_must_include": ["ORG-018", "ORG-019"],
+    "gaps_must_exclude": ["OPS-010", "RISK-019"],
+    "jurisdiction_keyword": "PIPEDA",
+    "min_cmt_roles": 6
+  }
+}

@@ -1096,3 +1096,105 @@ requirements:
     why_it_matters: Donor confidence and funding depend on transparent crisis communication.
     question_template: How are major donors and stakeholders notified during security or operational crises?
     industry_tags: [ngo]
+
+  # --- Build 4: IT/OT, travel overlay, third parties (universal) ---
+  - id: OPS-025
+    domain: operations_sites
+    field_path: ot_ics_security
+    label: OT/ICS security and IT-OT segmentation
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Cyber incidents on operational technology can cause physical harm and production shutdown.
+    question_template: Describe OT/ICS asset inventory, network segmentation, and incident response coordination with IT security.
+
+  - id: OPS-026
+    domain: operations_sites
+    field_path: traveler_tracking
+    label: Traveler tracking and welfare checks
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures, governance]
+    why_it_matters: Organizations must locate and support employees abroad during security or natural disasters.
+    question_template: How are business travelers tracked and how are welfare checks performed during overseas incidents?
+
+  - id: ORG-018
+    domain: org_profile
+    field_path: travel_risk_program
+    label: Travel risk management program
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, governance, procedures]
+    why_it_matters: Pre-travel risk assessment and approval reduce exposure to preventable overseas crises.
+    question_template: Describe pre-travel risk assessment, travel approval thresholds, and high-risk destination policies.
+
+  - id: ORG-019
+    domain: org_profile
+    field_path: critical_third_parties
+    label: Critical third-party dependency register
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Third-party failures become organization crises without mapped dependencies and contacts.
+    question_template: List critical third parties (MSPs, logistics, cloud, outsourced operations) and single points of failure.
+
+  - id: GOV-024
+    domain: governance
+    field_path: third_party_crisis_coordination
+    label: Third-party crisis coordination
+    priority: high
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: Contracted partners must be integrated into notification and command structures during shared incidents.
+    question_template: How are critical third parties notified and coordinated during crises affecting shared operations?
+
+  - id: RISK-027
+    domain: risk_bcp
+    field_path: cyber_physical_incidents
+    label: Cyber-physical and OT ransomware scenarios
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures, tabletop]
+    why_it_matters: OT ransomware and cyber-physical attacks require distinct response from standard IT incidents.
+    question_template: Have cyber-physical scenarios (OT ransomware, safety system compromise) been assessed and exercised?
+
+  - id: RISK-028
+    domain: risk_bcp
+    field_path: third_party_breach_cascade
+    label: Third-party breach and supply chain cyber
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Vendor breaches can expose customer data and disrupt operations through shared systems.
+    question_template: How are third-party cyber incidents monitored and what cascade response plans exist?
+
+  - id: COM-016
+    domain: communications
+    field_path: traveler_emergency_comms
+    label: Traveler emergency communications
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures, communications]
+    why_it_matters: Travelers abroad need dedicated channels when corporate email or phones fail in a crisis.
+    question_template: What channels reach travelers during overseas emergencies (app, SMS, satellite, local fixer)?
+
+  - id: OPS-027
+    domain: operations_sites
+    field_path: ot_ics_backup_recovery
+    label: OT/ICS backup and manual fallback
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Manual fallback procedures sustain safe operations when OT systems are unavailable.
+    question_template: What manual fallback or safe-state procedures exist if OT control systems fail?
+    industry_tags: [manufacturing, energy]
+
+  - id: RISK-029
+    domain: risk_bcp
+    field_path: travel_disruption_response
+    label: Travel disruption and stranded traveler response
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Mass travel disruption can strand employees in high-risk locations without a coordinated response.
+    question_template: How does the organization respond when travelers are stranded by airline, border, or security events?

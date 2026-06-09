@@ -1,0 +1,16 @@
+{
+  "intake": {
+    "company_name": "Golden Pharma",
+    "industry": "Pharmaceutical",
+    "countries": ["United Kingdom"],
+    "employees": 400
+  },
+  "expected": {
+    "size_tier": "medium",
+    "readiness_score": 3,
+    "critical_gap_count": 15,
+    "total_gap_count": 93,
+    "gaps_must_include": ["OPS-020", "RISK-021", "ORG-018"],
+    "gaps_must_exclude": ["OPS-010", "RISK-019", "RISK-023"]
+  }
+}

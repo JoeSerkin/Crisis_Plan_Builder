@@ -58,7 +58,7 @@ Full planner runs write Markdown files to `output/{engagement_id}/`:
 
 ## Knowledge base
 
-- **~105 requirements** in `knowledge/crisis_management/requirements_catalog.yaml` (universal + industry-scoped)
+- **~120 requirements** in `knowledge/crisis_management/requirements_catalog.yaml` (universal + industry-scoped)
 - **Industry modifiers:** manufacturing, energy, pharma, NGO (`knowledge/risk_assessment/industry_modifiers/`)
 - **Demo engagements:** `example-mfg` (medium manufacturing), `example-ngo` (small humanitarian)
 - Industry-specific requirements activate only when the intake industry matches a modifier

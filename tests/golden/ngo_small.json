@@ -1,0 +1,19 @@
+{
+  "intake": {
+    "company_name": "Golden NGO",
+    "industry": "Humanitarian NGO",
+    "countries": ["Kenya"],
+    "employees": 35,
+    "organization_size": "small",
+    "staffing_model": "lean"
+  },
+  "expected": {
+    "size_tier": "small",
+    "readiness_score": 5,
+    "critical_gap_count": 16,
+    "total_gap_count": 91,
+    "gaps_must_include": ["RISK-023", "GOV-020", "ORG-018"],
+    "gaps_must_exclude": ["OPS-010", "RISK-019", "OPS-020"],
+    "min_cmt_roles": 3
+  }
+}

@@ -68,4 +68,4 @@ def test_humanitarian_ngo_matches_ngo_modifier() -> None:
 
 def test_catalog_load_count_in_expected_range() -> None:
     catalog = load_requirements_catalog()
-    assert 100 <= len(catalog) <= 110
+    assert 115 <= len(catalog) <= 125

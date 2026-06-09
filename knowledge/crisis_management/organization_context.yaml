@@ -108,3 +108,36 @@ jurisdiction_profiles:
       - APAC and Latin America sites often have distinct local emergency services, insurer relationships, and cultural expectations for employee and family communication.
     priority_boost:
       OPS-006: high
+  - id: canada
+    match_countries:
+      - Canada
+      - CA
+    context_notes:
+      - Canadian operations may require PIPEDA breach notification, provincial privacy commissioners, and distinct workers compensation frameworks by province.
+      - Cross-border US-Canada incidents need coordinated insurer and legal counsel on both sides of the border.
+    priority_boost:
+      ORG-011: high
+      ORG-008: high
+  - id: united_arab_emirates
+    match_countries:
+      - United Arab Emirates
+      - UAE
+      - Dubai
+      - Abu Dhabi
+    context_notes:
+      - UAE entities may face distinct media, labor, and sponsorship (visa) obligations during workforce crises.
+      - Regional security events can affect expatriate staff differently from local nationals — clarify duty-of-care scope.
+    priority_boost:
+      OPS-026: high
+      ORG-018: high
+  - id: china
+    match_countries:
+      - China
+      - PRC
+      - Hong Kong
+    context_notes:
+      - China operations involve PIPL data obligations, state media sensitivity, and distinct emergency services coordination.
+      - Cross-border data transfer and communications restrictions may affect crisis notification tooling — validate in-country alternatives.
+    priority_boost:
+      ORG-011: high
+      COM-009: high
