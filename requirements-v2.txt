@@ -1,0 +1,7 @@
+# V2 stack: API, planner workflow, DOCX export
+fastapi>=0.115
+uvicorn>=0.32
+httpx>=0.27
+python-docx>=1.1
+langgraph>=0.2
+langchain-core>=0.3

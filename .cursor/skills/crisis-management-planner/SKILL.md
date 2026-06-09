@@ -91,7 +91,9 @@ pip install -e ".[workflow]"
 V2 API, web UI, DOCX export, and knowledge search:
 
 ```bash
-pip install -e ".[v2]"
+python -m pip install --upgrade pip
+pip install -e .
+pip install -r requirements-v2.txt
 cmp-api --port 8000
 ```
 

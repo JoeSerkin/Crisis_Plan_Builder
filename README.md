@@ -158,12 +158,23 @@ pytest
 
 ## V2 API and web UI (Build 5)
 
-Requires the V2 optional dependencies:
+Install the V2 stack:
+
+```bash
+python -m pip install --upgrade pip   # required on Python 3.14 with pip < 26
+pip install -e .
+pip install -r requirements-v2.txt
+cmp-api --host 127.0.0.1 --port 8000
+```
+
+Or, after upgrading pip:
 
 ```bash
 pip install -e ".[v2]"
 cmp-api --host 127.0.0.1 --port 8000
 ```
+
+> **Python 3.14:** pip 25.x fails on optional extras with `Invalid version: 'docx'` (or similar). Upgrade pip first, or use the two-step install above.
 
 Open http://127.0.0.1:8000 for the consultant UI, or call the REST API directly:
 

@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "2.0.1",
   "updated": "2026-06-09",
-  "notes": "V2 FastAPI server, consultant web UI, knowledge search, and DOCX export"
+  "notes": "Fix Python 3.14 pip install via requirements files and pip 26 upgrade guidance"
 }

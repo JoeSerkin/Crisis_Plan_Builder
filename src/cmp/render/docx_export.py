@@ -18,7 +18,7 @@ def _require_docx():
         from docx.shared import Pt
     except ImportError as exc:
         raise ImportError(
-            "python-docx is required for DOCX export. Install with: pip install -e '.[docx]'"
+            "python-docx is required for DOCX export. Install with: pip install -r requirements-v2.txt"
         ) from exc
     return Document, Pt
 
