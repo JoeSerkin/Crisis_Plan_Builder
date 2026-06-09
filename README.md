@@ -180,6 +180,12 @@ python -m cmp.api.server --host 127.0.0.1 --port 8000
 
 Open http://127.0.0.1:8000 for the consultant UI, or call the REST API directly:
 
+### Client intake questionnaire
+
+Send clients to **http://127.0.0.1:8000/intake** (optionally `?industry=Manufacturing&engagement=client-id`).
+
+The form is generated from the requirements catalog (~90+ questions, filtered by industry) with dropdowns and multi-select where relevant. Clients can **download JSON** or **save directly to an engagement** for discovery.
+
 | Method | Path | Purpose |
 |--------|------|---------|
 | GET | `/api/health` | Health check |
@@ -190,6 +196,9 @@ Open http://127.0.0.1:8000 for the consultant UI, or call the REST API directly:
 | GET | `/api/v1/engagements/{id}/deliverables` | List markdown deliverables |
 | POST | `/api/v1/engagements/{id}/export/docx` | Export deliverables to DOCX |
 | GET | `/api/v1/knowledge/search?q=…` | Search knowledge base |
+| GET | `/api/v1/intake-form/schema?industry=…` | Client form schema |
+| POST | `/api/v1/intake-form/submit` | Convert form answers → intake JSON |
+| POST | `/api/v1/intake-form/submit/{id}` | Save client form to engagement |
 
 DOCX files are written to `output/{engagement_id}/docx/`.
 

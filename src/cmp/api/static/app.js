@@ -6,6 +6,31 @@ function show(data) {
   output.textContent = typeof data === "string" ? data : JSON.stringify(data, null, 2);
 }
 
+function normalizeEngagementId(raw) {
+  return raw
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9_-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^[-_.]+|[-_.]+$/g, "");
+}
+
+function formatApiError(body) {
+  if (Array.isArray(body?.detail)) {
+    return body.detail
+      .map((item) => {
+        const field = item.loc?.slice(1).join(".") || "request";
+        return `${field}: ${item.msg}`;
+      })
+      .join("\n");
+  }
+  if (typeof body?.detail === "string") {
+    return body.detail;
+  }
+  return JSON.stringify(body, null, 2);
+}
+
 async function api(path, options = {}) {
   const response = await fetch(path, {
     headers: { "Content-Type": "application/json", ...(options.headers || {}) },
@@ -19,7 +44,7 @@ async function api(path, options = {}) {
     body = text;
   }
   if (!response.ok) {
-    throw new Error(body?.detail || body || response.statusText);
+    throw new Error(formatApiError(body) || response.statusText);
   }
   return body;
 }
@@ -27,31 +52,50 @@ async function api(path, options = {}) {
 document.getElementById("create-form").addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = event.target;
-  const engagementId = form.engagement_id.value.trim();
-  const countries = form.countries.value.split(",").map((c) => c.trim()).filter(Boolean);
+  const rawId = form.elements.namedItem("engagement_id").value;
+  const engagementId = normalizeEngagementId(rawId);
+  const countries = form.elements.namedItem("countries").value
+    .split(",")
+    .map((c) => c.trim())
+    .filter(Boolean);
+
+  if (!engagementId) {
+    show("Engagement ID is required (letters, numbers, hyphens only).");
+    return;
+  }
+  if (!countries.length) {
+    show("Enter at least one country.");
+    return;
+  }
+
   const payload = {
     engagement_id: engagementId,
     intake: {
-      company_name: form.company_name.value.trim(),
-      industry: form.industry.value.trim(),
+      company_name: form.elements.namedItem("company_name").value.trim(),
+      industry: form.elements.namedItem("industry").value.trim(),
       countries,
     },
   };
+
   try {
     const record = await api("/api/v1/engagements", {
       method: "POST",
       body: JSON.stringify(payload),
     });
     workflowId.value = engagementId;
-    show({ created: record });
+    show({
+      created: record,
+      note: rawId.trim() !== engagementId ? `Using engagement ID: ${engagementId}` : undefined,
+    });
   } catch (error) {
     show(String(error.message || error));
   }
 });
 
 document.getElementById("btn-discovery").addEventListener("click", async () => {
-  const id = workflowId.value.trim();
+  const id = normalizeEngagementId(workflowId.value);
   if (!id) return show("Enter an engagement ID.");
+  workflowId.value = id;
   try {
     const result = await api(`/api/v1/engagements/${encodeURIComponent(id)}/discovery`, {
       method: "POST",
@@ -63,8 +107,9 @@ document.getElementById("btn-discovery").addEventListener("click", async () => {
 });
 
 document.getElementById("btn-plan").addEventListener("click", async () => {
-  const id = workflowId.value.trim();
+  const id = normalizeEngagementId(workflowId.value);
   if (!id) return show("Enter an engagement ID.");
+  workflowId.value = id;
   try {
     const result = await api(`/api/v1/engagements/${encodeURIComponent(id)}/plan`, {
       method: "POST",
@@ -76,8 +121,9 @@ document.getElementById("btn-plan").addEventListener("click", async () => {
 });
 
 document.getElementById("btn-docx").addEventListener("click", async () => {
-  const id = workflowId.value.trim();
+  const id = normalizeEngagementId(workflowId.value);
   if (!id) return show("Enter an engagement ID.");
+  workflowId.value = id;
   try {
     const result = await api(`/api/v1/engagements/${encodeURIComponent(id)}/export/docx`, {
       method: "POST",

@@ -9,7 +9,7 @@
 <body>
   <header>
     <h1>Crisis Management Planner</h1>
-    <p>Consultant workflow — discovery, readiness gate, full plan</p>
+    <p>Consultant workflow — discovery, readiness gate, full plan · <a href="/intake">Client intake form</a></p>
   </header>
 
   <main>
@@ -18,7 +18,8 @@
       <form id="create-form">
         <label>
           Engagement ID
-          <input name="engagement_id" required pattern="[a-zA-Z0-9_-]+" placeholder="example-mfg" />
+          <input name="engagement_id" required placeholder="example-mfg or Example Mfg" />
+          <small>Spaces and punctuation are converted to hyphens (e.g. “Example Mfg” → example-mfg).</small>
         </label>
         <label>
           Company name

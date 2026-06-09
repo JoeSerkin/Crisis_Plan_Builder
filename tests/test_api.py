@@ -31,6 +31,22 @@ def test_health(api_client: TestClient) -> None:
     assert response.json()["status"] == "ok"
 
 
+def test_create_engagement_normalizes_friendly_ids(api_client: TestClient) -> None:
+    create = api_client.post(
+        "/api/v1/engagements",
+        json={
+            "engagement_id": "example.mfg",
+            "intake": {
+                "company_name": "Example Mfg",
+                "industry": "Manufacturing",
+                "countries": ["Germany"],
+            },
+        },
+    )
+    assert create.status_code == 201
+    assert create.json()["engagement_id"] == "example.mfg"
+
+
 def test_create_and_discover_engagement(api_client: TestClient) -> None:
     intake = json.loads((FIXTURES / "example_manufacturing_intake.json").read_text(encoding="utf-8"))
     create = api_client.post(

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Client Intake — Crisis Management Planner</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/client-intake.css" />
+</head>
+<body>
+  <header>
+    <h1>Client intake questionnaire</h1>
+    <p>
+      Complete this form to provide organizational information for crisis management planning.
+      Questions are generated from the requirements catalog and adapt to your industry.
+      <a href="/">Consultant console</a>
+    </p>
+  </header>
+
+  <main>
+    <section class="panel intro-panel">
+      <h2>Before you start</h2>
+      <ul>
+        <li>Fields marked <strong>required</strong> are needed to begin planning.</li>
+        <li>Leave optional items blank if not applicable — your consultant may follow up.</li>
+        <li>You can save a JSON file at the end and send it to your consultant.</li>
+      </ul>
+      <div class="intro-controls">
+        <label>
+          Primary industry
+          <select id="industry-filter">
+            <option value="">All universal questions first…</option>
+            <option value="Manufacturing">Manufacturing</option>
+            <option value="Oil and Gas">Oil and Gas / Energy</option>
+            <option value="Pharmaceutical">Pharmaceutical</option>
+            <option value="Humanitarian NGO">Humanitarian NGO</option>
+            <option value="Professional Services">Professional Services</option>
+            <option value="Financial Services">Financial Services</option>
+            <option value="Technology">Technology</option>
+            <option value="Retail">Retail</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+        <label>
+          Link to engagement (optional)
+          <input id="engagement-id" placeholder="demo-client" />
+          <small>If provided, submit saves directly to your consultant's engagement.</small>
+        </label>
+        <button type="button" id="btn-load-form">Load questionnaire</button>
+      </div>
+      <p id="form-meta" class="form-meta"></p>
+    </section>
+
+    <form id="client-intake-form" hidden>
+      <div id="form-sections"></div>
+      <section class="panel submit-panel">
+        <button type="submit">Generate intake JSON</button>
+        <button type="button" id="btn-download" disabled>Download JSON file</button>
+        <button type="button" id="btn-save-engagement" disabled>Save to engagement</button>
+      </section>
+    </form>
+
+    <section class="panel" id="result-panel" hidden>
+      <h2>Intake JSON</h2>
+      <pre id="result-json"></pre>
+    </section>
+  </main>
+
+  <script src="/static/client-intake.js"></script>
+</body>
+</html>
