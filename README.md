@@ -46,6 +46,7 @@ python -m cmp.workflows.discovery_cli ^
 
 - **~105 requirements** in `knowledge/crisis_management/requirements_catalog.yaml` (universal + industry-scoped)
 - **Industry modifiers:** manufacturing, energy, pharma, NGO (`knowledge/risk_assessment/industry_modifiers/`)
+- **Demo engagements:** `example-mfg` (medium manufacturing), `example-ngo` (small humanitarian)
 - Industry-specific requirements activate only when the intake industry matches a modifier
 
 ## Demo: sparse → enriched → full plan
@@ -75,6 +76,45 @@ python -m cmp.workflows.planner_cli ^
 ```
 
 Enriched intake fixture: `tests/fixtures/example_manufacturing_intake_enriched.json`
+
+## Demo: NGO (small humanitarian)
+
+Shows **lean CMT**, **field security gaps**, and **UK HQ jurisdiction** notes for a 45-person iNGO operating in Kenya and South Sudan.
+
+```bash
+# 1. Sparse discovery (score ~4, 16 critical gaps including field security)
+python -m cmp.workflows.discovery_cli ^
+  --engagement example-ngo ^
+  --input tests/fixtures/example_ngo_intake.json ^
+  --no-llm
+
+# 2. Merge enriched answers + re-run discovery (score ≥ 60, lean CMT)
+python -m cmp.workflows.merge_intake_cli ^
+  --engagement example-ngo ^
+  --updates tests/fixtures/example_ngo_merge_updates.json
+python -m cmp.workflows.discovery_cli ^
+  --engagement example-ngo ^
+  --input storage/engagements/example-ngo/intake.json ^
+  --no-llm
+
+# 3. Full planner workflow
+python -m cmp.workflows.planner_cli ^
+  --engagement example-ngo ^
+  --input storage/engagements/example-ngo/intake.json
+```
+
+Fixtures: `tests/fixtures/example_ngo_intake.json`, `example_ngo_intake_enriched.json`
+
+## Consultant playbook (merge vs resolve)
+
+| Situation | Action |
+|-----------|--------|
+| Client provided new facts (contacts, policies, sites) | `merge_intake_cli --updates answers.json` then re-run discovery |
+| Gap is intentionally N/A for this client (e.g. no OT/ICS) | `merge_intake_cli --resolve REQ-ID` — consultant override, not client data |
+| Industry/size context changes expectations | Set `organization_size`, `staffing_model`, `headquarters_country` in intake — discovery adapts automatically |
+| Readiness still below 60 | Fill **critical** gaps first (score capped at 40 until cleared), then high-priority fields |
+
+Never use `--resolve` to skip gaps without consultant sign-off. Resolved IDs are stored on the engagement record and excluded from future gap detection.
 
 ## Full workflow (optional)
 

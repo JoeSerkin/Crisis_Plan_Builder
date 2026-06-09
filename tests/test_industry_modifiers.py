@@ -54,6 +54,18 @@ def test_energy_discovery_includes_energy_requirements_not_manufacturing() -> No
     assert any("[industry_context]" in note for note in output.assumptions)
 
 
+def test_humanitarian_ngo_matches_ngo_modifier() -> None:
+    intake = ClientIntake(
+        company_name="Test NGO",
+        industry="Humanitarian NGO",
+        countries=["Kenya"],
+    )
+    output = run_discovery(intake, use_llm_questions=False)
+    gap_ids = {g.requirement_id for g in output.missing_information}
+    assert "RISK-023" in gap_ids
+    assert any("[industry_context]" in note for note in output.assumptions)
+
+
 def test_catalog_load_count_in_expected_range() -> None:
     catalog = load_requirements_catalog()
     assert 100 <= len(catalog) <= 110

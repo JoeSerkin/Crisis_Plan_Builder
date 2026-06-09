@@ -111,6 +111,17 @@ python -m cmp.workflows.planner_cli ^
   --input storage/engagements/example-mfg/intake.json
 ```
 
+### NGO demo (small humanitarian)
+
+```bash
+python -m cmp.workflows.discovery_cli ^
+  --engagement example-ngo ^
+  --input tests/fixtures/example_ngo_intake.json ^
+  --no-llm
+```
+
+Fixtures: `tests/fixtures/example_ngo_intake.json`, `example_ngo_intake_enriched.json`
+
 ## Output contracts
 
 ### Discovery

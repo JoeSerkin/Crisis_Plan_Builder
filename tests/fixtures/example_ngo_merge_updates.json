@@ -1,0 +1,182 @@
+{
+  "company_name": "Example Humanitarian NGO",
+  "industry": "Humanitarian NGO",
+  "employees": 45,
+  "countries": [
+    "Kenya",
+    "South Sudan",
+    "United Kingdom"
+  ],
+  "headquarters_country": "United Kingdom",
+  "organization_size": "small",
+  "crisis_program_maturity": "developing",
+  "staffing_model": "lean",
+  "legal_entities": [
+    {
+      "name": "Example Humanitarian NGO",
+      "country": "United Kingdom",
+      "role": "Parent charity"
+    }
+  ],
+  "sites": [
+    {
+      "name": "Nairobi Programme Office",
+      "country": "Kenya",
+      "headcount": 18
+    },
+    {
+      "name": "Juba Field Office",
+      "country": "South Sudan",
+      "headcount": 12
+    },
+    {
+      "name": "London HQ",
+      "country": "United Kingdom",
+      "headcount": 15
+    }
+  ],
+  "critical_functions": [
+    "Field programme delivery",
+    "Donor reporting",
+    "Staff safety tracking"
+  ],
+  "site_activation_contacts": [
+    {
+      "site": "Nairobi Programme Office",
+      "primary": "Country Director",
+      "phone": "+254-555-0100"
+    }
+  ],
+  "existing_crisis_plan": "Draft field security plan 2023; HQ crisis addendum pending board approval",
+  "crisis_team_structure": {
+    "crisis_lead": "Executive Director",
+    "alternates": [
+      "Country Director Kenya",
+      "Safety & Security Advisor"
+    ]
+  },
+  "crisis_activation_criteria": [
+    "Field staff detained or missing",
+    "Attack on programme site",
+    "Major donor reputational event",
+    "Suspension of operations in country"
+  ],
+  "decision_authorities": {
+    "programme_suspension": "Country Director with Executive Director",
+    "media": "Communications Lead",
+    "evacuation": "Safety & Security Advisor"
+  },
+  "escalation_matrix": [
+    {
+      "level": 1,
+      "notify": "Country Director",
+      "within_minutes": 30
+    },
+    {
+      "level": 2,
+      "notify": "Crisis Lead",
+      "within_minutes": 60
+    }
+  ],
+  "after_hours_escalation": [
+    {
+      "name": "Duty Security Officer",
+      "phone": "+254-555-0199",
+      "channel": "Satellite phone + SMS"
+    }
+  ],
+  "internal_comms_channels": [
+    "Signal group",
+    "Satellite phone tree",
+    "Email backup"
+  ],
+  "spokesperson_policy": {
+    "primary": "Executive Director",
+    "backup": "Board Chair",
+    "holding_statement": "Pre-approved donor-facing template v2"
+  },
+  "existing_bcp": "Programme continuity plans for Kenya and South Sudan; last reviewed 2024",
+  "cyber_incident_playbook": "Shared IT provider IR playbook; NGO data classified per donor requirements",
+  "field_team_security": "HEAT-trained field staff in South Sudan; daily check-in protocol via satellite phone",
+  "duty_of_care_travelers": "Travel tracker maintained in HQ; welfare checks every 12 hours in elevated risk periods",
+  "local_partner_vetting": "Implementing partners assessed annually for security and financial integrity",
+  "kidnap_hostage_response": "K&R policy with retained specialist firm; staff briefed pre-deployment",
+  "donor_stakeholder_comms": "Major donors notified within 4 hours for Level 2+ security incidents",
+  "last_tabletop_exercise": "2024 Q3 field security incident tabletop with HQ and Kenya country team",
+  "crisis_levels": [
+    "Level 1 - Local incident",
+    "Level 2 - Country programme crisis",
+    "Level 3 - Multi-country NGO crisis",
+    "Level 4 - Board and donor escalation"
+  ],
+  "executive_succession": {
+    "executive_director_unavailable": "Deputy Director"
+  },
+  "legal_counsel_contacts": [
+    {
+      "firm": "External Charity Counsel",
+      "phone": "+44-555-0200",
+      "available_24_7": true
+    }
+  ],
+  "local_emergency_services": [
+    {
+      "site": "Nairobi Programme Office",
+      "security": "Local police liaison on file"
+    }
+  ],
+  "employee_notification": "SMS and Signal cascade to all staff in affected country",
+  "risk_register": "Field security and operational risks reviewed quarterly by SMT",
+  "historical_incidents": "2022 temporary suspension in South Sudan due to nearby armed clash; no staff injuries",
+  "data_backup_recovery": {
+    "rpo_hours": 24,
+    "rto_hours": 48,
+    "last_restore_test": "2024-09"
+  },
+  "travel_exposure": "35 field staff across Kenya and South Sudan; expatriate and national staff mix",
+  "family_liaison": {
+    "role": "HR Manager",
+    "protocol": "Family contact within 2 hours of confirmed serious injury"
+  },
+  "business_model": "Grant-funded humanitarian programmes; top 5 donors represent 70% of funding",
+  "regulators": [
+    "UK Charity Commission",
+    "Kenya NGO Coordination Board"
+  ],
+  "insurance_program": "K&R, medical evacuation, and liability via broker; policy summary on file at HQ",
+  "public_listing": "Registered UK charity",
+  "data_privacy_program": "GDPR-aligned donor and beneficiary data handling; DPO contact at HQ",
+  "cloud_dependencies": {
+    "provider": "Microsoft 365",
+    "critical_apps": [
+      "Email",
+      "SharePoint programme files"
+    ]
+  },
+  "physical_security": "Compound security at Juba field office; access control at Nairobi office",
+  "emergency_evacuation": {
+    "Juba Field Office": {
+      "triggers": "Security Phase 4",
+      "route": "Pre-approved UNMISS coordination"
+    }
+  },
+  "post_incident_review": "After-action review within 10 days; led by Crisis Lead",
+  "insurance_claims": "Broker notified within 24 hours for K&R or medevac triggers",
+  "investor_relations": "N/A - charity; donor relations managed by Executive Director",
+  "vendor_notification": "Implementing partners notified when programme suspension affects joint operations",
+  "medical_emergency_response": "Medevac provider on retainer; clinic referrals documented per country",
+  "tabletop_history": "2024 Q3 field security; 2023 donor reputational scenario",
+  "crisis_comms_training": "Spokesperson briefing completed 2024 Q1",
+  "monitoring_alert_services": "Local security intelligence subscription for South Sudan",
+  "social_media_monitoring": "Communications volunteer monitors during Level 2+ events",
+  "regulator_notification_templates": {
+    "charity_commission": "Serious incident template on file"
+  },
+  "delegation_of_authority": {
+    "programme_spend": "Country Director up to GBP 25k emergency spend"
+  },
+  "evacuation_capability": {
+    "South Sudan": "Medevac and relocation plan reviewed semi-annually with security vendor"
+  },
+  "geopolitical_exposure": "South Sudan active conflict monitoring; Kenya election period watch"
+}

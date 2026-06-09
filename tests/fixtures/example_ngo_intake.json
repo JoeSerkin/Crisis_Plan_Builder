@@ -1,0 +1,11 @@
+{
+  "company_name": "Example Humanitarian NGO",
+  "industry": "Humanitarian NGO",
+  "employees": 45,
+  "countries": [
+    "Kenya",
+    "South Sudan",
+    "United Kingdom"
+  ],
+  "headquarters_country": "United Kingdom"
+}

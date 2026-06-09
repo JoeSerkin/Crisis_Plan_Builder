@@ -112,6 +112,16 @@ def load_readiness_weights(root: Path | None = None) -> ReadinessWeights:
     )
 
 
+def _industry_matches_modifier(industry_key: str, raw: dict[str, Any]) -> bool:
+    if raw.get("industry", "").lower() == industry_key:
+        return True
+    aliases = [a.lower() for a in raw.get("aliases", [])]
+    if industry_key in aliases:
+        return True
+    normalized = industry_key.replace("-", " ").replace("_", " ")
+    return any(alias in normalized for alias in aliases)
+
+
 def load_industry_modifier(industry: str, root: Path | None = None) -> IndustryModifier | None:
     root = root or knowledge_root()
     modifiers_dir = root / "risk_assessment" / "industry_modifiers"
@@ -120,15 +130,15 @@ def load_industry_modifier(industry: str, root: Path | None = None) -> IndustryM
     industry_key = industry.strip().lower()
     for path in modifiers_dir.glob("*.yaml"):
         raw = load_yaml(path)
-        aliases = [a.lower() for a in raw.get("aliases", [])]
-        if raw.get("industry", "").lower() == industry_key or industry_key in aliases:
-            return IndustryModifier(
-                industry=raw.get("industry", path.stem),
-                aliases=raw.get("aliases", []),
-                additional_requirement_ids=list(raw.get("additional_requirement_ids", [])),
-                priority_boost=dict(raw.get("priority_boost", {})),
-                context_notes=list(raw.get("context_notes", [])),
-            )
+        if not _industry_matches_modifier(industry_key, raw):
+            continue
+        return IndustryModifier(
+            industry=raw.get("industry", path.stem),
+            aliases=raw.get("aliases", []),
+            additional_requirement_ids=list(raw.get("additional_requirement_ids", [])),
+            priority_boost=dict(raw.get("priority_boost", {})),
+            context_notes=list(raw.get("context_notes", [])),
+        )
     return None
 
 
