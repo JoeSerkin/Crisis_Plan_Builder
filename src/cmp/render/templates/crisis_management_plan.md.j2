@@ -1,0 +1,108 @@
+# Crisis Management Plan — {{ client_name }}
+
+> **DRAFT — For consultant review. Not ISO certification.**
+
+## 1. Purpose
+
+This plan establishes the crisis management framework for {{ client_name }}, enabling structured detection, assessment, response, and recovery from events that threaten personnel safety, operations, reputation, or regulatory standing.
+
+## 2. Scope
+
+Applies to all employees, contractors, sites, and operations under the organization's crisis management governance structure.
+
+**Planning readiness score:** {{ discovery.planning_readiness_score }}/100
+
+## 3. Governance
+
+### Crisis Severity Levels
+
+{% for level in governance.crisis_levels %}
+- **Level {{ level.level }} — {{ level.name }}:** {{ level.description }}
+{% endfor %}
+
+### Crisis Management Team Roles
+
+{% for role in governance.crisis_team_roles %}
+#### {{ role.role }}
+{% for item in role.responsibilities %}
+- {{ item }}
+{% endfor %}
+{% endfor %}
+
+### Decision Authorities
+
+| Decision | Authority | Backup |
+|----------|-----------|--------|
+{% for d in governance.decision_authorities %}
+| {{ d.decision_type }} | {{ d.authority_role }} | {{ d.backup_role or '—' }} |
+{% endfor %}
+
+### Escalation Matrix
+
+| Severity | Notify Within | Roles | Channel |
+|----------|---------------|-------|---------|
+{% for step in governance.escalation_matrix %}
+| {{ step.severity }} | {{ step.notify_within_minutes }} min | {{ step.roles | join(', ') }} | {{ step.channel }} |
+{% endfor %}
+
+## 4. Activation Criteria
+
+Formal crisis activation is required when Level 3 or Level 4 criteria are met. Site managers may take immediate life-safety actions without prior CMT approval.
+
+## 5. Incident Response Procedures
+
+{% for proc in procedures.procedures %}
+### {{ proc.title }}
+
+**Purpose:** {{ proc.procedure.purpose }}
+
+**Scope:** {{ proc.procedure.scope }}
+
+**Activation criteria:**
+{% for item in proc.procedure.activation_criteria %}
+- {{ item }}
+{% endfor %}
+
+**Immediate actions:**
+{% for item in proc.procedure.immediate_actions %}
+- {{ item }}
+{% endfor %}
+
+**Ongoing actions:**
+{% for item in proc.procedure.ongoing_actions %}
+- {{ item }}
+{% endfor %}
+
+**Escalation triggers:**
+{% for item in proc.procedure.escalation_triggers %}
+- {{ item }}
+{% endfor %}
+
+**Recovery considerations:**
+{% for item in proc.procedure.recovery_considerations %}
+- {{ item }}
+{% endfor %}
+
+{% endfor %}
+
+## 6. Communications
+
+Communications Lead coordinates all internal and external messaging. Unauthorized statements are prohibited during Level 2+ events.
+
+## 7. Recovery
+
+Termination of crisis response requires Crisis Director approval, hot-wash within 48 hours, and documentation of unresolved issues.
+
+## 8. Standards Review Summary
+
+**Framework coverage score:** {{ review.framework_coverage_score }}/100
+
+**Strengths:**
+{% for s in review.strengths %}
+- {{ s }}
+{% endfor %}
+
+**Gaps:**
+{% for g in review.gaps %}
+- {{ g }}
+{% endfor %}

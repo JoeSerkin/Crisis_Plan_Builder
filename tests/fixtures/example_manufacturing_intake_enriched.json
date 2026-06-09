@@ -1,0 +1,222 @@
+{
+  "company_name": "Example Manufacturing GmbH",
+  "industry": "Manufacturing",
+  "employees": 500,
+  "countries": [
+    "Germany",
+    "Mexico",
+    "Thailand"
+  ],
+  "legal_entities": [
+    {
+      "name": "Example Manufacturing GmbH",
+      "country": "Germany",
+      "role": "Parent"
+    }
+  ],
+  "sites": [
+    {
+      "name": "Plant A",
+      "country": "Germany",
+      "headcount": 200,
+      "address": "Industrial Park 1"
+    },
+    {
+      "name": "Plant B",
+      "country": "Mexico",
+      "headcount": 180
+    },
+    {
+      "name": "Plant C",
+      "country": "Thailand",
+      "headcount": 120
+    }
+  ],
+  "additional_context": {
+    "critical_functions": [
+      "Production",
+      "Warehouse",
+      "Quality control"
+    ],
+    "site_activation_contacts": [
+      {
+        "site": "Plant A",
+        "primary": "Site Manager",
+        "phone": "+49-555-0100"
+      }
+    ],
+    "existing_crisis_plan": "2019 crisis plan, last reviewed 2021",
+    "crisis_team_structure": {
+      "crisis_director": "VP Operations",
+      "alternates": [
+        "COO",
+        "General Counsel"
+      ]
+    },
+    "crisis_activation_criteria": [
+      "Fatality",
+      "Regulatory notification required",
+      "Media attention",
+      "Production halt >24h"
+    ],
+    "decision_authorities": {
+      "shutdown": "Plant Director",
+      "media": "Communications Director",
+      "regulatory": "General Counsel"
+    },
+    "escalation_matrix": [
+      {
+        "level": 1,
+        "notify": "Site Manager",
+        "within_minutes": 15
+      },
+      {
+        "level": 2,
+        "notify": "Crisis Director",
+        "within_minutes": 30
+      }
+    ],
+    "after_hours_escalation": [
+      {
+        "name": "On-call Manager",
+        "phone": "+49-555-0199",
+        "channel": "Phone + SMS"
+      }
+    ],
+    "internal_comms_channels": [
+      "Teams crisis bridge",
+      "SMS mass notification",
+      "Satellite phone backup"
+    ],
+    "spokesperson_policy": {
+      "primary": "Communications Director",
+      "backup": "CEO",
+      "holding_statement": "Pre-approved template v3"
+    },
+    "existing_bcp": "Site BCPs maintained per plant, last tested Q3 2024",
+    "cyber_incident_playbook": "IT IR playbook v2.1; OT escalation via Plant Director and IT Security",
+    "supply_chain_critical_suppliers": [
+      {
+        "name": "Supplier X",
+        "sole_source": true,
+        "alternate": "Under qualification"
+      }
+    ],
+    "production_continuity": {
+      "rto_hours": 24,
+      "rpo_hours": 8,
+      "critical_lines": [
+        "Line 1",
+        "Line 2"
+      ]
+    },
+    "ot_ics_environment": {
+      "systems": [
+        "SCADA",
+        "MES"
+      ],
+      "segmentation": "Level 3 Purdue model",
+      "shutdown_authority": "Plant Director"
+    },
+    "site_crisis_leads": [
+      {
+        "country": "Germany",
+        "lead": "Country GM"
+      },
+      {
+        "country": "Mexico",
+        "lead": "Plant B Director"
+      }
+    ],
+    "industrial_accident_scenarios": [
+      "Fire",
+      "Chemical release",
+      "Explosion",
+      "Structural collapse"
+    ],
+    "last_tabletop_exercise": "2024 Q2 supply chain disruption tabletop",
+    "crisis_levels": [
+      "Level 1 - Site incident",
+      "Level 2 - Regional",
+      "Level 3 - Global CMT",
+      "Level 4 - Board escalation"
+    ],
+    "executive_succession": {
+      "ceo_unavailable": "COO",
+      "crisis_director_unavailable": "VP Operations"
+    },
+    "legal_counsel_contacts": [
+      {
+        "firm": "External Counsel LLP",
+        "phone": "+49-555-0200",
+        "available_24_7": true
+      }
+    ],
+    "hazmat_exposure": "Solvents and coatings at Plant A; SDS on file per site",
+    "local_emergency_services": [
+      {
+        "site": "Plant A",
+        "fire": "112",
+        "police": "110",
+        "ambulance": "112"
+      }
+    ],
+    "employee_notification": "SMS alert + site PA system + line manager cascade",
+    "risk_register": "Enterprise risk register updated annually; top risks reviewed quarterly",
+    "historical_incidents": "Minor chemical spill 2022 at Plant B; no injuries; lessons incorporated into drills",
+    "data_backup_recovery": {
+      "rpo_hours": 4,
+      "rto_hours": 8,
+      "last_restore_test": "2024-11"
+    },
+    "civil_unrest_exposure": "Elevated monitoring in Mexico region during election periods",
+    "natural_hazard_exposure": {
+      "Plant A": "Flood risk",
+      "Plant C": "Cyclone season June-November"
+    },
+    "environmental_liability": "Environmental Manager leads spill response; regulator notification within 2 hours",
+    "business_model": "Industrial components for automotive sector; 60% EU revenue",
+    "regulators": [
+      "German authority",
+      "Mexican environmental agency"
+    ],
+    "travel_exposure": "15 international travelers monthly; primarily EU and NA",
+    "customer_notification": "Key account managers notify top 10 customers within 4 hours",
+    "family_liaison": {
+      "role": "HR Business Partner",
+      "protocol": "Family notification within 2 hours of confirmed serious injury"
+    },
+    "geopolitical_exposure": "Monitoring US-Mexico trade policy impacts on supply chain",
+    "board_notification": "Board notified within 4 hours for Level 3+ crises",
+    "public_listing": "Private company",
+    "key_customers": [
+      "Automotive OEM A",
+      "Tier-1 Supplier B"
+    ],
+    "data_privacy_program": "GDPR compliant; DPO contact on file",
+    "cloud_dependencies": {
+      "provider": "Azure",
+      "critical_apps": [
+        "ERP",
+        "Email"
+      ],
+      "failover": "Secondary region DR"
+    },
+    "physical_security": "Perimeter fencing, guard force 24/7 at Plants A and B",
+    "emergency_evacuation": {
+      "Plant A": {
+        "assembly_point": "Parking lot C",
+        "wardens": "Shift supervisors"
+      }
+    },
+    "post_incident_review": "Post-incident review within 10 business days; led by Crisis Director",
+    "insurance_claims": "Broker notified within 24 hours; claims coordinator is CFO office",
+    "investor_relations": "N/A - private company",
+    "vendor_notification": "Procurement notifies tier-1 suppliers within 6 hours",
+    "supply_chain_bcp": "Alternate supplier qualified for Supplier X; 6-week buffer stock",
+    "medical_emergency_response": "Plant A clinic staffed weekdays; AED on all production floors",
+    "tabletop_history": "2024 Q2 supply disruption; 2023 Q4 cyber-physical scenario",
+    "critical_vendor_bcp": "Tier-1 logistics vendor BCP reviewed annually",
+    "single_points_of_failure": "Single coating line at Plant A; backup capacity at Plant B in progress"
+  }
+}

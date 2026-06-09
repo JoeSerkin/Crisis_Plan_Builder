@@ -1,0 +1,25 @@
+# Tabletop Exercise Package — {{ client_name }}
+
+## Scenario
+
+{{ tabletop.scenario }}
+
+## Learning Objectives
+
+{% for obj in tabletop.learning_objectives %}
+- {{ obj }}
+{% endfor %}
+
+## Injects
+
+| Time | Inject | Expected Actions |
+|------|--------|------------------|
+{% for inj in tabletop.injects %}
+| T+{{ inj.time_offset_minutes }} min | {{ inj.inject }} | {{ inj.expected_actions | join('; ') }} |
+{% endfor %}
+
+## Evaluation Criteria
+
+{% for crit in tabletop.evaluation_criteria %}
+- {{ crit }}
+{% endfor %}

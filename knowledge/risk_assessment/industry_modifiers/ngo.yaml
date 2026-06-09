@@ -1,0 +1,24 @@
+version: 1
+industry: ngo
+aliases:
+  - ngo
+  - non_profit
+  - nonprofit
+  - humanitarian
+  - aid
+  - charity
+  - ingo
+additional_requirement_ids:
+  - RISK-023
+  - RISK-024
+  - GOV-020
+  - OPS-021
+  - COM-013
+priority_boost:
+  RISK-023: critical
+  GOV-008: critical
+  GOV-020: critical
+context_notes:
+  - Field team security incidents require duty-of-care protocols distinct from corporate site emergencies.
+  - Donor and stakeholder communication sensitivity is elevated — reputational impact affects funding continuity.
+  - Local implementing partner failures may trigger concurrent operational and security crises requiring split CMT tracks.

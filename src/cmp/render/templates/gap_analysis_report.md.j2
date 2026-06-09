@@ -1,0 +1,43 @@
+# Gap Analysis Report — {{ client_name }}
+
+**Planning readiness score:** {{ discovery.planning_readiness_score }}/100
+
+## Readiness by Domain
+
+| Domain | Score |
+|--------|-------|
+{% for domain, score in discovery.readiness_breakdown.items() %}
+| {{ domain }} | {{ score }} |
+{% endfor %}
+
+## Critical Gaps ({{ discovery.critical_gaps | length }})
+
+{% for gap_id in discovery.critical_gaps %}
+- {{ gap_id }}
+{% endfor %}
+
+## Missing Information
+
+{% for gap in discovery.missing_information %}
+### {{ gap.requirement_id }} — {{ gap.label }} ({{ gap.priority }})
+
+{{ gap.why_it_matters }}
+
+{% endfor %}
+
+## Recommended Consultant Questions
+
+{% for q in discovery.recommended_questions[:15] %}
+**{{ q.id }}** ({{ q.priority }}): {{ q.question }}
+
+*Rationale:* {{ q.rationale }}
+
+{% endfor %}
+
+{% if discovery.assumptions %}
+## Assumptions
+
+{% for a in discovery.assumptions %}
+- {{ a }}
+{% endfor %}
+{% endif %}

@@ -1,0 +1,22 @@
+version: 1
+industry: pharma
+aliases:
+  - pharma
+  - pharmaceutical
+  - biotech
+  - life_sciences
+  - medical_devices
+additional_requirement_ids:
+  - RISK-021
+  - RISK-022
+  - OPS-020
+  - COM-012
+  - GOV-019
+priority_boost:
+  COM-002: critical
+  RISK-021: critical
+  GOV-005: critical
+context_notes:
+  - Product quality crises may require simultaneous regulatory notification and product recall coordination.
+  - GxP compliance status affects all crisis decisions involving batch release, quarantine, and supply continuity.
+  - Pharmacovigilance reporting timelines apply to adverse events discovered during or after operational crises.

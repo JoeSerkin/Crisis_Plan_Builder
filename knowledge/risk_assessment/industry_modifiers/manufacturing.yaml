@@ -1,0 +1,23 @@
+version: 1
+industry: manufacturing
+aliases:
+  - manufacturing
+  - industrial
+  - production
+additional_requirement_ids:
+  - OPS-010
+  - OPS-011
+  - OPS-012
+  - RISK-010
+  - RISK-011
+  - RISK-012
+  - GOV-012
+priority_boost:
+  OPS-003: critical
+  OPS-010: critical
+  RISK-010: critical
+  GOV-008: critical
+context_notes:
+  - Multi-site manufacturing requires site-specific activation procedures and local emergency services contacts per facility.
+  - Supply chain disruption and industrial accidents are primary Tier 1 risks for manufacturing clients.
+  - OT/ICS environments may require separate cyber-physical incident escalation paths.

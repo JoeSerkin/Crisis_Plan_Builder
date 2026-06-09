@@ -1,0 +1,40 @@
+---
+description: Crisis Management Planner agent sessions — discovery through deliverables
+globs:
+  - "**/*"
+---
+
+# Crisis Management Planner (Cursor)
+
+**Primary operator:** Cursor Agent with `crisis-management-planner` skill.
+
+**Pipeline root:** `crisis-management-planner/` (standalone repo).
+
+## Skills (use every session)
+
+| Skill | Path | Role |
+|-------|------|------|
+| **crisis-management-planner** | `.cursor/skills/crisis-management-planner/SKILL.md` | Methodology, commands, phase gates |
+
+## Default user messages
+
+- **`Run crisis discovery for [client].`** — discovery CLI with intake JSON
+- **`Merge client answers into engagement.`** — merge_intake_cli + re-run discovery
+- **`Generate crisis plan deliverables.`** — planner_cli (if readiness ≥ 60)
+
+## Per session
+
+1. Read `.cursor/skills/crisis-management-planner/SKILL.md`
+2. Never invent organizational details — use requirements catalog gaps only
+3. Write client artifacts only under `storage/engagements/` and `output/`
+4. Consultant reviews all outputs before client delivery
+
+## Phase order (do not skip)
+
+Discovery → Gap Review → Risk Profile → Governance → Procedures → Review → Tabletop → Deliverables
+
+## Out of scope
+
+- Declaring ISO compliance or certification
+- Fabricating CMT names, phone numbers, or site addresses
+- Pushing client data to external services without explicit user request

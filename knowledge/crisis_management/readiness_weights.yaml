@@ -1,0 +1,20 @@
+version: 1
+domains:
+  org_profile:
+    weight: 0.20
+    label: Organization Profile
+  operations_sites:
+    weight: 0.20
+    label: Operations & Sites
+  governance:
+    weight: 0.25
+    label: Crisis Governance
+  communications:
+    weight: 0.15
+    label: Communications
+  risk_bcp:
+    weight: 0.20
+    label: Risk & Business Continuity
+gates:
+  risk_profiling_min_score: 60
+  critical_gap_score_cap: 40

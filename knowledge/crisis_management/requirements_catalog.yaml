@@ -1,0 +1,1058 @@
+version: 1
+domains:
+  - id: org_profile
+    label: Organization Profile
+  - id: operations_sites
+    label: Operations & Sites
+  - id: governance
+    label: Crisis Governance
+  - id: communications
+    label: Communications
+  - id: risk_bcp
+    label: Risk & Business Continuity
+
+requirements:
+  # --- Organization Profile ---
+  - id: ORG-001
+    domain: org_profile
+    field_path: company_name
+    label: Legal company name
+    priority: critical
+    intake_required: true
+    unlocks_agents: [discovery, risk_profile, governance]
+    why_it_matters: Establishes the legal entity scope for the crisis management plan.
+    question_template: What is the full legal name of the organization (including parent/subsidiary structure if relevant)?
+
+  - id: ORG-002
+    domain: org_profile
+    field_path: industry
+    label: Primary industry sector
+    priority: critical
+    intake_required: true
+    unlocks_agents: [discovery, risk_profile]
+    why_it_matters: Industry determines applicable risk modifiers and regulatory context.
+    question_template: What is the organization's primary industry sector and any secondary sectors?
+
+  - id: ORG-003
+    domain: org_profile
+    field_path: employees
+    label: Total employee count
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, governance]
+    why_it_matters: Scale affects team structure, notification volumes, and resource assumptions.
+    question_template: What is the total headcount (employees and contractors) globally and by major region?
+
+  - id: ORG-004
+    domain: org_profile
+    field_path: legal_entities
+    label: Legal entity structure
+    priority: critical
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: Crisis authority and regulatory obligations vary by legal entity.
+    question_template: List all legal entities (parent, subsidiaries, JVs) with country of incorporation and operational role.
+
+  - id: ORG-005
+    domain: org_profile
+    field_path: countries
+    label: Countries of operation
+    priority: critical
+    intake_required: true
+    unlocks_agents: [risk_profile, governance, procedures]
+    why_it_matters: Geographic footprint drives jurisdiction-specific procedures and escalation.
+    question_template: In which countries does the organization have employees, facilities, or material operations?
+
+  - id: ORG-006
+    domain: org_profile
+    field_path: business_model
+    label: Business model summary
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile]
+    why_it_matters: Revenue-critical activities inform business impact analysis.
+    question_template: Briefly describe core products/services, revenue streams, and customer concentration.
+
+  - id: ORG-007
+    domain: org_profile
+    field_path: regulators
+    label: Primary regulators
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures, reviewer]
+    why_it_matters: Regulatory notification timelines must be embedded in procedures.
+    question_template: Which regulators or authorities must be notified for incidents in each jurisdiction?
+
+  - id: ORG-008
+    domain: org_profile
+    field_path: insurance_program
+    label: Insurance and crisis response coverage
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Insurance carriers and brokers are often part of crisis coordination.
+    question_template: Describe crisis-related insurance (property, liability, cyber, D&O) and broker/emergency contacts.
+
+  # --- Operations & Sites ---
+  - id: OPS-001
+    domain: operations_sites
+    field_path: sites
+    label: Facility and site registry
+    priority: critical
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Site-specific activation and local emergency response require a site registry.
+    question_template: Provide a registry of facilities (name, address, country, headcount, critical functions).
+
+  - id: OPS-002
+    domain: operations_sites
+    field_path: critical_functions
+    label: Critical business functions
+    priority: critical
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: BIA and recovery priorities depend on identified critical functions.
+    question_template: What business functions cannot tolerate more than 4/24/72 hours of disruption?
+
+  - id: OPS-003
+    domain: operations_sites
+    field_path: site_activation_contacts
+    label: Site-level activation contacts
+    priority: critical
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: Each site needs 24/7 reachable contacts for crisis activation.
+    question_template: Who are the site-level crisis contacts (primary/alternate) and after-hours numbers per major site?
+
+  - id: OPS-004
+    domain: operations_sites
+    field_path: shift_patterns
+    label: Shift and staffing patterns
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Off-hours incidents require different notification paths.
+    question_template: Describe shift patterns, weekend operations, and remote vs on-site staffing by site.
+
+  - id: OPS-005
+    domain: operations_sites
+    field_path: hazmat_exposure
+    label: Hazardous materials exposure
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Environmental and industrial incidents require specialized response procedures.
+    question_template: Are hazardous materials stored or processed? List substances, quantities, and SDS availability.
+
+  - id: OPS-006
+    domain: operations_sites
+    field_path: local_emergency_services
+    label: Local emergency services contacts
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: First responders and facility emergency coordination must be pre-identified.
+    question_template: For each major site, list fire, police, ambulance, and poison control numbers.
+
+  - id: OPS-007
+    domain: operations_sites
+    field_path: utilities_dependencies
+    label: Utilities and infrastructure dependencies
+    priority: medium
+    intake_required: false
+    unlocks_agents: [risk_profile]
+    why_it_matters: Utility failure can trigger hibernation or relocation decisions.
+    question_template: What utilities (power, water, telecom) are single points of failure per site?
+
+  - id: OPS-008
+    domain: operations_sites
+    field_path: third_party_operators
+    label: Third-party operators on site
+    priority: medium
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: Contractor incidents require clear authority and notification lines.
+    question_template: Which third parties operate on your sites (security, catering, logistics) and who manages them?
+
+  - id: OPS-009
+    domain: operations_sites
+    field_path: travel_exposure
+    label: Employee travel exposure
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Travelers abroad require separate crisis tracks from site incidents.
+    question_template: How many employees travel internationally monthly and to which high-risk destinations?
+
+  - id: OPS-010
+    domain: operations_sites
+    field_path: supply_chain_critical_suppliers
+    label: Critical suppliers and single points of failure
+    priority: critical
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Supply chain disruption is a primary manufacturing crisis scenario.
+    question_template: List tier-1 suppliers, sole-source dependencies, and alternate supplier status.
+    industry_tags: [manufacturing]
+
+  - id: OPS-011
+    domain: operations_sites
+    field_path: production_continuity
+    label: Production continuity requirements
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Recovery time objectives for production drive crisis priorities.
+    question_template: What are RTO/RPO targets for production lines and warehouse operations?
+    industry_tags: [manufacturing]
+
+  - id: OPS-012
+    domain: operations_sites
+    field_path: ot_ics_environment
+    label: OT/ICS environment overview
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Cyber-physical incidents require distinct escalation from IT-only events.
+    question_template: Describe OT/ICS systems, segmentation from IT, and who authorizes emergency shutdowns.
+    industry_tags: [manufacturing]
+
+  # --- Crisis Governance ---
+  - id: GOV-001
+    domain: governance
+    field_path: existing_crisis_plan
+    label: Existing crisis management plan
+    priority: critical
+    intake_required: false
+    unlocks_agents: [discovery, reviewer]
+    why_it_matters: Baseline assessment requires knowing what already exists.
+    question_template: Do you have an existing crisis management plan? When was it last updated and approved?
+
+  - id: GOV-002
+    domain: governance
+    field_path: last_tabletop_exercise
+    label: Last crisis exercise date
+    priority: high
+    intake_required: false
+    unlocks_agents: [reviewer, tabletop]
+    why_it_matters: Exercise currency indicates organizational readiness.
+    question_template: When was the last crisis tabletop or simulation, what scenario was used, and what were key findings?
+
+  - id: GOV-003
+    domain: governance
+    field_path: crisis_team_structure
+    label: Crisis Management Team structure
+    priority: critical
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: CMT roles and membership are core governance deliverables.
+    question_template: Describe the Crisis Management Team — roles, named members, and alternates.
+
+  - id: GOV-004
+    domain: governance
+    field_path: crisis_activation_criteria
+    label: Crisis activation criteria
+    priority: critical
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: Clear thresholds prevent delayed or premature activation.
+    question_template: What conditions trigger formal crisis activation (fatalities, regulatory, media, operational)?
+
+  - id: GOV-005
+    domain: governance
+    field_path: decision_authorities
+    label: Decision authorities by crisis level
+    priority: critical
+    intake_required: false
+    unlocks_agents: [governance]
+    why_it_matters: Authority matrix prevents paralysis during high-stakes decisions.
+    question_template: Who can authorize evacuation, production shutdown, media statements, and regulatory notification?
+
+  - id: GOV-006
+    domain: governance
+    field_path: escalation_matrix
+    label: Escalation matrix
+    priority: critical
+    intake_required: false
+    unlocks_agents: [governance]
+    why_it_matters: Time-based escalation ensures leadership engagement.
+    question_template: Provide current escalation paths (who is notified, when, via what channel) by severity level.
+
+  - id: GOV-007
+    domain: governance
+    field_path: crisis_levels
+    label: Crisis severity levels
+    priority: high
+    intake_required: false
+    unlocks_agents: [governance]
+    why_it_matters: Tiered response requires defined severity levels.
+    question_template: How do you classify incident severity today (levels 1–4 or equivalent)?
+
+  - id: GOV-008
+    domain: governance
+    field_path: after_hours_escalation
+    label: 24/7 escalation contacts
+    priority: critical
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: Crises do not respect business hours; 24/7 reachability is essential.
+    question_template: Who is on the 24/7 escalation roster and how are they reached after hours?
+
+  - id: GOV-009
+    domain: governance
+    field_path: executive_succession
+    label: Executive succession during crisis
+    priority: high
+    intake_required: false
+    unlocks_agents: [governance]
+    why_it_matters: Unavailability of key leaders must not halt crisis command.
+    question_template: If the CEO or Crisis Director is unavailable, who assumes command?
+
+  - id: GOV-010
+    domain: governance
+    field_path: board_notification
+    label: Board and investor notification protocol
+    priority: medium
+    intake_required: false
+    unlocks_agents: [governance, communications]
+    why_it_matters: Material incidents may require board and investor communication.
+    question_template: When and how is the board notified? Is there an investor relations crisis protocol?
+
+  - id: GOV-011
+    domain: governance
+    field_path: legal_counsel_contacts
+    label: Legal counsel crisis contacts
+    priority: high
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: Legal privilege and regulatory advice must be available immediately.
+    question_template: Who is external and internal legal counsel for crisis events, and how are they reached 24/7?
+
+  - id: GOV-012
+    domain: governance
+    field_path: site_crisis_leads
+    label: Site crisis leads per country
+    priority: critical
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: Multi-country operations need local crisis leads with defined authority.
+    question_template: Who leads crisis response at each country/site level and what authority do they hold?
+    industry_tags: [manufacturing]
+
+  # --- Communications ---
+  - id: COM-001
+    domain: communications
+    field_path: internal_comms_channels
+    label: Internal crisis communication channels
+    priority: critical
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: Reliable internal channels are required for CMT coordination.
+    question_template: What channels are used for crisis comms (phone bridge, Teams, satellite, SMS mass notify)?
+
+  - id: COM-002
+    domain: communications
+    field_path: spokesperson_policy
+    label: Spokesperson and media policy
+    priority: critical
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: Unauthorized statements create legal and reputational risk.
+    question_template: Who is authorized to speak to media, employees, and regulators? Is there a holding statement template?
+
+  - id: COM-003
+    domain: communications
+    field_path: employee_notification
+    label: Employee notification procedures
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Employee safety notifications must be timely and accurate.
+    question_template: How are employees notified during site emergencies, travel incidents, and all-clear events?
+
+  - id: COM-004
+    domain: communications
+    field_path: family_liaison
+    label: Family and next-of-kin liaison
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Serious injuries or fatalities require structured family communication.
+    question_template: Is there a family liaison role and protocol for serious injuries, fatalities, or missing persons?
+
+  - id: COM-005
+    domain: communications
+    field_path: social_media_monitoring
+    label: Social media monitoring and response
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Crises often break on social media before official channels.
+    question_template: Who monitors social media during a crisis and what is the approval flow for responses?
+
+  - id: COM-006
+    domain: communications
+    field_path: customer_notification
+    label: Customer and partner notification
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Supply disruption and data incidents require customer communication plans.
+    question_template: How are major customers and partners notified of operational or data incidents?
+
+  - id: COM-007
+    domain: communications
+    field_path: dark_website
+    label: Crisis website or dark site readiness
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Public-facing crisis pages may be needed for large-scale events.
+    question_template: Is a crisis/dark website available or pre-approved? Who can activate it?
+
+  # --- Risk & Business Continuity ---
+  - id: RISK-001
+    domain: risk_bcp
+    field_path: existing_bcp
+    label: Existing business continuity plans
+    priority: critical
+    intake_required: false
+    unlocks_agents: [risk_profile, reviewer]
+    why_it_matters: Crisis plans must align with or reference existing BCP.
+    question_template: Do business continuity plans exist by site or function? When were they last tested?
+
+  - id: RISK-002
+    domain: risk_bcp
+    field_path: risk_register
+    label: Enterprise risk register
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile]
+    why_it_matters: Existing risk assessments accelerate profiling.
+    question_template: Is there an enterprise risk register? Can you share top 10 risks for the next 12 months?
+
+  - id: RISK-003
+    domain: risk_bcp
+    field_path: historical_incidents
+    label: Historical crisis and near-miss incidents
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, tabletop]
+    why_it_matters: Past incidents reveal realistic scenarios and gaps.
+    question_template: Describe significant incidents or near-misses in the past 3 years and lessons learned.
+
+  - id: RISK-004
+    domain: risk_bcp
+    field_path: cyber_incident_playbook
+    label: Cyber incident response playbook
+    priority: critical
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Cyber crises often trigger regulatory and operational cascades.
+    question_template: Is there a cyber IR playbook? Who declares a cyber crisis and interfaces with IT/OT?
+
+  - id: RISK-005
+    domain: risk_bcp
+    field_path: pandemic_health_plan
+    label: Health emergency and pandemic plan
+    priority: medium
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Health emergencies affect workforce availability across sites.
+    question_template: What health emergency plans exist (pandemic, occupational illness outbreaks)?
+
+  - id: RISK-006
+    domain: risk_bcp
+    field_path: data_backup_recovery
+    label: Data backup and recovery capabilities
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Recovery depends on tested backup and restoration procedures.
+    question_template: What are RPO/RTO for critical systems and when were restores last tested?
+
+  - id: RISK-007
+    domain: risk_bcp
+    field_path: alternate_work_locations
+    label: Alternate work and recovery sites
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Relocation and hibernation decisions need pre-identified alternatives.
+    question_template: What alternate sites or work-from-home capacity exists if primary sites are unavailable?
+
+  - id: RISK-008
+    domain: risk_bcp
+    field_path: civil_unrest_exposure
+    label: Civil unrest and security threat exposure
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Multi-country footprint may include unrest-prone locations.
+    question_template: Which operating locations have elevated security threats (unrest, crime, terrorism)?
+
+  - id: RISK-009
+    domain: risk_bcp
+    field_path: natural_hazard_exposure
+    label: Natural hazard exposure by site
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Site-specific hazards drive scenario planning.
+    question_template: What natural hazards affect each site (flood, earthquake, cyclone, wildfire)?
+
+  - id: RISK-010
+    domain: risk_bcp
+    field_path: industrial_accident_scenarios
+    label: Industrial accident scenarios
+    priority: critical
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures, tabletop]
+    why_it_matters: Manufacturing clients require fire, explosion, and chemical release scenarios.
+    question_template: What industrial accident scenarios have been assessed (fire, explosion, chemical release)?
+    industry_tags: [manufacturing]
+
+  - id: RISK-011
+    domain: risk_bcp
+    field_path: environmental_liability
+    label: Environmental liability and spill response
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Environmental incidents trigger regulatory and community response.
+    question_template: Who manages environmental spill response and regulator notification?
+    industry_tags: [manufacturing]
+
+  - id: RISK-012
+    domain: risk_bcp
+    field_path: labor_industrial_relations
+    label: Labor and industrial relations risks
+    priority: medium
+    intake_required: false
+    unlocks_agents: [risk_profile]
+    why_it_matters: Strikes and labor disputes can disrupt operations and require crisis governance.
+    question_template: Are there active or historical labor disputes at any site? What is the escalation path?
+    industry_tags: [manufacturing]
+
+  # --- Organization Profile (extended) ---
+  - id: ORG-009
+    domain: org_profile
+    field_path: public_listing
+    label: Public listing and market exposure
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, communications]
+    why_it_matters: Listed companies face disclosure obligations and market sensitivity during crises.
+    question_template: Is the organization publicly listed? On which exchanges and under what disclosure rules?
+
+  - id: ORG-010
+    domain: org_profile
+    field_path: key_customers
+    label: Key customer concentration
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Customer concentration affects crisis communication and business impact severity.
+    question_template: Which customers represent significant revenue concentration and require priority notification?
+
+  - id: ORG-011
+    domain: org_profile
+    field_path: data_privacy_program
+    label: Data privacy and protection program
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Data incidents require GDPR/CCPA and breach notification procedures.
+    question_template: Describe data privacy governance, DPO contacts, and breach notification obligations.
+
+  - id: ORG-012
+    domain: org_profile
+    field_path: union_presence
+    label: Union and collective bargaining presence
+    priority: medium
+    intake_required: false
+    unlocks_agents: [risk_profile, governance]
+    why_it_matters: Unionized workforces require distinct communication and escalation paths during labor crises.
+    question_template: Which sites or regions have union representation and active collective agreements?
+
+  - id: ORG-013
+    domain: org_profile
+    field_path: csr_esg_contacts
+    label: CSR and ESG crisis contacts
+    priority: medium
+    intake_required: false
+    unlocks_agents: [communications]
+    why_it_matters: ESG-related incidents attract stakeholder and media scrutiny beyond operational impact.
+    question_template: Who manages CSR/ESG communications and stakeholder engagement during reputational crises?
+
+  # --- Operations & Sites (extended) ---
+  - id: OPS-013
+    domain: operations_sites
+    field_path: cloud_dependencies
+    label: Cloud and SaaS dependencies
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Cloud outages can disable crisis tools and business-critical applications simultaneously.
+    question_template: Which critical systems depend on cloud/SaaS providers and what are failover arrangements?
+
+  - id: OPS-014
+    domain: operations_sites
+    field_path: physical_security
+    label: Physical security perimeters
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Perimeter breaches and active threats require coordinated security and CMT response.
+    question_template: Describe physical security controls, guard force, and lockdown procedures per major site.
+
+  - id: OPS-015
+    domain: operations_sites
+    field_path: emergency_evacuation
+    label: Emergency evacuation procedures
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Evacuation decisions must be pre-planned with assembly points and accountability processes.
+    question_template: What evacuation routes, assembly points, and headcount verification procedures exist per site?
+
+  - id: OPS-016
+    domain: operations_sites
+    field_path: mutual_aid
+    label: Mutual aid and mutual assistance agreements
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Neighboring facilities and industry peers may provide emergency support during major incidents.
+    question_template: Are mutual aid agreements in place with neighboring facilities or industry peers?
+
+  - id: OPS-017
+    domain: operations_sites
+    field_path: business_hours_coverage
+    label: Business hours and timezone coverage
+    priority: medium
+    intake_required: false
+    unlocks_agents: [governance]
+    why_it_matters: Global operations span time zones; crisis command coverage must be defined.
+    question_template: What business hours and timezone coverage exist for crisis leadership across regions?
+
+  - id: OPS-022
+    domain: operations_sites
+    field_path: access_control_systems
+    label: Access control and badge systems
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Lockdown and access revocation are common crisis actions at secured facilities.
+    question_template: How are access control systems managed during lockdown or credential compromise events?
+
+  - id: OPS-023
+    domain: operations_sites
+    field_path: single_points_of_failure
+    label: Operational single points of failure
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile]
+    why_it_matters: Identifying SPOFs informs prioritization during cascading failures.
+    question_template: What operational single points of failure have been identified across sites and functions?
+
+  - id: OPS-024
+    domain: operations_sites
+    field_path: remote_workforce
+    label: Remote and hybrid workforce
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Remote workers require different notification and welfare check procedures during crises.
+    question_template: What percentage of staff work remotely and how are they reached during site-level emergencies?
+
+  # --- Crisis Governance (extended) ---
+  - id: GOV-013
+    domain: governance
+    field_path: post_incident_review
+    label: Post-incident review process
+    priority: high
+    intake_required: false
+    unlocks_agents: [reviewer]
+    why_it_matters: Lessons learned and corrective actions close the crisis management loop.
+    question_template: Is there a post-incident review process? Who leads it and within what timeframe?
+
+  - id: GOV-014
+    domain: governance
+    field_path: insurance_claims
+    label: Insurance claims coordination
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Property and liability claims must be initiated promptly to preserve coverage.
+    question_template: Who coordinates insurance claims during a crisis and what documentation is required?
+
+  - id: GOV-015
+    domain: governance
+    field_path: crisis_tools
+    label: Crisis management tools and systems
+    priority: medium
+    intake_required: false
+    unlocks_agents: [governance]
+    why_it_matters: CMT coordination depends on reliable tools for bridges, logs, and document sharing.
+    question_template: What crisis management tools are used (conference bridges, incident logs, secure document sharing)?
+
+  - id: GOV-016
+    domain: governance
+    field_path: external_advisors
+    label: External crisis advisors
+    priority: medium
+    intake_required: false
+    unlocks_agents: [governance]
+    why_it_matters: Retained advisors (security, PR, legal) may need rapid activation during major events.
+    question_template: Are external crisis advisors retained (PR firm, security consultant)? How are they activated?
+
+  - id: GOV-017
+    domain: governance
+    field_path: union_stakeholders
+    label: Union and workforce stakeholder contacts
+    priority: medium
+    intake_required: false
+    unlocks_agents: [governance, communications]
+    why_it_matters: Workforce crises require early union and employee representative engagement.
+    question_template: Who are the union and workforce representative contacts for crisis communication?
+
+  - id: GOV-021
+    domain: governance
+    field_path: regulator_notification_templates
+    label: Regulator notification templates
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures, reviewer]
+    why_it_matters: Pre-approved templates accelerate mandatory regulatory notifications.
+    question_template: Are regulator notification templates pre-approved for common incident types?
+
+  - id: GOV-022
+    domain: governance
+    field_path: crisis_documentation_standards
+    label: Crisis documentation and record-keeping
+    priority: medium
+    intake_required: false
+    unlocks_agents: [reviewer]
+    why_it_matters: Legal privilege and regulatory defense depend on accurate crisis records.
+    question_template: What documentation standards apply during a crisis (decision logs, timelines, evidence preservation)?
+
+  - id: GOV-023
+    domain: governance
+    field_path: delegation_of_authority
+    label: Delegation of authority during crisis
+    priority: high
+    intake_required: false
+    unlocks_agents: [governance]
+    why_it_matters: Pre-delegated authorities prevent delays when executives are unavailable.
+    question_template: What financial and operational authorities are pre-delegated during crisis activation?
+
+  # --- Communications (extended) ---
+  - id: COM-008
+    domain: communications
+    field_path: investor_relations
+    label: Investor relations crisis contacts
+    priority: high
+    intake_required: false
+    unlocks_agents: [communications, governance]
+    why_it_matters: Material incidents may require stock exchange and investor disclosure.
+    question_template: Who handles investor relations during a crisis and what disclosure triggers apply?
+
+  - id: COM-009
+    domain: communications
+    field_path: translation_capability
+    label: Translation and localization capability
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Multi-country crises require messages in local languages quickly.
+    question_template: What translation resources are available for employee and public communications?
+
+  - id: COM-010
+    domain: communications
+    field_path: vendor_notification
+    label: Vendor and supplier notification
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Supply chain partners must be notified of disruptions affecting shared operations.
+    question_template: How are critical vendors and suppliers notified during operational crises?
+
+  - id: COM-011
+    domain: communications
+    field_path: crisis_comms_training
+    label: Crisis communications training
+    priority: medium
+    intake_required: false
+    unlocks_agents: [reviewer]
+    why_it_matters: Spokesperson readiness depends on prior media training and rehearsal.
+    question_template: Have spokespersons and comms staff received crisis media training? When was the last session?
+
+  - id: COM-014
+    domain: communications
+    field_path: press_agency_relationship
+    label: Press and media agency relationship
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: External PR support may be needed for high-profile incidents.
+    question_template: Is a press/media agency on retainer for crisis communications? What is the activation process?
+
+  - id: COM-015
+    domain: communications
+    field_path: monitoring_alert_services
+    label: Media and threat monitoring services
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Early detection of media and social narratives enables faster response.
+    question_template: What media monitoring or threat intelligence services are used during crises?
+
+  # --- Risk & Business Continuity (extended) ---
+  - id: RISK-013
+    domain: risk_bcp
+    field_path: geopolitical_exposure
+    label: Geopolitical and sanctions exposure
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Geopolitical events can disrupt operations, travel, and supply chains simultaneously.
+    question_template: Which countries or regions face elevated geopolitical or sanctions risk for your operations?
+
+  - id: RISK-014
+    domain: risk_bcp
+    field_path: evacuation_capability
+    label: Emergency evacuation capability
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Evacuation of personnel from high-risk locations requires pre-planned routes and vendors.
+    question_template: What evacuation plans exist for employees in high-risk countries or disaster zones?
+
+  - id: RISK-015
+    domain: risk_bcp
+    field_path: tabletop_history
+    label: Tabletop and exercise history
+    priority: high
+    intake_required: false
+    unlocks_agents: [reviewer, tabletop]
+    why_it_matters: Exercise history reveals tested scenarios and identified improvement areas.
+    question_template: List crisis exercises conducted in the past 24 months, scenarios used, and outcomes.
+
+  - id: RISK-016
+    domain: risk_bcp
+    field_path: critical_vendor_bcp
+    label: Critical vendor business continuity
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Vendor failures cascade into operational crises without pre-assessed continuity plans.
+    question_template: Have critical vendors been assessed for business continuity and alternate supply arrangements?
+
+  - id: RISK-017
+    domain: risk_bcp
+    field_path: insurance_triggers
+    label: Insurance policy crisis triggers
+    priority: medium
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Policy notification windows and coverage limits affect crisis financial decisions.
+    question_template: What insurance policies apply to crisis events and what are notification deadlines?
+
+  - id: RISK-018
+    domain: risk_bcp
+    field_path: medical_emergency_response
+    label: On-site medical emergency response
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Serious injuries require immediate medical response and family notification protocols.
+    question_template: What on-site medical capabilities exist (clinic, AED, trained responders) per major site?
+
+  - id: RISK-025
+    domain: risk_bcp
+    field_path: supply_chain_bcp
+    label: Supply chain business continuity
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Supply chain continuity plans reduce production and delivery disruption during crises.
+    question_template: Do supply chain continuity plans exist for tier-1 suppliers and logistics partners?
+
+  - id: RISK-026
+    domain: risk_bcp
+    field_path: emergency_drills_schedule
+    label: Emergency drill and drill schedule
+    priority: medium
+    intake_required: false
+    unlocks_agents: [reviewer]
+    why_it_matters: Regular drills maintain readiness for fire, evacuation, and shelter-in-place events.
+    question_template: What emergency drills are conducted per site and on what schedule?
+
+  # --- Energy industry ---
+  - id: OPS-018
+    domain: operations_sites
+    field_path: process_safety_management
+    label: Process safety management program
+    priority: critical
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: High-hazard processes require PSM programs and major accident hazard planning.
+    question_template: Describe your process safety management program, PHA status, and MOC procedures.
+    industry_tags: [energy]
+
+  - id: OPS-019
+    domain: operations_sites
+    field_path: pipeline_infrastructure
+    label: Pipeline and transmission infrastructure
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Pipeline incidents have wide geographic impact and strict regulatory reporting.
+    question_template: Describe pipeline, transmission, or distribution assets and their emergency shutdown procedures.
+    industry_tags: [energy]
+
+  - id: RISK-019
+    domain: risk_bcp
+    field_path: major_accident_hazard
+    label: Major accident hazard scenarios
+    priority: critical
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures, tabletop]
+    why_it_matters: Energy operations face high-consequence MAH scenarios requiring specialized response.
+    question_template: What major accident hazard scenarios have been assessed (fire, explosion, toxic release)?
+    industry_tags: [energy]
+
+  - id: RISK-020
+    domain: risk_bcp
+    field_path: environmental_release_energy
+    label: Environmental release response
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Spills and releases trigger multi-agency response and long-duration remediation.
+    question_template: Who leads environmental release response and what regulator notification timelines apply?
+    industry_tags: [energy]
+
+  - id: GOV-018
+    domain: governance
+    field_path: energy_regulatory_contacts
+    label: Energy regulatory authority contacts
+    priority: high
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: Energy incidents require notification to sector regulators within defined timeframes.
+    question_template: List energy sector regulators (NERC, FERC, national authorities) and 24/7 notification contacts.
+    industry_tags: [energy]
+
+  # --- Pharma industry ---
+  - id: OPS-020
+    domain: operations_sites
+    field_path: cold_chain_integrity
+    label: Cold chain and temperature-controlled logistics
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Cold chain failures destroy product inventory and trigger regulatory action.
+    question_template: Describe cold chain monitoring, backup power, and excursion response procedures.
+    industry_tags: [pharma]
+
+  - id: RISK-021
+    domain: risk_bcp
+    field_path: product_recall_capability
+    label: Product recall capability
+    priority: critical
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures, tabletop]
+    why_it_matters: Product recalls require rapid traceability and regulatory coordination.
+    question_template: Describe product recall procedures, traceability systems, and FDA/EMA notification readiness.
+    industry_tags: [pharma]
+
+  - id: RISK-022
+    domain: risk_bcp
+    field_path: gxp_compliance
+    label: GxP compliance and quality systems
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, reviewer]
+    why_it_matters: Quality crises affect regulatory standing and market authorization.
+    question_template: Describe GMP/GCP compliance status and quality crisis escalation procedures.
+    industry_tags: [pharma]
+
+  - id: COM-012
+    domain: communications
+    field_path: pharmacovigilance_contacts
+    label: Pharmacovigilance and drug safety contacts
+    priority: high
+    intake_required: false
+    unlocks_agents: [procedures]
+    why_it_matters: Adverse events require timely pharmacovigilance reporting to health authorities.
+    question_template: Who manages pharmacovigilance reporting and health authority notifications?
+    industry_tags: [pharma]
+
+  - id: GOV-019
+    domain: governance
+    field_path: quality_crisis_authority
+    label: Quality and QP crisis authority
+    priority: high
+    intake_required: false
+    unlocks_agents: [governance]
+    why_it_matters: Quality-related crises require Qualified Person and QA authority for batch decisions.
+    question_template: Who has authority for batch quarantine, release holds, and quality crisis decisions?
+    industry_tags: [pharma]
+
+  # --- NGO industry ---
+  - id: OPS-021
+    domain: operations_sites
+    field_path: local_partner_vetting
+    label: Local implementing partner vetting
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, governance]
+    why_it_matters: Partner failures or misconduct create duty-of-care and reputational crises for NGOs.
+    question_template: How are local implementing partners vetted and monitored for security and integrity?
+    industry_tags: [ngo]
+
+  - id: RISK-023
+    domain: risk_bcp
+    field_path: field_team_security
+    label: Field team security and HEAT protocols
+    priority: critical
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: Field teams in hostile environments face targeted violence and kidnapping risks.
+    question_template: Describe field team security protocols, HEAT training, and threat monitoring in program areas.
+    industry_tags: [ngo]
+
+  - id: RISK-024
+    domain: risk_bcp
+    field_path: kidnap_hostage_response
+    label: Kidnap and hostage response protocols
+    priority: high
+    intake_required: false
+    unlocks_agents: [risk_profile, procedures]
+    why_it_matters: K&R incidents require specialized response without escalating harm to victims.
+    question_template: Are kidnap and hostage response protocols in place? Is K&R insurance coverage active?
+    industry_tags: [ngo]
+
+  - id: GOV-020
+    domain: governance
+    field_path: duty_of_care_travelers
+    label: Duty of care for travelers and field staff
+    priority: critical
+    intake_required: false
+    unlocks_agents: [governance, procedures]
+    why_it_matters: NGOs must track and protect staff in high-risk locations with defined welfare protocols.
+    question_template: How are travelers and field staff tracked, and what welfare check protocols apply during crises?
+    industry_tags: [ngo]
+
+  - id: COM-013
+    domain: communications
+    field_path: donor_stakeholder_comms
+    label: Donor and stakeholder communications
+    priority: high
+    intake_required: false
+    unlocks_agents: [communications, procedures]
+    why_it_matters: Donor confidence and funding depend on transparent crisis communication.
+    question_template: How are major donors and stakeholders notified during security or operational crises?
+    industry_tags: [ngo]

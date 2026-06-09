@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "crisis-management-planner"
+version = "0.1.0"
+description = "Cursor-operated crisis management planning agent system for consultants"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.0",
+  "pyyaml>=6.0",
+  "jinja2>=3.1",
+]
+
+[project.optional-dependencies]
+llm = ["google-generativeai>=0.8"]
+workflow = ["langgraph>=0.2", "langchain-core>=0.3"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.scripts]
+cmp-discovery = "cmp.workflows.discovery_cli:main"
+cmp-merge-intake = "cmp.workflows.merge_intake_cli:main"
+cmp-planner = "cmp.workflows.planner_cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cmp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

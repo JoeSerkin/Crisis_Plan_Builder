@@ -1,0 +1,6 @@
+{
+  "company_name": "Example Manufacturing",
+  "industry": "Manufacturing",
+  "employees": 500,
+  "countries": ["Germany", "Mexico", "Thailand"]
+}

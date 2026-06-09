@@ -1,0 +1,24 @@
+version: 1
+industry: energy
+aliases:
+  - energy
+  - oil_and_gas
+  - oil and gas
+  - utilities
+  - power
+  - upstream
+  - downstream
+additional_requirement_ids:
+  - OPS-018
+  - OPS-019
+  - RISK-019
+  - RISK-020
+  - GOV-018
+priority_boost:
+  OPS-003: critical
+  RISK-019: critical
+  GOV-008: critical
+context_notes:
+  - High-hazard energy operations require process safety management integration with crisis activation criteria.
+  - Pipeline and transmission incidents may affect communities beyond facility boundaries — community notification is essential.
+  - Energy sector regulators often mandate incident reporting within hours; pre-approved notification templates are critical.
