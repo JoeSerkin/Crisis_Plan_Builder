@@ -164,17 +164,19 @@ Install the V2 stack:
 python -m pip install --upgrade pip   # required on Python 3.14 with pip < 26
 pip install -e .
 pip install -r requirements-v2.txt
-cmp-api --host 127.0.0.1 --port 8000
+python -m cmp.api.server --host 127.0.0.1 --port 8000
 ```
 
 Or, after upgrading pip:
 
 ```bash
 pip install -e ".[v2]"
-cmp-api --host 127.0.0.1 --port 8000
+python -m cmp.api.server --host 127.0.0.1 --port 8000
 ```
 
 > **Python 3.14:** pip 25.x fails on optional extras with `Invalid version: 'docx'` (or similar). Upgrade pip first, or use the two-step install above.
+
+> **Windows PATH:** If `cmp-api` is not recognized, use `python -m cmp.api.server` (same command). Pip may install console scripts to `%APPDATA%\Python\Python314\Scripts` — add that folder to PATH if you prefer the `cmp-api` shortcut.
 
 Open http://127.0.0.1:8000 for the consultant UI, or call the REST API directly:
 

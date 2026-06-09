@@ -94,7 +94,7 @@ V2 API, web UI, DOCX export, and knowledge search:
 python -m pip install --upgrade pip
 pip install -e .
 pip install -r requirements-v2.txt
-cmp-api --port 8000
+python -m cmp.api.server --port 8000
 ```
 
 Optional LLM question phrasing:
@@ -177,4 +177,4 @@ Fixtures: `tests/fixtures/example_ngo_intake.json`, `example_ngo_intake_enriched
 
 ## V2 (API)
 
-Use `pip install -e ".[v2]"` and `cmp-api` when the consultant is not working inside Cursor. Keyword knowledge search is available at `/api/v1/knowledge/search`; vector RAG and PDF export are planned next.
+Use `python -m cmp.api.server` when the consultant is not working inside Cursor (avoids Windows PATH issues with `cmp-api`). Keyword knowledge search is available at `/api/v1/knowledge/search`; vector RAG and PDF export are planned next.
