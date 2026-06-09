@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "updated": "2026-06-09",
-  "notes": "Expanded requirements catalog (~105 entries), industry-scoped filtering, energy/pharma/NGO modifiers"
+  "notes": "Organization context layer for size, maturity, staffing, and jurisdiction flexibility"
 }

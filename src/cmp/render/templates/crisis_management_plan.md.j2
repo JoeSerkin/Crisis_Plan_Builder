@@ -106,3 +106,11 @@ Termination of crisis response requires Crisis Director approval, hot-wash withi
 {% for g in review.gaps %}
 - {{ g }}
 {% endfor %}
+
+### ISO 22361 Checklist Verifications
+
+| Item | Status |
+|------|--------|
+{% for check in review.checklist_verifications %}
+| {{ check.item }} | {{ check.status | upper }} |
+{% endfor %}

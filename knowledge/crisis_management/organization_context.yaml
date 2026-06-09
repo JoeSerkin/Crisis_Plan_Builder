@@ -1,0 +1,110 @@
+version: 1
+size_tiers:
+  small:
+    max_employees: 49
+    min_cmt_roles: 3
+    min_procedures: 2
+    context_notes:
+      - Lean organizations may combine CMT roles under dual-hat assignments; document named alternates explicitly.
+      - A single-site organization may use simplified escalation without a full enterprise CMT stand-up for Level 1–2 events.
+    priority_downgrade:
+      GOV-012: high
+      GOV-010: low
+      COM-008: medium
+      OPS-024: low
+  medium:
+    max_employees: 499
+    min_cmt_roles: 4
+    min_procedures: 3
+    context_notes:
+      - Medium organizations should define core CMT roles even when staffed part-time or via retained advisors.
+  large:
+    max_employees: 4999
+    min_cmt_roles: 5
+    min_procedures: 3
+    context_notes:
+      - Multi-function CMT separation becomes important as operational and reputational complexity increases.
+  enterprise:
+    min_employees: 5000
+    min_cmt_roles: 6
+    min_procedures: 4
+    context_notes:
+      - Enterprise-scale organizations typically require dedicated crisis roles, board protocols, and multi-region coordination.
+
+maturity_guidance:
+  nascent:
+    context_notes:
+      - Nascent programs should prioritize activation criteria, 24/7 escalation, and spokesperson policy before advanced tooling.
+    readiness_gate_adjustment: 0
+  developing:
+    context_notes:
+      - Developing programs may use phased implementation — validate interim dual-role assignments with the client.
+    readiness_gate_adjustment: 0
+  established:
+    context_notes:
+      - Established programs should demonstrate exercise history, post-incident review, and tested notification paths.
+    readiness_gate_adjustment: 0
+
+staffing_guidance:
+  lean:
+    context_notes:
+      - Lean staffing models require explicit alternates and pre-delegated authorities for after-hours decisions.
+  centralized:
+    context_notes:
+      - Centralized crisis staffing should define who represents each region or site when local leaders are unavailable.
+  distributed:
+    context_notes:
+      - Distributed models need clear site-level activation authority and a single enterprise coordination point.
+
+jurisdiction_profiles:
+  - id: eu_gdpr
+    match_countries:
+      - Germany
+      - France
+      - Netherlands
+      - Spain
+      - Italy
+      - Belgium
+      - Austria
+      - Poland
+      - Sweden
+      - Ireland
+    context_notes:
+      - EU operations may trigger GDPR breach notification (typically 72 hours) and works council consultation in several member states.
+      - Insurance and liability frameworks vary by member state — map policies to each operating entity, not just HQ.
+    priority_boost:
+      ORG-011: high
+      ORG-007: high
+  - id: united_states
+    match_countries:
+      - United States
+      - USA
+      - US
+    context_notes:
+      - US operations may require OSHA, EPA, and state-level breach notification alongside carrier and broker coordination.
+      - Insurance programs often differ by state for workers compensation and environmental liability.
+    priority_boost:
+      ORG-008: high
+      ORG-007: high
+  - id: united_kingdom
+    match_countries:
+      - United Kingdom
+      - UK
+      - England
+      - Scotland
+      - Wales
+    context_notes:
+      - UK entities may require ICO breach reporting, HSE notification, and distinct insurance broker contacts from EU operations.
+    priority_boost:
+      ORG-011: high
+  - id: apac_multi
+    match_countries:
+      - Thailand
+      - Mexico
+      - Japan
+      - Singapore
+      - Australia
+    context_notes:
+      - APAC and Latin America sites often have distinct local emergency services, insurer relationships, and cultural expectations for employee and family communication.
+    priority_boost:
+      OPS-006: high

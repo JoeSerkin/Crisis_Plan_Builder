@@ -33,6 +33,10 @@ class ClientIntake(BaseModel):
     industry: str
     employees: int | None = None
     countries: list[str] = Field(default_factory=list)
+    headquarters_country: str | None = None
+    organization_size: str | None = None
+    crisis_program_maturity: str | None = None
+    staffing_model: str | None = None
     legal_entities: list[dict[str, Any]] | None = None
     sites: list[dict[str, Any]] | None = None
     additional_context: dict[str, Any] = Field(default_factory=dict)
@@ -50,6 +54,14 @@ class ClientIntake(BaseModel):
             "employees": self.employees,
             "countries": self.countries,
         }
+        if self.headquarters_country is not None:
+            data["headquarters_country"] = self.headquarters_country
+        if self.organization_size is not None:
+            data["organization_size"] = self.organization_size
+        if self.crisis_program_maturity is not None:
+            data["crisis_program_maturity"] = self.crisis_program_maturity
+        if self.staffing_model is not None:
+            data["staffing_model"] = self.staffing_model
         if self.legal_entities is not None:
             data["legal_entities"] = self.legal_entities
         if self.sites is not None:
@@ -87,12 +99,28 @@ class ConsultantQuestion(BaseModel):
     priority: GapPriority
 
 
+class OrganizationContextSummary(BaseModel):
+    size_tier: str
+    employee_count: int | None = None
+    country_count: int = 0
+    site_count: int = 0
+    headquarters_country: str | None = None
+    crisis_maturity: str | None = None
+    staffing_model: str | None = None
+    min_cmt_roles: int = 5
+    min_procedures: int = 3
+    readiness_gate: int = 60
+    flexibility_notes: list[str] = Field(default_factory=list)
+    jurisdiction_notes: list[str] = Field(default_factory=list)
+
+
 class DiscoveryOutput(BaseModel):
     known_information: dict[str, KnownField | dict[str, Any]]
     missing_information: list[RequirementGap]
     critical_gaps: list[str]
     recommended_questions: list[ConsultantQuestion]
     assumptions: list[str] = Field(default_factory=list)
+    organization_context: OrganizationContextSummary | None = None
     planning_readiness_score: int = Field(ge=0, le=100)
     readiness_breakdown: dict[str, int] = Field(default_factory=dict)
     engagement_id: str | None = None
@@ -208,11 +236,18 @@ class ProceduresBundle(BaseModel):
     )
 
 
+class ChecklistVerification(BaseModel):
+    item: str
+    status: str
+    note: str = ""
+
+
 class StandardsReviewOutput(BaseModel):
     strengths: list[str]
     gaps: list[str]
     recommendations: list[str]
     framework_coverage_score: int = Field(ge=0, le=100)
+    checklist_verifications: list[ChecklistVerification] = Field(default_factory=list)
     engagement_id: str | None = None
     version: int = 1
     created_at: str = Field(

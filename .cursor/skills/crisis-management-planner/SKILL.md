@@ -36,6 +36,22 @@ Consultant-grade **agentic workflow** — not a chatbot. Follow the phased metho
 - After client answers, merge into intake and re-run discovery
 - Consultant is the decision-maker on all recommendations
 
+## Organizational flexibility
+
+The process adapts to client context — it is not a one-size-fits-all checklist:
+
+- **Size tier** (small / medium / large / enterprise) — inferred from `employees` or set via `organization_size`
+- **Maturity** (`crisis_program_maturity`: nascent / developing / established) — calibrates phased expectations
+- **Staffing model** (`staffing_model`: lean / centralized / distributed) — affects CMT design and alternates
+- **Jurisdiction** — `headquarters_country` and `countries[]` drive legal, insurance, and cultural assumptions
+
+Discovery emits `organization_context` plus tagged assumptions:
+
+- `[org_flexibility]` — size/maturity/staffing guidance
+- `[jurisdiction]` — country-specific legal and insurance notes
+
+Small organizations may use a **lean CMT** (combined roles with named alternates). Multi-country clients retain stricter site-level and regulatory requirements. Consultants may still `--resolve` requirement IDs when a gap is intentionally out of scope.
+
 ## Repository layout
 
 - Package: `src/cmp/`
@@ -106,6 +122,7 @@ python -m cmp.workflows.planner_cli ^
   "critical_gaps": [],
   "recommended_questions": [],
   "assumptions": [],
+  "organization_context": {},
   "planning_readiness_score": 0,
   "readiness_breakdown": {}
 }

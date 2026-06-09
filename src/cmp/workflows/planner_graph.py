@@ -43,14 +43,15 @@ def _discovery_node(state: PlannerState) -> PlannerState:
 def _gate_node(state: PlannerState) -> PlannerState:
     discovery = state.get("discovery", {})
     score = discovery.get("planning_readiness_score", 0)
-    weights = load_readiness_weights()
-    if score < weights.risk_profiling_min_score:
+    org = discovery.get("organization_context") or {}
+    threshold = int(org.get("readiness_gate", load_readiness_weights().risk_profiling_min_score))
+    if score < threshold:
         return {
             **state,
             "status": "blocked_readiness_gate",
             "error": (
                 f"Planning readiness score {score} is below threshold "
-                f"{weights.risk_profiling_min_score}. Resolve discovery gaps before continuing."
+                f"{threshold}. Resolve discovery gaps before continuing."
             ),
         }
     return {**state, "status": "gate_passed"}

@@ -132,7 +132,18 @@ class EngagementStore:
         base = existing.model_dump()
         additional = dict(base.get("additional_context") or {})
         for key, value in updates.items():
-            if key in ("company_name", "industry", "employees", "countries", "legal_entities", "sites"):
+            if key in (
+                "company_name",
+                "industry",
+                "employees",
+                "countries",
+                "headquarters_country",
+                "organization_size",
+                "crisis_program_maturity",
+                "staffing_model",
+                "legal_entities",
+                "sites",
+            ):
                 base[key] = value
             else:
                 additional[key] = value

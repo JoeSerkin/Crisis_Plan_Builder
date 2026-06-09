@@ -25,6 +25,17 @@
       "headcount": 120
     }
   ],
+  "headquarters_country": "Germany",
+  "organization_size": "medium",
+  "crisis_program_maturity": "established",
+  "staffing_model": "centralized",
+  "employees": 500,
+  "countries": [
+    "Germany",
+    "Mexico",
+    "Thailand"
+  ],
+  "industry": "Manufacturing",
   "critical_functions": [
     "Production",
     "Warehouse",
@@ -209,5 +220,21 @@
   "medical_emergency_response": "Plant A clinic staffed weekdays; AED on all production floors",
   "tabletop_history": "2024 Q2 supply disruption; 2023 Q4 cyber-physical scenario",
   "critical_vendor_bcp": "Tier-1 logistics vendor BCP reviewed annually",
-  "single_points_of_failure": "Single coating line at Plant A; backup capacity at Plant B in progress"
+  "single_points_of_failure": "Single coating line at Plant A; backup capacity at Plant B in progress",
+  "regulator_notification_templates": {
+    "environmental_spill": "Template ENV-01 pre-approved by General Counsel",
+    "workplace_fatality": "Template HR-03 pre-approved by General Counsel"
+  },
+  "delegation_of_authority": {
+    "spending_up_to_eur": "Plant Director up to EUR 50k; CFO above",
+    "production_shutdown": "Plant Director without CEO approval for Level 1-2"
+  },
+  "evacuation_capability": {
+    "Mexico": "Pre-identified assembly routes; security vendor on retainer",
+    "Thailand": "Cyclone season shelter-in-place plan reviewed annually"
+  },
+  "crisis_comms_training": "Spokesperson media training completed 2024 Q1; refresher scheduled Q3 2026",
+  "monitoring_alert_services": "Meltwater media monitoring; 24/7 alert to Communications Lead",
+  "social_media_monitoring": "Communications team monitors branded channels during Level 2+ events",
+  "insurance_program": "Property, liability, and cyber policies via broker; crisis hotline on policy documents"
 }

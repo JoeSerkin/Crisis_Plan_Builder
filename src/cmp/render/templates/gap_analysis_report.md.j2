@@ -2,6 +2,10 @@
 
 **Planning readiness score:** {{ discovery.planning_readiness_score }}/100
 
+{% if discovery.organization_context %}
+**Organization context:** {{ discovery.organization_context.size_tier }} tier{% if discovery.organization_context.headquarters_country %}, HQ {{ discovery.organization_context.headquarters_country }}{% endif %}{% if discovery.organization_context.crisis_maturity %}, {{ discovery.organization_context.crisis_maturity }} program{% endif %}
+{% endif %}
+
 ## Readiness by Domain
 
 | Domain | Score |
@@ -19,7 +23,7 @@
 ## Missing Information
 
 {% for gap in discovery.missing_information %}
-### {{ gap.requirement_id }} — {{ gap.label }} ({{ gap.priority }})
+### {{ gap.requirement_id }} — {{ gap.label }} ({{ gap.priority.value }})
 
 {{ gap.why_it_matters }}
 
@@ -28,7 +32,7 @@
 ## Recommended Consultant Questions
 
 {% for q in discovery.recommended_questions[:15] %}
-**{{ q.id }}** ({{ q.priority }}): {{ q.question }}
+**{{ q.id }}** ({{ q.priority.value }}): {{ q.question }}
 
 *Rationale:* {{ q.rationale }}
 
@@ -39,5 +43,16 @@
 
 {% for a in discovery.assumptions %}
 - {{ a }}
+{% endfor %}
+{% endif %}
+
+{% if discovery.organization_context and (discovery.organization_context.flexibility_notes or discovery.organization_context.jurisdiction_notes) %}
+## Organizational Flexibility Notes
+
+{% for note in discovery.organization_context.flexibility_notes %}
+- {{ note }}
+{% endfor %}
+{% for note in discovery.organization_context.jurisdiction_notes %}
+- {{ note }}
 {% endfor %}
 {% endif %}

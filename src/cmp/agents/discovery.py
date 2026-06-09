@@ -5,6 +5,11 @@ from __future__ import annotations
 import os
 from typing import Any
 
+from cmp.models.organization_context import (
+    apply_organization_context,
+    resolve_organization_context,
+    to_summary,
+)
 from cmp.models.requirements import (
     Requirement,
     apply_industry_modifier,
@@ -181,8 +186,10 @@ def run_discovery(
     """Execute Client Discovery Agent."""
     catalog = load_requirements_catalog()
     modifier = load_industry_modifier(intake.industry)
+    org_context = resolve_organization_context(intake)
     requirements = filter_requirements_for_industry(catalog, modifier)
     requirements = apply_industry_modifier(requirements, modifier, catalog)
+    requirements = apply_organization_context(requirements, org_context)
     weights_cfg = load_readiness_weights()
     requirements_by_id = {r.id: r for r in requirements}
 
@@ -210,6 +217,10 @@ def run_discovery(
         assumptions.extend(
             f"[industry_context] {note}" for note in modifier.context_notes[:3]
         )
+    if org_context.flexibility_notes:
+        assumptions.extend(f"[org_flexibility] {note}" for note in org_context.flexibility_notes[:4])
+    if org_context.jurisdiction_notes:
+        assumptions.extend(f"[jurisdiction] {note}" for note in org_context.jurisdiction_notes[:4])
 
     return DiscoveryOutput(
         known_information=known,
@@ -217,6 +228,7 @@ def run_discovery(
         critical_gaps=critical_gaps,
         recommended_questions=questions,
         assumptions=assumptions,
+        organization_context=to_summary(org_context),
         planning_readiness_score=score,
         readiness_breakdown=breakdown,
         engagement_id=engagement_id,

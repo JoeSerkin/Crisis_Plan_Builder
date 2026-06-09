@@ -12,6 +12,88 @@ from cmp.models.schemas import (
 )
 
 
+def _default_cmt_roles() -> list[CrisisTeamRole]:
+    return [
+        CrisisTeamRole(
+            role="Crisis Director",
+            responsibilities=["Activate CMT", "Set objectives", "Authorize major decisions", "Declare stand-down"],
+            primary_authority=["Crisis activation", "Resource allocation", "External spokesperson approval"],
+            alternate_role="Deputy Crisis Director",
+        ),
+        CrisisTeamRole(
+            role="Operations Lead",
+            responsibilities=["Site status", "Production impacts", "Recovery sequencing"],
+            primary_authority=["Operational shutdown/restart recommendations"],
+        ),
+        CrisisTeamRole(
+            role="Communications Lead",
+            responsibilities=["Internal/external messaging", "Media monitoring", "Spokesperson coordination"],
+            primary_authority=["Approved holding statements", "Employee notifications"],
+        ),
+        CrisisTeamRole(
+            role="Legal & Regulatory Lead",
+            responsibilities=["Regulatory notification", "Privilege management", "Investigation coordination"],
+            primary_authority=["Regulator contact approval"],
+        ),
+        CrisisTeamRole(
+            role="HR / People Lead",
+            responsibilities=["Employee welfare", "Family liaison", "Casualty tracking"],
+            primary_authority=["Family notification protocol initiation"],
+        ),
+        CrisisTeamRole(
+            role="IT / Cyber Lead",
+            responsibilities=["Technology continuity", "Cyber incident coordination", "OT/ICS liaison"],
+            primary_authority=["System isolation recommendations"],
+        ),
+    ]
+
+
+def _lean_cmt_roles() -> list[CrisisTeamRole]:
+    return [
+        CrisisTeamRole(
+            role="Crisis Lead",
+            responsibilities=[
+                "Activate response team",
+                "Set objectives",
+                "Authorize major decisions",
+                "Serve as primary internal and external coordination point",
+            ],
+            primary_authority=["Crisis activation", "Resource allocation", "External spokesperson approval"],
+            alternate_role="Deputy Crisis Lead",
+        ),
+        CrisisTeamRole(
+            role="Operations & Safety Lead",
+            responsibilities=[
+                "Site status and life safety",
+                "Production impacts",
+                "Local emergency services liaison",
+            ],
+            primary_authority=["Evacuation and operational shutdown recommendations"],
+            alternate_role="Crisis Lead",
+        ),
+        CrisisTeamRole(
+            role="People & Communications Lead",
+            responsibilities=[
+                "Employee and family welfare",
+                "Internal notifications",
+                "Spokesperson coordination",
+            ],
+            primary_authority=["Employee notifications", "Approved holding statements"],
+            alternate_role="Crisis Lead",
+        ),
+        CrisisTeamRole(
+            role="Legal, Insurance & Compliance Lead",
+            responsibilities=[
+                "Regulatory notification",
+                "Insurance and broker coordination",
+                "Privilege management",
+            ],
+            primary_authority=["Regulator and insurer contact approval"],
+            alternate_role="Crisis Lead",
+        ),
+    ]
+
+
 def run_governance(
     discovery: DiscoveryOutput | None = None,
     engagement_id: str | None = None,
@@ -65,39 +147,11 @@ def run_governance(
         ),
     ]
 
-    crisis_team_roles = [
-        CrisisTeamRole(
-            role="Crisis Director",
-            responsibilities=["Activate CMT", "Set objectives", "Authorize major decisions", "Declare stand-down"],
-            primary_authority=["Crisis activation", "Resource allocation", "External spokesperson approval"],
-            alternate_role="Deputy Crisis Director",
-        ),
-        CrisisTeamRole(
-            role="Operations Lead",
-            responsibilities=["Site status", "Production impacts", "Recovery sequencing"],
-            primary_authority=["Operational shutdown/restart recommendations"],
-        ),
-        CrisisTeamRole(
-            role="Communications Lead",
-            responsibilities=["Internal/external messaging", "Media monitoring", "Spokesperson coordination"],
-            primary_authority=["Approved holding statements", "Employee notifications"],
-        ),
-        CrisisTeamRole(
-            role="Legal & Regulatory Lead",
-            responsibilities=["Regulatory notification", "Privilege management", "Investigation coordination"],
-            primary_authority=["Regulator contact approval"],
-        ),
-        CrisisTeamRole(
-            role="HR / People Lead",
-            responsibilities=["Employee welfare", "Family liaison", "Casualty tracking"],
-            primary_authority=["Family notification protocol initiation"],
-        ),
-        CrisisTeamRole(
-            role="IT / Cyber Lead",
-            responsibilities=["Technology continuity", "Cyber incident coordination", "OT/ICS liaison"],
-            primary_authority=["System isolation recommendations"],
-        ),
-    ]
+    org = discovery.organization_context if discovery else None
+    if org and org.size_tier == "small":
+        crisis_team_roles = _lean_cmt_roles()
+    else:
+        crisis_team_roles = _default_cmt_roles()
 
     decision_authorities = [
         DecisionAuthority(
@@ -136,6 +190,8 @@ def run_governance(
                 "[CONSULTANT NOTE] Populate named individuals — discovery gaps remain for CMT membership."
             )
             break
+    elif org and org.flexibility_notes:
+        crisis_team_roles[0].responsibilities.append(f"[ORG CONTEXT] {org.flexibility_notes[0]}")
 
     return GovernanceOutput(
         crisis_levels=crisis_levels,

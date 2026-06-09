@@ -58,6 +58,24 @@ def test_standards_review(manufacturing_intake: ClientIntake) -> None:
     review = run_standards_review(discovery, gov, procs)
     assert 0 <= review.framework_coverage_score <= 100
     assert review.recommendations
+    assert len(review.checklist_verifications) == 12
+    assert any(check.status == "fail" for check in review.checklist_verifications)
+
+
+def test_standards_review_enriched_passes_checklist() -> None:
+    data = json.loads(
+        (FIXTURES / "example_manufacturing_intake_enriched.json").read_text(encoding="utf-8")
+    )
+    intake = ClientIntake.model_validate(data)
+    discovery = run_discovery(intake, use_llm_questions=False)
+    gov = run_governance(discovery)
+    profile = run_risk_profile(intake, discovery)
+    procs = run_procedures(profile)
+    review = run_standards_review(discovery, gov, procs)
+    assert discovery.critical_gaps == []
+    assert review.framework_coverage_score == 100
+    assert all(check.status == "pass" for check in review.checklist_verifications)
+    assert review.gaps == []
 
 
 def test_tabletop_from_risks(manufacturing_intake: ClientIntake) -> None:

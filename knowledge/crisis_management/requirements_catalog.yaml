@@ -93,6 +93,46 @@ requirements:
     why_it_matters: Insurance carriers and brokers are often part of crisis coordination.
     question_template: Describe crisis-related insurance (property, liability, cyber, D&O) and broker/emergency contacts.
 
+  - id: ORG-014
+    domain: org_profile
+    field_path: headquarters_country
+    label: Headquarters country
+    priority: high
+    intake_required: false
+    unlocks_agents: [discovery, governance, reviewer]
+    why_it_matters: HQ jurisdiction drives default legal, insurance, and regulatory assumptions.
+    question_template: In which country is the organization headquartered or legally domiciled?
+
+  - id: ORG-015
+    domain: org_profile
+    field_path: organization_size
+    label: Organization size tier
+    priority: medium
+    intake_required: false
+    unlocks_agents: [discovery, governance]
+    why_it_matters: Size tier calibrates CMT structure expectations and gap priorities.
+    question_template: How would you classify organization size (small, medium, large, enterprise) if different from headcount?
+
+  - id: ORG-016
+    domain: org_profile
+    field_path: crisis_program_maturity
+    label: Crisis program maturity
+    priority: high
+    intake_required: false
+    unlocks_agents: [discovery, reviewer]
+    why_it_matters: Nascent programs need phased implementation; established programs need exercise and review evidence.
+    question_template: Is the crisis program nascent, developing, or established? What exists today?
+
+  - id: ORG-017
+    domain: org_profile
+    field_path: staffing_model
+    label: Crisis staffing model
+    priority: medium
+    intake_required: false
+    unlocks_agents: [discovery, governance]
+    why_it_matters: Lean, centralized, and distributed staffing models require different escalation and alternate coverage.
+    question_template: Is crisis staffing lean (dual roles), centralized at HQ, or distributed across sites/regions?
+
   # --- Operations & Sites ---
   - id: OPS-001
     domain: operations_sites

@@ -101,3 +101,5 @@ def test_enriched_intake_passes_readiness_gate() -> None:
     output = run_discovery(intake, use_llm_questions=False)
     assert output.critical_gaps == []
     assert output.planning_readiness_score >= 60
+    high_gaps = [g for g in output.missing_information if g.priority.value == "high"]
+    assert high_gaps == []

@@ -14,7 +14,8 @@ AI-powered agent system that assists consultants in creating professional crisis
 
 1. **Structured methodology** — Assess → Gaps → Risk → Governance → Procedures → Review → Deliverables
 2. **Human-in-the-loop** — Consultant remains decision-maker; agents identify gaps and recommend options
-3. **Modular agents** — Specialized agents with typed JSON outputs
+3. **Organizational flexibility** — Size, maturity, staffing, and jurisdiction calibrate gap priorities and CMT design
+4. **Modular agents** — Specialized agents with typed JSON outputs
 
 ## Quick start
 
