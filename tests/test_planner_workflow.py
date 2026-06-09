@@ -31,6 +31,8 @@ def test_planner_completes_for_enriched_manufacturing_intake(enriched_intake: Cl
 
     assert result["status"] == "complete"
     assert "deliverable_paths" in result
-    assert len(result["deliverable_paths"]) >= 1
+    assert "risk_register.md" in result["deliverable_paths"]
+    assert "escalation_matrix.md" in result["deliverable_paths"]
+    assert "incident_procedures.md" in result["deliverable_paths"]
     discovery = result.get("discovery", {})
     assert discovery.get("planning_readiness_score", 0) >= 60

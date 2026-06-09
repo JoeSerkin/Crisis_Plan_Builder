@@ -42,6 +42,20 @@ python -m cmp.workflows.discovery_cli ^
 | Standards Review | `cmp.agents.reviewer` | Framework coverage assessment |
 | Tabletop Exercise | `cmp.agents.tabletop` | Scenario + injects |
 
+## Deliverables
+
+Full planner runs write Markdown files to `output/{engagement_id}/`:
+
+| File | Content |
+|------|---------|
+| `crisis_management_plan.md` | Integrated plan |
+| `gap_analysis_report.md` | Discovery gaps and readiness |
+| `risk_register.md` | Tier 1/2/3 risk register |
+| `escalation_matrix.md` | Severity levels, notification matrix, authorities |
+| `incident_procedures.md` | Combined procedure pack |
+| `procedures/{risk_id}.md` | Individual procedure per risk |
+| `tabletop_exercise.md` | Exercise scenario and injects |
+
 ## Knowledge base
 
 - **~105 requirements** in `knowledge/crisis_management/requirements_catalog.yaml` (universal + industry-scoped)

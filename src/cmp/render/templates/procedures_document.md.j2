@@ -1,0 +1,11 @@
+# Incident Procedures — {{ client_name }}
+
+> **DRAFT — For consultant review. Not ISO certification.**
+
+This document contains standalone incident response procedures generated from the organizational risk profile. Each procedure maps to a identified Tier 1 or Tier 2 risk.
+
+{% for proc in procedures.procedures %}
+---
+
+{% include 'procedure.md.j2' %}
+{% endfor %}

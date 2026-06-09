@@ -1,0 +1,44 @@
+# Incident Procedure — {{ proc.title }}
+
+> **DRAFT — For consultant review. Not ISO certification.**
+
+**Client:** {{ client_name }}  
+**Risk ID:** {{ proc.risk_id }}
+
+## Purpose
+
+{{ proc.procedure.purpose }}
+
+## Scope
+
+{{ proc.procedure.scope }}
+
+## Activation Criteria
+
+{% for item in proc.procedure.activation_criteria %}
+- {{ item }}
+{% endfor %}
+
+## Immediate Actions
+
+{% for item in proc.procedure.immediate_actions %}
+- {{ item }}
+{% endfor %}
+
+## Ongoing Actions
+
+{% for item in proc.procedure.ongoing_actions %}
+- {{ item }}
+{% endfor %}
+
+## Escalation Triggers
+
+{% for item in proc.procedure.escalation_triggers %}
+- {{ item }}
+{% endfor %}
+
+## Recovery Considerations
+
+{% for item in proc.procedure.recovery_considerations %}
+- {{ item }}
+{% endfor %}

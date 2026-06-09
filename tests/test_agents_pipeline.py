@@ -14,7 +14,13 @@ from cmp.agents.reviewer import run_standards_review
 from cmp.agents.risk_profile import run_risk_profile
 from cmp.agents.tabletop import run_tabletop
 from cmp.models.schemas import ClientIntake
-from cmp.render.deliverables import render_crisis_management_plan, render_gap_analysis
+from cmp.render.deliverables import (
+    render_crisis_management_plan,
+    render_escalation_matrix,
+    render_gap_analysis,
+    render_risk_register,
+    write_deliverables,
+)
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -96,6 +102,10 @@ def test_render_deliverables(manufacturing_intake: ClientIntake) -> None:
         manufacturing_intake.company_name, discovery, gov, procs, review
     )
     gap = render_gap_analysis(discovery, manufacturing_intake.company_name)
+    risk_reg = render_risk_register(profile, manufacturing_intake.company_name, discovery)
+    escalation = render_escalation_matrix(gov, manufacturing_intake.company_name, discovery)
     assert "Example Manufacturing" in plan
     assert "DRAFT" in plan
     assert "Planning readiness score" in gap
+    assert "Tier 1" in risk_reg
+    assert "Notification Matrix" in escalation

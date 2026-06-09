@@ -1,0 +1,47 @@
+# Escalation Matrix — {{ client_name }}
+
+> **DRAFT — For consultant review. Not ISO certification.**
+
+Use this matrix with the Crisis Management Team structure. Timeframes begin when an incident is confirmed by the site or programme lead.
+
+## Crisis Severity Levels
+
+| Level | Name | Description | Example Triggers |
+|-------|------|-------------|------------------|
+{% for level in governance.crisis_levels %}
+| {{ level.level }} | {{ level.name }} | {{ level.description }} | {{ level.activation_triggers | join('; ') }} |
+{% endfor %}
+
+## Notification Matrix
+
+| Severity | Notify Within | Roles Notified | Channel | Crisis Lead Action |
+|----------|---------------|----------------|---------|-------------------|
+{% for step in governance.escalation_matrix %}
+| {{ step.severity }} | {{ step.notify_within_minutes }} minutes | {{ step.roles | join(', ') }} | {{ step.channel }} | Confirm activation level and convene appropriate team |
+{% endfor %}
+
+## Decision Authorities
+
+| Decision Type | Primary Authority | Backup | Notes |
+|---------------|-------------------|--------|-------|
+{% for d in governance.decision_authorities %}
+| {{ d.decision_type }} | {{ d.authority_role }} | {{ d.backup_role or '—' }} | {{ d.notes or '—' }} |
+{% endfor %}
+
+## CMT Roles and Primary Responsibilities
+
+| Role | Alternate | Key Responsibilities |
+|------|-----------|---------------------|
+{% for role in governance.crisis_team_roles %}
+| {{ role.role }} | {{ role.alternate_role or '—' }} | {{ role.responsibilities[0] if role.responsibilities else '—' }} |
+{% endfor %}
+
+{% if discovery and discovery.organization_context and discovery.organization_context.flexibility_notes %}
+## Organizational Notes
+
+{% for note in discovery.organization_context.flexibility_notes %}
+- {{ note }}
+{% endfor %}
+{% endif %}
+
+**Consultant action:** Replace role titles with named individuals, validated phone numbers, and after-hours reachability before client delivery.

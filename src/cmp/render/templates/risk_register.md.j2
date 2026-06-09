@@ -1,0 +1,61 @@
+# Risk Register — {{ client_name }}
+
+> **DRAFT — For consultant review. Not ISO certification.**
+
+{% if discovery %}
+**Planning readiness score:** {{ discovery.planning_readiness_score }}/100
+{% if discovery.organization_context %}
+**Organization context:** {{ discovery.organization_context.size_tier }} tier{% if discovery.organization_context.headquarters_country %}, HQ {{ discovery.organization_context.headquarters_country }}{% endif %}
+{% endif %}
+{% endif %}
+
+## Methodology
+
+{% for key, value in risk_profile.risk_rationale.items() %}
+- **{{ key.replace('_', ' ') | title }}:** {{ value }}
+{% endfor %}
+
+## Tier 1 — Immediate Threat (24 hours)
+
+| ID | Risk | Likelihood | Impact | Affected Domains |
+|----|------|------------|--------|------------------|
+{% for risk in risk_profile.tier_1_risks %}
+| {{ risk.id }} | {{ risk.title }} | {{ risk.likelihood }} | {{ risk.impact }} | {{ risk.affected_domains | join(', ') if risk.affected_domains else '—' }} |
+{% endfor %}
+
+{% for risk in risk_profile.tier_1_risks %}
+### {{ risk.id }} — {{ risk.title }}
+
+{{ risk.rationale }}
+
+{% endfor %}
+
+## Tier 2 — Significant Disruption (72 hours)
+
+| ID | Risk | Likelihood | Impact |
+|----|------|------------|--------|
+{% for risk in risk_profile.tier_2_risks %}
+| {{ risk.id }} | {{ risk.title }} | {{ risk.likelihood }} | {{ risk.impact }} |
+{% endfor %}
+
+{% for risk in risk_profile.tier_2_risks %}
+### {{ risk.id }} — {{ risk.title }}
+
+{{ risk.rationale }}
+
+{% endfor %}
+
+## Tier 3 — Monitor and Prepare
+
+| ID | Risk | Likelihood | Impact |
+|----|------|------------|--------|
+{% for risk in risk_profile.tier_3_risks %}
+| {{ risk.id }} | {{ risk.title }} | {{ risk.likelihood }} | {{ risk.impact }} |
+{% endfor %}
+
+{% for risk in risk_profile.tier_3_risks %}
+### {{ risk.id }} — {{ risk.title }}
+
+{{ risk.rationale }}
+
+{% endfor %}

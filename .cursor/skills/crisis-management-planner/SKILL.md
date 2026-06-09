@@ -59,6 +59,18 @@ Small organizations may use a **lean CMT** (combined roles with named alternates
 - Client data: `storage/engagements/{engagement_id}/` (gitignored)
 - Deliverables: `output/{engagement_id}/`
 
+Full planner output (v1.4+):
+
+| File | Purpose |
+|------|---------|
+| `crisis_management_plan.md` | Integrated plan |
+| `gap_analysis_report.md` | Gaps and readiness score |
+| `risk_register.md` | Tier 1/2/3 risks |
+| `escalation_matrix.md` | Severity levels, notification matrix, authorities |
+| `incident_procedures.md` | Combined procedure pack |
+| `procedures/{risk_id}.md` | One procedure per risk |
+| `tabletop_exercise.md` | Exercise scenario |
+
 ## Commands
 
 ### Setup
