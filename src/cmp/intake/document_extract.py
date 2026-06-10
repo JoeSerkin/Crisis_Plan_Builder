@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from cmp.intake.document_structured_extract import extract_structured_fields
 from cmp.models.schemas import ClientIntake, RequirementGap
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
@@ -167,6 +168,39 @@ def _normalize_scalar(value: str, field_path: str) -> Any:
     return cleaned
 
 
+WEAK_VALUE_PATTERNS = (
+    re.compile(r"^drills?$", re.I),
+    re.compile(r"^emergency contingency and response plan$", re.I),
+    re.compile(r"^risk profile and management chart$", re.I),
+    re.compile(r"^make the plans\b", re.I),
+    re.compile(r"^level one emergency\b", re.I),
+)
+
+
+def _is_quality_proposal(proposal: ExtractionProposal, text: str) -> bool:
+    value = proposal.proposed_value
+    if proposal.confidence == "high":
+        return True
+    if isinstance(value, str):
+        cleaned = value.strip()
+        if len(cleaned) < 4:
+            return False
+        if any(pattern.search(cleaned) for pattern in WEAK_VALUE_PATTERNS):
+            return False
+        if cleaned.upper() == cleaned and len(cleaned) < 80 and proposal.confidence == "low":
+            return False
+        first_line = next((line.strip() for line in text.splitlines() if line.strip()), "")
+        if cleaned == first_line and proposal.field_path not in {
+            "existing_crisis_plan",
+            "pandemic_health_plan",
+            "medical_emergency_response",
+        }:
+            return False
+    return proposal.confidence != "low" or (
+        isinstance(value, str) and len(value.strip()) >= 24
+    )
+
+
 def _extract_from_label_value_lines(text: str, gap: RequirementGap) -> ExtractionProposal | None:
     for raw_line in text.splitlines():
         line = raw_line.strip()
@@ -259,10 +293,32 @@ def propose_updates_from_text(
     *,
     intake: ClientIntake | None = None,
 ) -> list[ExtractionProposal]:
+    gap_by_field = {gap.field_path: gap for gap in gaps}
     proposals: list[ExtractionProposal] = []
     seen_fields: set[str] = set()
 
+    for field_path, value, confidence, snippet in extract_structured_fields(text):
+        gap = gap_by_field.get(field_path)
+        if gap is None:
+            continue
+        if field_path in seen_fields:
+            continue
+        proposals.append(
+            ExtractionProposal(
+                requirement_id=gap.requirement_id,
+                field_path=field_path,
+                label=gap.label,
+                proposed_value=value,
+                confidence=confidence,
+                source_snippet=snippet,
+                source="structured",
+            )
+        )
+        seen_fields.add(field_path)
+
     for gap in gaps:
+        if gap.field_path in seen_fields:
+            continue
         if intake and intake.is_field_present(gap.field_path):
             continue
         proposal = (
@@ -270,7 +326,7 @@ def propose_updates_from_text(
             or _extract_from_keyword_line(text, gap)
             or _extract_pattern_value(text, gap)
         )
-        if proposal and proposal.field_path not in seen_fields:
+        if proposal and _is_quality_proposal(proposal, text):
             proposals.append(proposal)
             seen_fields.add(proposal.field_path)
 

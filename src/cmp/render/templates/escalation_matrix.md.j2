@@ -2,46 +2,50 @@
 
 > **DRAFT — For consultant review. Not ISO certification.**
 
-Use this matrix with the Crisis Management Team structure. Timeframes begin when an incident is confirmed by the site or programme lead.
+This matrix supports the [Crisis Response Playbook](crisis_playbook.md). Notification timeframes start when the site or programme lead **confirms** an incident.
 
-## Crisis Severity Levels
+## Severity levels
 
-| Level | Name | Description | Example Triggers |
-|-------|------|-------------|------------------|
 {% for level in governance.crisis_levels %}
-| {{ level.level }} | {{ level.name }} | {{ level.description }} | {{ level.activation_triggers | join('; ') }} |
+### Level {{ level.level }} — {{ level.name }}
+
+{{ level.description }}
+
+**Example triggers:** {{ level.activation_triggers | join('; ') }}.
+
 {% endfor %}
 
-## Notification Matrix
+## Notification sequence
 
-| Severity | Notify Within | Roles Notified | Channel | Crisis Lead Action |
-|----------|---------------|----------------|---------|-------------------|
+When an incident is confirmed, notify roles in this order. The crisis lead may parallelise notifications at Level 3+.
+
+| Level | Within | Roles notified | Channel | Crisis lead action |
+|-------|--------|----------------|---------|-------------------|
 {% for step in governance.escalation_matrix %}
-| {{ step.severity }} | {{ step.notify_within_minutes }} minutes | {{ step.roles | join(', ') }} | {{ step.channel }} | Confirm activation level and convene appropriate team |
+| {{ step.severity }} | {{ step.notify_within_minutes }} min | {{ step.roles | join(', ') }} | {{ step.channel }} | Confirm level; convene activated roles per scenario guide |
 {% endfor %}
 
-## Decision Authorities
+## Decision authorities
 
-| Decision Type | Primary Authority | Backup | Notes |
-|---------------|-------------------|--------|-------|
 {% for d in governance.decision_authorities %}
-| {{ d.decision_type }} | {{ d.authority_role }} | {{ d.backup_role or '—' }} | {{ d.notes or '—' }} |
+**{{ d.decision_type }}** — Primary: {{ d.authority_role }}{% if d.backup_role %}; Backup: {{ d.backup_role }}{% endif %}{% if d.notes %}. {{ d.notes }}{% endif %}
+
 {% endfor %}
 
-## CMT Roles and Primary Responsibilities
+## Role roster (fill before go-live)
 
-| Role | Alternate | Key Responsibilities |
-|------|-----------|---------------------|
-{% for role in governance.crisis_team_roles %}
-| {{ role.role }} | {{ role.alternate_role or '—' }} | {{ role.responsibilities[0] if role.responsibilities else '—' }} |
+| Role | Alternate | Activates at |
+|------|-----------|--------------|
+{% for role in playbook.roles %}
+| {{ role.role }} | {{ role.alternate_role or '—' }} | {{ role.activates_when }} |
 {% endfor %}
 
 {% if discovery and discovery.organization_context and discovery.organization_context.flexibility_notes %}
-## Organizational Notes
+## Organizational notes
 
 {% for note in discovery.organization_context.flexibility_notes %}
 - {{ note }}
 {% endfor %}
 {% endif %}
 
-**Consultant action:** Replace role titles with named individuals, validated phone numbers, and after-hours reachability before client delivery.
+**Consultant action:** Insert named individuals, 24/7 phone numbers, and backup contacts before client delivery.

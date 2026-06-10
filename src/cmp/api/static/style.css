@@ -179,6 +179,16 @@ button:disabled {
   font-size: 0.88rem;
 }
 
+.merge-status {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--navy);
+}
+
+.merge-status.error {
+  color: #9b1c1c;
+}
+
 .status-pill {
   display: inline-block;
   padding: 0.25rem 0.65rem;

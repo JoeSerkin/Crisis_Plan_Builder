@@ -9,7 +9,14 @@ from cmp.intake.document_extract import (
     propose_updates_from_document,
     propose_updates_from_text,
 )
+from cmp.models.requirements import (
+    filter_requirements_for_industry,
+    load_industry_modifier,
+    load_requirements_catalog,
+)
 from cmp.models.schemas import ClientIntake, RequirementGap
+
+FIXTURES = Path(__file__).parent / "fixtures"
 
 
 def _gap(requirement_id: str, field_path: str, label: str) -> RequirementGap:
@@ -67,3 +74,56 @@ def test_propose_updates_skips_present_intake_fields() -> None:
     gaps = [_gap("ORG-003", "employees", "Total employee count")]
     proposals = propose_updates_from_text("Employees: 750", gaps, intake=intake)
     assert proposals == []
+
+
+def _ngo_catalog_gaps() -> list[RequirementGap]:
+    catalog = load_requirements_catalog()
+    modifier = load_industry_modifier("Humanitarian NGO")
+    requirements = filter_requirements_for_industry(catalog, modifier)
+    return [
+        RequirementGap(
+            requirement_id=req.id,
+            domain=req.domain,
+            label=req.label,
+            priority=req.priority,
+            why_it_matters=req.why_it_matters,
+            unlocks_agents=req.unlocks_agents,
+            field_path=req.field_path,
+        )
+        for req in requirements
+    ]
+
+
+def test_israaid_dominica_emergency_plan_extraction() -> None:
+    text = (FIXTURES / "israaid_dominica_emergency_plan.txt").read_text(encoding="utf-8")
+    gaps = _ngo_catalog_gaps()
+    proposals = propose_updates_from_text(text, gaps)
+    by_field = {item.field_path: item for item in proposals}
+
+    assert by_field["existing_crisis_plan"].proposed_value == "yes"
+    assert by_field["company_name"].proposed_value == "IsraAID"
+    assert "Dominica" in by_field["countries"].proposed_value
+    assert by_field["headquarters_country"].proposed_value == "Dominica"
+
+    team = by_field["crisis_team_structure"].proposed_value
+    assert isinstance(team, list)
+    team_text = json.dumps(team)
+    assert "Paul Norris" in team_text
+    assert "Hannah Gaventa" in team_text
+    assert "Air Mattress" not in team_text
+
+    levels = by_field["crisis_levels"].proposed_value
+    assert "Level 1" in levels
+    assert "Level 3" in levels
+
+    hazards = by_field["risk_register"].proposed_value
+    assert "Hurricanes" in hazards
+    assert "Earthquakes" in hazards
+
+    sites = by_field["sites"].proposed_value
+    site_names = {site["name"] for site in sites}
+    assert "Portsmouth" in site_names
+    assert "Roseau office" in site_names
+
+    assert "whatsapp" in by_field["internal_comms_channels"].proposed_value.lower()
+    assert len(proposals) >= 12

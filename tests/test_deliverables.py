@@ -13,12 +13,14 @@ from cmp.agents.risk_profile import run_risk_profile
 from cmp.agents.tabletop import run_tabletop
 from cmp.models.schemas import ClientIntake
 from cmp.render.deliverables import (
+    render_crisis_playbook,
     render_escalation_matrix,
     render_procedure,
     render_procedures_document,
     render_risk_register,
     write_deliverables,
 )
+from cmp.render.playbook_builder import build_role_playbook
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -34,7 +36,8 @@ def test_render_procedure_standalone() -> None:
     content = render_procedure(proc, intake.company_name)
     assert proc.title in content
     assert "DRAFT" in content
-    assert proc.procedure.immediate_actions[0] in content
+    assert proc.procedure.role_actions[0].role in content
+    assert "Activated roles" in content or proc.procedure.role_actions[0].summary in content
 
 
 def test_render_risk_register_includes_all_tiers() -> None:
@@ -54,11 +57,12 @@ def test_render_escalation_matrix_includes_governance_tables() -> None:
     intake = ClientIntake.model_validate(data)
     discovery = run_discovery(intake, use_llm_questions=False)
     gov = run_governance(discovery)
+    playbook = build_role_playbook(gov)
 
-    content = render_escalation_matrix(gov, intake.company_name, discovery)
-    assert "Notification Matrix" in content
+    content = render_escalation_matrix(gov, intake.company_name, playbook, discovery)
+    assert "Notification sequence" in content
     assert gov.escalation_matrix[0].severity in content
-    assert "Decision Authorities" in content
+    assert "Decision authorities" in content
 
 
 def test_write_deliverables_includes_build3_artifacts(tmp_path: Path) -> None:
@@ -85,9 +89,17 @@ def test_write_deliverables_includes_build3_artifacts(tmp_path: Path) -> None:
 
     assert (tmp_path / "risk_register.md").exists()
     assert (tmp_path / "escalation_matrix.md").exists()
+    assert (tmp_path / "crisis_playbook.md").exists()
+    assert (tmp_path / "scenario_activation_guide.md").exists()
     assert (tmp_path / "incident_procedures.md").exists()
     assert len(list((tmp_path / "procedures").glob("*.md"))) == len(procs.procedures)
-    assert len(paths) == 6 + len(procs.procedures)
+    assert len(list((tmp_path / "roles").glob("*.md"))) == len(gov.crisis_team_roles)
+    assert len(paths) == 8 + len(procs.procedures) + len(gov.crisis_team_roles)
 
-    combined = (tmp_path / "incident_procedures.md").read_text(encoding="utf-8")
-    assert render_procedures_document(procs, intake.company_name) == combined or len(combined) > 500
+    playbook_content = (tmp_path / "crisis_playbook.md").read_text(encoding="utf-8")
+    assert "How to use this playbook" in playbook_content
+    assert "First 15 minutes" in playbook_content
+
+    scenario_guide = (tmp_path / "scenario_activation_guide.md").read_text(encoding="utf-8")
+    assert "At a glance" in scenario_guide
+    assert procs.procedures[0].title in scenario_guide

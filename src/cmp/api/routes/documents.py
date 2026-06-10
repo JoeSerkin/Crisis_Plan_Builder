@@ -11,7 +11,8 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from pydantic import BaseModel, Field
 
 from cmp.api.deps import get_store
-from cmp.intake.document_extract import propose_updates_from_document
+from cmp.intake.extraction_gaps import catalog_gaps_for_extraction
+from cmp.intake.document_extract import propose_updates_from_document, propose_updates_from_text
 from cmp.models.schemas import RequirementGap
 from cmp.storage.engagement_store import EngagementStore
 
@@ -19,6 +20,10 @@ router = APIRouter(prefix="/engagements", tags=["documents"])
 
 ALLOWED_SUFFIXES = {".pdf", ".docx", ".txt", ".md", ".json", ".csv"}
 MAX_UPLOAD_BYTES = 20 * 1024 * 1024
+
+
+class ExtractTextRequest(BaseModel):
+    text: str = Field(min_length=1)
 
 
 class ApplyProposalsRequest(BaseModel):
@@ -46,6 +51,10 @@ def _gaps_from_discovery(store: EngagementStore, engagement_id: str) -> list[Req
     for item in discovery.get("missing_information") or []:
         gaps.append(RequirementGap.model_validate(item))
     return gaps
+
+
+def _gaps_for_extraction(store: EngagementStore, engagement_id: str) -> list[RequirementGap]:
+    return catalog_gaps_for_extraction(store, engagement_id)
 
 
 @router.get("/{engagement_id}/documents")
@@ -133,7 +142,7 @@ def extract_document(
     if not target.exists() or not target.is_file():
         raise HTTPException(status_code=404, detail="Document not found")
 
-    gaps = _gaps_from_discovery(store, engagement_id)
+    gaps = _gaps_for_extraction(store, engagement_id)
     intake = store.load_intake(engagement_id)
     try:
         text, proposals = propose_updates_from_document(target, gaps, intake=intake)
@@ -149,6 +158,28 @@ def extract_document(
         "open_gaps": len(gaps),
         "proposal_count": len(proposals),
         "proposals": [proposal.to_dict() for proposal in proposals],
+    }
+
+
+@router.post("/{engagement_id}/documents/extract-text")
+def extract_text(
+    engagement_id: str,
+    body: ExtractTextRequest,
+    store: EngagementStore = Depends(get_store),
+) -> dict[str, Any]:
+    if store.get_engagement(engagement_id) is None:
+        raise HTTPException(status_code=404, detail="Engagement not found")
+
+    gaps = _gaps_for_extraction(store, engagement_id)
+    intake = store.load_intake(engagement_id)
+    proposals = propose_updates_from_text(body.text, gaps, intake=intake)
+
+    return {
+        "text_length": len(body.text),
+        "open_gaps": len(gaps),
+        "proposal_count": len(proposals),
+        "proposals": [proposal.to_dict() for proposal in proposals],
+        "text_preview": body.text[:2000],
     }
 
 

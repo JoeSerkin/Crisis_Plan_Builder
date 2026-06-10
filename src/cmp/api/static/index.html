@@ -85,9 +85,10 @@
           </div>
           <div id="gaps-list" class="gap-list"></div>
           <details class="details-block" open>
-            <summary>Manual merge (JSON updates)</summary>
-            <p class="muted">Paste field updates from consultant notes or external sources. Discovery re-runs automatically.</p>
-            <textarea id="merge-json" rows="8" placeholder='{"headquarters_country": "Germany", "cmt_leader_name": "Jane Doe"}'></textarea>
+            <summary>Manual merge (JSON or document text)</summary>
+            <p class="muted">Paste JSON field updates like <code>{"headquarters_country": "Germany"}</code>, or paste text from a client crisis plan — we will extract matching fields automatically.</p>
+            <textarea id="merge-json" rows="8" placeholder='{"headquarters_country": "Germany"}&#10;&#10;Or paste document text here...'></textarea>
+            <p id="merge-status" class="merge-status" aria-live="polite"></p>
             <div class="actions">
               <button type="button" id="btn-apply-merge" class="primary">Apply merge</button>
             </div>

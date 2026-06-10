@@ -46,6 +46,18 @@ class ClientIntake(BaseModel):
     def strip_required_strings(cls, v: str) -> str:
         return v.strip()
 
+    @field_validator("legal_entities", mode="before")
+    @classmethod
+    def coerce_legal_entities(cls, v: Any) -> Any:
+        if v is None or isinstance(v, list):
+            return v
+        if isinstance(v, dict):
+            notes = str(v.get("notes") or "").strip()
+            if notes:
+                return [{"name": notes, "role": "other"}]
+            return None
+        return v
+
     def flatten(self) -> dict[str, Any]:
         """Flatten intake into a field_path -> value map for gap detection."""
         data: dict[str, Any] = {
@@ -210,14 +222,40 @@ class GovernanceOutput(BaseModel):
     )
 
 
+class RoleAction(BaseModel):
+    role: str
+    summary: str
+
+
 class ProcedureSection(BaseModel):
     purpose: str
     scope: str
-    activation_criteria: list[str]
-    immediate_actions: list[str]
-    ongoing_actions: list[str]
-    escalation_triggers: list[str]
-    recovery_considerations: list[str]
+    activation_summary: str
+    crisis_level: int
+    crisis_level_name: str
+    opening_steps: str
+    activated_roles: list[str]
+    role_actions: list[RoleAction]
+    escalation_summary: str
+    recovery_summary: str
+
+
+class PlaybookRole(BaseModel):
+    role: str
+    alternate_role: str | None = None
+    activates_when: str
+    purpose: str
+    first_15_minutes: str
+    during_response: str
+    decisions: list[str]
+    coordinates_with: list[str]
+    stand_down: str
+
+
+class PlaybookBundle(BaseModel):
+    roles: list[PlaybookRole]
+    engagement_id: str | None = None
+    version: int = 1
 
 
 class ProcedureOutput(BaseModel):

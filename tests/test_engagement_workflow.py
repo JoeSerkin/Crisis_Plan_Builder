@@ -37,8 +37,9 @@ def test_workflow_status_before_discovery(store: EngagementStore) -> None:
 
     assert status["next_action"]["id"] == "discovery"
     assert status["readiness_score"] is None
-    assert status["steps"][0]["state"] == "complete"
-    assert status["steps"][1]["state"] == "active"
+    assert status["steps"][1]["id"] == "intake"
+    assert status["steps"][1]["state"] == "complete"
+    assert status["steps"][2]["state"] == "active"
 
 
 def test_workflow_status_blocked_after_sparse_discovery(store: EngagementStore) -> None:
@@ -63,7 +64,8 @@ def test_workflow_status_blocked_after_sparse_discovery(store: EngagementStore) 
 
     assert status["next_action"]["id"] == "gaps"
     assert status["gate_passed"] is False
-    assert status["steps"][1]["state"] == "blocked"
+    assert status["steps"][2]["id"] == "discovery"
+    assert status["steps"][2]["state"] == "blocked"
 
 
 @pytest.fixture
@@ -87,4 +89,4 @@ def test_workflow_status_endpoint(api_client: TestClient) -> None:
     body = response.json()
     assert body["engagement_id"] == "wf-api"
     assert body["next_action"]["id"] == "discovery"
-    assert len(body["steps"]) == 4
+    assert len(body["steps"]) == 5

@@ -52,6 +52,8 @@ def build_workflow_status(
     has_discovery = discovery is not None
     has_deliverables = bool(deliverables)
     has_docx = bool(docx_files)
+    client_confirmed = record.status == "client_confirmed"
+    client_in_progress = record.status in {"awaiting_client", "gap_review"}
 
     def step_state(
         complete: bool,
@@ -75,8 +77,21 @@ def build_workflow_status(
 
     steps = [
         {
+            "id": "client_intake",
+            "label": "Client intake",
+            "state": step_state(
+                client_confirmed,
+                active=client_in_progress,
+            ),
+            "detail": (
+                "Client confirmed"
+                if client_confirmed
+                else "Awaiting client" if client_in_progress else "Not started"
+            ),
+        },
+        {
             "id": "intake",
-            "label": "Intake",
+            "label": "Intake data",
             "state": step_state(has_intake, active=not has_intake),
             "detail": intake.company_name if intake else "Client data required",
         },
@@ -121,6 +136,8 @@ def build_workflow_status(
         score=score,
         threshold=threshold,
         critical_gaps=critical_gaps,
+        client_confirmed=client_confirmed,
+        client_in_progress=client_in_progress,
     )
 
     return {
@@ -128,6 +145,7 @@ def build_workflow_status(
         "client_name": record.client_name,
         "industry": record.industry,
         "status": record.status,
+        "client_confirmed": client_confirmed,
         "readiness_score": score,
         "readiness_threshold": threshold,
         "gate_passed": gate_passed,
@@ -152,7 +170,19 @@ def _resolve_next_action(
     score: int | None,
     threshold: int,
     critical_gaps: int | None,
+    client_confirmed: bool = False,
+    client_in_progress: bool = False,
 ) -> dict[str, Any]:
+    if client_in_progress and not client_confirmed:
+        return {
+            "id": "client_intake",
+            "label": "Waiting for client",
+            "description": "Share the intake link so the client can upload documents and complete remaining questions.",
+            "method": "GET",
+            "path": f"/intake?engagement={engagement_id}",
+            "kind": "link",
+        }
+
     if not has_intake:
         return {
             "id": "intake",
@@ -164,10 +194,16 @@ def _resolve_next_action(
         }
 
     if not has_discovery:
+        label = "Review client intake" if client_confirmed else "Run discovery"
+        description = (
+            "Client confirmed their submission. Review discovery results and resolve any remaining gaps."
+            if client_confirmed
+            else "Analyze intake and produce gap analysis with readiness score."
+        )
         return {
             "id": "discovery",
-            "label": "Run discovery",
-            "description": "Analyze intake and produce gap analysis with readiness score.",
+            "label": label,
+            "description": description,
             "method": "POST",
             "path": f"/api/v1/engagements/{engagement_id}/discovery",
             "kind": "api",

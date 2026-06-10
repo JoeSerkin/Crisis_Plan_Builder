@@ -1,0 +1,478 @@
+domains:
+  org_profile: About your organization
+  operations_sites: Locations and daily operations
+  governance: Leadership during an emergency
+  communications: Communicating during an incident
+  risk_bcp: Risks, insurance, and business recovery
+fields:
+  company_name:
+    label: Your organization's legal name
+    question: What is your organization's full legal name?
+    help: Include parent company or subsidiary names if relevant.
+  industry:
+    label: Main type of business
+    question: What industry best describes your organization?
+  employees:
+    label: Total number of people
+    question: How many employees and contractors do you have in total (worldwide)?
+  legal_entities:
+    label: Companies in your group
+    question: List each legal company in your group, where it is registered, and its role (parent, subsidiary,
+      branch, etc.).
+    help: Use one row per company. You can also upload an org chart or entity list file.
+  countries:
+    label: Countries where you operate
+    question: Select every country where you have employees, offices, warehouses, or major operations.
+    help: Use Ctrl (Windows) or Cmd (Mac) to select more than one country.
+  business_model:
+    label: What your organization does
+    question: Briefly describe your products or services, who you serve, and whether income depends on
+      a few customers or funders.
+    help: This helps us understand what must be protected during a disruption.
+  regulators:
+    label: Primary regulators
+    question: Which regulators or authorities must be notified for incidents in each jurisdiction?
+    help: Regulatory notification timelines must be embedded in procedures.
+  insurance_program:
+    label: Insurance and crisis response coverage
+    question: Please describe crisis-related insurance (property, liability, cyber, directors and officers
+      insurance) and broker/emergency contacts.
+    help: Insurance carriers and brokers are often part of crisis coordination.
+  headquarters_country:
+    label: Headquarters country
+    question: In which country is your organization headquartered or legally registered?
+    help: This is usually where your main office or parent company is domiciled.
+  organization_size:
+    label: Organization size
+    question: Which size category best fits your organization?
+  crisis_program_maturity:
+    label: How developed your emergency program is
+    question: How would you describe your current crisis preparedness?
+  staffing_model:
+    label: How crisis responsibilities are organized
+    question: Is emergency leadership handled by a small shared team, a central headquarters team, or
+      regional and site leads?
+  sites:
+    label: Your locations
+    question: Add each major office, plant, warehouse, or field hub.
+    help: For each location, provide a name, country, approximate headcount, and main activity. You can
+      add rows or upload a site list file.
+  critical_functions:
+    label: Most important work that must continue
+    question: Which activities would cause serious harm if stopped for 4 hours, 24 hours, or 3 days?
+    help: This helps prioritize recovery during a disruption.
+  site_activation_contacts:
+    label: Site emergency contacts
+    question: For each major location, who is the main and backup emergency contact, including after-hours
+      numbers?
+  shift_patterns:
+    label: Shift and staffing patterns
+    question: Please describe shift patterns, weekend operations, and remote vs on-site staffing by site.
+    help: Off-hours incidents require different notification paths.
+  hazmat_exposure:
+    label: Hazardous materials exposure
+    question: Are hazardous materials stored or processed? List substances, quantities, and safety data
+      sheets availability.
+    help: Environmental and industrial incidents require specialized response procedures.
+  local_emergency_services:
+    label: Local emergency services contacts
+    question: For each major site, list fire, police, ambulance, and poison control numbers.
+    help: First responders and facility emergency coordination must be pre-identified.
+  utilities_dependencies:
+    label: Essential services at your locations
+    question: At your main locations, which essential services (power, water, internet, fuel) would be
+      hardest to replace if they failed?
+    help: Tell us which sites are affected and whether you have backup generators, tanks, or alternate
+      providers.
+  third_party_operators:
+    label: Third-party operators on site
+    question: Which third parties operate on your sites (security, catering, logistics) and who manages
+      them?
+    help: Contractor incidents require clear authority and notification lines.
+  travel_exposure:
+    label: Employee travel
+    question: How many international trips your staff take each month, how many go to high-risk places,
+      and where those places are.
+    help: Count all business travel abroad. High-risk means elevated security, health, or political concerns.
+  supply_chain_critical_suppliers:
+    label: Critical suppliers and single points of failure
+    question: Please list most critical suppliers, single-source dependencies, and alternate supplier
+      status.
+    help: Supply chain disruption is a primary manufacturing crisis scenario.
+  production_continuity:
+    label: How quickly production must resume
+    question: If production stopped, how quickly must each major line or site be running again?
+  ot_ics_environment:
+    label: Factory or plant control systems
+    question: Do you use industrial control or plant automation systems? Who can authorize an emergency
+      shutdown?
+  existing_crisis_plan:
+    label: Existing emergency or crisis plan
+    question: Do you have a written crisis or emergency plan today? When was it last updated?
+  last_tabletop_exercise:
+    label: Last crisis practice exercise
+    question: When did you last run a crisis practice exercise or simulation? What was practiced?
+  crisis_team_structure:
+    label: Emergency leadership team
+    question: Who leads your organization during a serious emergency? List roles, names, and backup contacts.
+  crisis_activation_criteria:
+    label: When you declare a formal emergency
+    question: What situations require senior leaders to take charge (for example deaths, serious injuries,
+      major outages, or media attention)?
+  decision_authorities:
+    label: Who can make major emergency decisions
+    question: For serious incidents, who can approve evacuation, stopping operations, public statements,
+      regulator notification, and emergency spending?
+    help: List names or roles — clarity here prevents delays during a crisis.
+  escalation_matrix:
+    label: Who to notify and when
+    question: Who gets notified as an incident gets more serious, and how are they contacted?
+  crisis_levels:
+    label: How you classify incident severity
+    question: How do you rank incidents from minor to severe today?
+  after_hours_escalation:
+    label: After-hours emergency contacts
+    question: Who can be reached outside normal business hours during an emergency, and how?
+  executive_succession:
+    label: Executive succession during crisis
+    question: If the CEO or Crisis Director is unavailable, who assumes command?
+    help: Unavailability of key leaders must not halt crisis command.
+  board_notification:
+    label: Board and investor notification protocol
+    question: When and how is the board notified? Is there an investor relations crisis protocol?
+    help: Material incidents may require board and investor communication.
+  legal_counsel_contacts:
+    label: Legal counsel crisis contacts
+    question: Who is external and internal legal counsel for crisis events, and how are they reached 24/7?
+    help: Legal privilege and regulatory advice must be available immediately.
+  site_crisis_leads:
+    label: Site crisis leads per country
+    question: Who leads crisis response at each country/site level and what authority do they hold?
+    help: Multi-country operations need local crisis leads with defined authority.
+  internal_comms_channels:
+    label: Internal crisis communication channels
+    question: What channels are used for crisis comms (phone bridge, Teams, satellite, SMS mass notify)?
+    help: Reliable internal channels are required for crisis management team coordination.
+  spokesperson_policy:
+    label: Who may speak publicly
+    question: Who is allowed to speak to employees, media, customers, or regulators during an incident?
+  employee_notification:
+    label: Employee notification procedures
+    question: How are employees notified during site emergencies, travel incidents, and all-clear events?
+    help: Employee safety notifications must be timely and accurate.
+  family_liaison:
+    label: Contact with families after serious harm
+    question: Is there a named person and process for contacting families after a death, serious injury,
+      or missing person?
+  social_media_monitoring:
+    label: Social media monitoring and response
+    question: Who monitors social media during a crisis and what is the approval flow for responses?
+    help: Crises often break on social media before official channels.
+  customer_notification:
+    label: Customer and partner notification
+    question: How are major customers and partners notified of operational or data incidents?
+    help: Supply disruption and data incidents require customer communication plans.
+  dark_website:
+    label: Standby crisis website
+    question: Do you have a pre-built website or web page ready to publish during a major public incident?
+  existing_bcp:
+    label: Business continuity plans
+    question: Do you have plans for keeping critical work going if a site or system is unavailable?
+  risk_register:
+    label: Major risks you track
+    question: Do you maintain a list of major risks? What are the top concerns for the next year?
+  historical_incidents:
+    label: Historical crisis and near-miss incidents
+    question: Please describe significant incidents or near-misses in the past 3 years and lessons learned.
+    help: Past incidents reveal realistic scenarios and gaps.
+  cyber_incident_playbook:
+    label: Cyber attack response plan
+    question: Do you have a written plan for cyber attacks? Who decides when it becomes a company-wide
+      emergency?
+  pandemic_health_plan:
+    label: Health emergency and pandemic plan
+    question: What health emergency plans exist (pandemic, occupational illness outbreaks)?
+    help: Health emergencies affect workforce availability across sites.
+  data_backup_recovery:
+    label: Data backup and recovery
+    question: How often are critical systems backed up, and when did you last test restoring data?
+  alternate_work_locations:
+    label: Alternate work and recovery sites
+    question: What alternate sites or work-from-home capacity exists if primary sites are unavailable?
+    help: Relocation and hibernation decisions need pre-identified alternatives.
+  civil_unrest_exposure:
+    label: Civil unrest and security threat exposure
+    question: Which operating locations have elevated security threats (unrest, crime, terrorism)?
+    help: Multi-country footprint may include unrest-prone locations.
+  natural_hazard_exposure:
+    label: Natural hazard exposure by site
+    question: What natural hazards affect each site (flood, earthquake, cyclone, wildfire)?
+    help: Site-specific hazards drive scenario planning.
+  industrial_accident_scenarios:
+    label: Industrial accident scenarios
+    question: What industrial accident scenarios have been assessed (fire, explosion, chemical release)?
+    help: Manufacturing clients require fire, explosion, and chemical release scenarios.
+  environmental_liability:
+    label: Environmental liability and spill response
+    question: Who manages environmental spill response and regulator notification?
+    help: Environmental incidents trigger regulatory and community response.
+  labor_industrial_relations:
+    label: Labor and industrial relations risks
+    question: Are there active or historical labor disputes at any site? What is the escalation path?
+    help: Strikes and labor disputes can disrupt operations and require crisis governance.
+  public_listing:
+    label: Public listing and market exposure
+    question: Is the organization publicly listed? On which exchanges and under what disclosure rules?
+    help: Listed companies face disclosure obligations and market sensitivity during crises.
+  key_customers:
+    label: Important customers or clients
+    question: Do a few customers represent a large share of your revenue? Who should be notified first
+      during a major disruption?
+    help: Skip or answer 'No' if this does not apply to your organization.
+  data_privacy_program:
+    label: Data privacy and protection program
+    question: Please describe data privacy governance, data protection officer contacts, and breach notification
+      obligations.
+    help: Data incidents require EU data privacy law/California privacy law and breach notification procedures.
+  union_presence:
+    label: Union and collective bargaining presence
+    question: Which sites or regions have union representation and active collective agreements?
+    help: Unionized workforces require distinct communication and escalation paths during labor crises.
+  csr_esg_contacts:
+    label: community and social responsibility and environmental and social responsibility crisis contacts
+    question: Who manages community and social responsibility/environmental and social responsibility
+      communications and stakeholder engagement during reputational crises?
+    help: environmental and social responsibility-related incidents attract stakeholder and media scrutiny
+      beyond operational impact.
+  cloud_dependencies:
+    label: Cloud and cloud software services dependencies
+    question: Which critical systems depend on cloud/cloud software services providers and what are failover
+      arrangements?
+    help: Cloud outages can disable crisis tools and business-critical applications simultaneously.
+  physical_security:
+    label: Physical security perimeters
+    question: Please describe physical security controls, guard force, and lockdown procedures per major
+      site.
+    help: Perimeter breaches and active threats require coordinated security and crisis management team
+      response.
+  emergency_evacuation:
+    label: Emergency evacuation procedures
+    question: What evacuation routes, assembly points, and headcount verification procedures exist per
+      site?
+    help: Evacuation decisions must be pre-planned with assembly points and accountability processes.
+  mutual_aid:
+    label: Emergency help from neighboring organizations
+    question: Do you have agreements to receive emergency help from nearby companies or industry peers?
+  business_hours_coverage:
+    label: Business hours and timezone coverage
+    question: What business hours and timezone coverage exist for crisis leadership across regions?
+    help: Global operations span time zones; crisis command coverage must be defined.
+  access_control_systems:
+    label: Access control and badge systems
+    question: How are access control systems managed during lockdown or credential compromise events?
+    help: Lockdown and access revocation are common crisis actions at secured facilities.
+  single_points_of_failure:
+    label: Operational weak points
+    question: What would seriously disrupt your organization if it stopped working with no quick backup?
+    help: 'Examples: one datacenter, one supplier, one person with unique authority, or one utility feed.'
+  remote_workforce:
+    label: Remote and hybrid workers
+    question: How much of your workforce works remotely or hybrid, and how would you reach them during
+      a site-level emergency?
+  post_incident_review:
+    label: Post-incident review process
+    question: Is there a post-incident review process? Who leads it and within what timeframe?
+    help: Lessons learned and corrective actions close the crisis management loop.
+  insurance_claims:
+    label: Insurance claims coordination
+    question: Who coordinates insurance claims during a crisis and what documentation is required?
+    help: Property and liability claims must be initiated promptly to preserve coverage.
+  crisis_tools:
+    label: Crisis management tools and systems
+    question: What crisis management tools are used (conference bridges, incident logs, secure document
+      sharing)?
+    help: crisis management team coordination depends on reliable tools for bridges, logs, and document
+      sharing.
+  external_advisors:
+    label: External crisis advisors
+    question: Are external crisis advisors retained (PR firm, security consultant)? How are they activated?
+    help: Retained advisors (security, PR, legal) may need rapid activation during major events.
+  union_stakeholders:
+    label: Union and workforce stakeholder contacts
+    question: Who are the union and workforce representative contacts for crisis communication?
+    help: Workforce crises require early union and employee representative engagement.
+  regulator_notification_templates:
+    label: Prepared messages for regulators
+    question: Do you have pre-approved messages for notifying government authorities after common incidents?
+  crisis_documentation_standards:
+    label: Crisis documentation and record-keeping
+    question: What documentation standards apply during a crisis (decision logs, timelines, evidence preservation)?
+    help: Legal privilege and regulatory defense depend on accurate crisis records.
+  delegation_of_authority:
+    label: Delegation of authority during crisis
+    question: What financial and operational authorities are pre-delegated during formal emergency response?
+    help: Pre-delegated authorities prevent delays when executives are unavailable.
+  investor_relations:
+    label: Investor relations crisis contacts
+    question: Who handles investor relations during a crisis and what disclosure triggers apply?
+    help: Material incidents may require stock exchange and investor disclosure.
+  translation_capability:
+    label: Translation and localization capability
+    question: What translation resources are available for employee and public communications?
+    help: Multi-country crises require messages in local languages quickly.
+  vendor_notification:
+    label: Vendor and supplier notification
+    question: How are critical vendors and suppliers notified during operational crises?
+    help: Supply chain partners must be notified of disruptions affecting shared operations.
+  crisis_comms_training:
+    label: Crisis communications training
+    question: Have spokespersons and comms staff received crisis media training? When was the last session?
+    help: official media contact readiness depends on prior media training and rehearsal.
+  press_agency_relationship:
+    label: Press and media agency relationship
+    question: Is a press/media agency on retainer for crisis communications? What is the activation process?
+    help: External PR support may be needed for high-profile incidents.
+  monitoring_alert_services:
+    label: Media and threat monitoring services
+    question: What media monitoring or threat intelligence services are used during crises?
+    help: Early detection of media and social narratives enables faster response.
+  geopolitical_exposure:
+    label: Geopolitical and sanctions exposure
+    question: Which countries or regions face elevated geopolitical or sanctions risk for your operations?
+    help: Geopolitical events can disrupt operations, travel, and supply chains simultaneously.
+  evacuation_capability:
+    label: Emergency evacuation capability
+    question: What evacuation plans exist for employees in high-risk countries or disaster zones?
+    help: Evacuation of personnel from high-risk locations requires pre-planned routes and vendors.
+  tabletop_history:
+    label: Recent crisis practice exercises
+    question: List any crisis practice exercises from the last two years, what you practiced, and what
+      you learned.
+  critical_vendor_bcp:
+    label: Critical vendor business continuity
+    question: Have critical vendors been assessed for business continuity and alternate supply arrangements?
+    help: Vendor failures cascade into operational crises without pre-assessed continuity plans.
+  insurance_triggers:
+    label: Insurance policy crisis triggers
+    question: What insurance policies apply to crisis events and what are notification deadlines?
+    help: Policy notification windows and coverage limits affect crisis financial decisions.
+  medical_emergency_response:
+    label: On-site medical emergency response
+    question: What on-site medical capabilities exist (clinic, automated external defibrillator, trained
+      responders) per major site?
+    help: Serious injuries require immediate medical response and family notification protocols.
+  supply_chain_bcp:
+    label: Supply chain business continuity
+    question: Do supply chain continuity plans exist for most critical suppliers and logistics partners?
+    help: Supply chain continuity plans reduce production and delivery disruption during crises.
+  emergency_drills_schedule:
+    label: Emergency drill and drill schedule
+    question: What emergency drills are conducted per site and on what schedule?
+    help: Regular drills maintain readiness for fire, evacuation, and shelter-in-place events.
+  process_safety_management:
+    label: Major hazard safety program
+    question: Describe your program for preventing major industrial accidents and how changes to hazardous
+      processes are managed.
+  pipeline_infrastructure:
+    label: Pipeline and transmission infrastructure
+    question: Please describe pipeline, transmission, or distribution assets and their emergency shutdown
+      procedures.
+    help: Pipeline incidents have wide geographic impact and strict regulatory reporting.
+  major_accident_hazard:
+    label: high-consequence safety incident scenarios
+    question: What high-consequence safety incident scenarios have been assessed (fire, explosion, toxic
+      release)?
+    help: Energy operations face high-consequence MAH scenarios requiring specialized response.
+  environmental_release_energy:
+    label: Environmental release response
+    question: Who leads environmental release response and what regulator notification timelines apply?
+    help: Spills and releases trigger multi-agency response and long-duration remediation.
+  energy_regulatory_contacts:
+    label: Energy regulatory authority contacts
+    question: Please list energy sector regulators (North American electric reliability regulator, U.S.
+      Federal Energy Regulatory Commission, national authorities) and 24/7 notification contacts.
+    help: Energy incidents require notification to sector regulators within defined timeframes.
+  cold_chain_integrity:
+    label: Cold chain and temperature-controlled logistics
+    question: Please describe cold chain monitoring, backup power, and excursion response procedures.
+    help: Cold chain failures destroy product inventory and trigger regulatory action.
+  product_recall_capability:
+    label: Product recall capability
+    question: Please describe product recall procedures, traceability systems, and U.S. Food and Drug
+      Administration/European Medicines Agency notification readiness.
+    help: Product recalls require rapid traceability and regulatory coordination.
+  gxp_compliance:
+    label: pharmaceutical quality rules compliance and quality systems
+    question: Please describe good manufacturing practice/good clinical practice compliance status and
+      quality crisis escalation procedures.
+    help: Quality crises affect regulatory standing and market authorization.
+  pharmacovigilance_contacts:
+    label: Drug safety reporting contacts
+    question: Who handles reporting adverse drug events to health authorities?
+  quality_crisis_authority:
+    label: Quality and QP crisis authority
+    question: Who has authority for batch quarantine, release holds, and quality crisis decisions?
+    help: Quality-related crises require Qualified Person and QA authority for batch decisions.
+  local_partner_vetting:
+    label: Local implementing partner vetting
+    question: How are local implementing partners vetted and monitored for security and integrity?
+    help: Partner failures or misconduct create responsibility to protect and reputational crises for
+      NGOs.
+  field_team_security:
+    label: Security for staff working in the field
+    question: How do you keep field staff safe in higher-risk areas, including training and threat monitoring?
+  kidnap_hostage_response:
+    label: Kidnap or hostage response plan
+    question: Do you have a plan for kidnapping or hostage situations, including insurance if applicable?
+  duty_of_care_travelers:
+    label: Duty of care for travelers and field staff
+    question: How are travelers and field staff tracked, and what check-ins to confirm people are safe
+      protocols apply during crises?
+    help: NGOs must track and protect staff in high-risk locations with defined welfare protocols.
+  donor_stakeholder_comms:
+    label: Donor and stakeholder communications
+    question: How are major donors and stakeholders notified during security or operational crises?
+    help: Donor confidence and funding depend on transparent crisis communication.
+  ot_ics_security:
+    label: Security for operational technology (OT)
+    question: How are plant, facility, or pipeline control systems protected and kept separate from office
+      IT networks?
+    help: Only applies if you operate industrial control or automation systems.
+  traveler_tracking:
+    label: Tracking employees who are traveling
+    question: How do you know where traveling employees are and confirm they are safe during an overseas
+      incident?
+  travel_risk_program:
+    label: Travel risk management program
+    question: Please describe pre-travel risk assessment, travel approval thresholds, and high-risk destination
+      policies.
+    help: Pre-travel risk assessment and approval reduce exposure to preventable overseas crises.
+  critical_third_parties:
+    label: Outside organizations you depend on
+    question: Which outside providers are critical to your operations, and where would failure hurt you
+      most?
+  third_party_crisis_coordination:
+    label: Third-party crisis coordination
+    question: How are critical third parties notified and coordinated during crises affecting shared operations?
+    help: Contracted partners must be integrated into notification and command structures during shared
+      incidents.
+  cyber_physical_incidents:
+    label: Cyber attacks that affect physical operations
+    question: Have you planned for cyber attacks that could shut down plant systems or affect safety equipment?
+  third_party_breach_cascade:
+    label: Third-party breach and supply chain cyber
+    question: How are third-party cyber incidents monitored and what cascade response plans exist?
+    help: Vendor breaches can expose customer data and disrupt operations through shared systems.
+  traveler_emergency_comms:
+    label: Traveler emergency communications
+    question: What channels reach travelers during overseas emergencies (app, SMS, satellite, local fixer)?
+    help: Travelers abroad need dedicated channels when corporate email or phones fail in a crisis.
+  ot_ics_backup_recovery:
+    label: factory or plant control systems backup and manual fallback
+    question: What manual fallback or safe-state procedures exist if OT control systems fail?
+    help: Manual fallback procedures sustain safe operations when OT systems are unavailable.
+  travel_disruption_response:
+    label: Travel disruption and stranded traveler response
+    question: How does the organization respond when travelers are stranded by airline, border, or security
+      events?
+    help: Mass travel disruption can strand employees in high-risk locations without a coordinated response.

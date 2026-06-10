@@ -184,7 +184,13 @@ Open http://127.0.0.1:8000 for the consultant UI, or call the REST API directly:
 
 Send clients to **http://127.0.0.1:8000/intake** (optionally `?industry=Manufacturing&engagement=client-id`).
 
-The form is generated from the requirements catalog (~90+ questions, filtered by industry) with dropdowns and multi-select where relevant. Clients can **download JSON** or **save directly to an engagement** for discovery.
+The form uses **plain-language questions** for clients (not consultant jargon). Questions are generated from the requirements catalog (~90+ fields, filtered by industry) with dropdowns and multi-select where relevant. Clients can **download JSON** or **save directly to an engagement** for discovery.
+
+To refresh client-facing copy after catalog changes:
+
+```bash
+python scripts/generate_client_intake_copy.py
+```
 
 The consultant console (`/`) now supports the full workflow in browser tabs:
 

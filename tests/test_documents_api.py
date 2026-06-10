@@ -59,6 +59,20 @@ def test_upload_extract_and_apply_document(api_client: TestClient) -> None:
     assert apply.json()["discovery"] is not None
 
 
+def test_extract_text_from_manual_paste(api_client: TestClient) -> None:
+    intake = json.loads((FIXTURES / "example_manufacturing_intake.json").read_text(encoding="utf-8"))
+    api_client.post("/api/v1/engagements", json={"engagement_id": "paste-ui", "intake": intake})
+    api_client.post("/api/v1/engagements/paste-ui/discovery")
+
+    text = "Crisis Management Team Leader: Morgan Lee\nHeadquarters country: Germany"
+    extract = api_client.post(
+        "/api/v1/engagements/paste-ui/documents/extract-text",
+        json={"text": text},
+    )
+    assert extract.status_code == 200
+    assert extract.json()["proposal_count"] >= 1
+
+
 def test_merge_with_resolve(api_client: TestClient) -> None:
     intake = json.loads((FIXTURES / "example_manufacturing_intake.json").read_text(encoding="utf-8"))
     api_client.post("/api/v1/engagements", json={"engagement_id": "resolve-ui", "intake": intake})

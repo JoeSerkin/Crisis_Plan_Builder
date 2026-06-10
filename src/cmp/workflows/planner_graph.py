@@ -79,11 +79,12 @@ def _governance_node(state: PlannerState) -> PlannerState:
 
 
 def _procedures_node(state: PlannerState) -> PlannerState:
-    from cmp.models.schemas import RiskProfileOutput
+    from cmp.models.schemas import GovernanceOutput, RiskProfileOutput
 
     store = EngagementStore()
     profile = RiskProfileOutput.model_validate(state["risk_profile"])
-    procs = run_procedures(profile, state["engagement_id"])
+    governance = GovernanceOutput.model_validate(state["governance"])
+    procs = run_procedures(profile, state["engagement_id"], governance=governance)
     store.save_artifact(state["engagement_id"], "procedures", procs.model_dump(mode="json"))
     return {**state, "procedures": procs.model_dump(mode="json"), "status": "procedures_complete"}
 

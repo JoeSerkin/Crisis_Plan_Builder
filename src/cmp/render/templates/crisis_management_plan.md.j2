@@ -2,115 +2,44 @@
 
 > **DRAFT — For consultant review. Not ISO certification.**
 
-## 1. Purpose
+## Executive summary
 
-This plan establishes the crisis management framework for {{ client_name }}, enabling structured detection, assessment, response, and recovery from events that threaten personnel safety, operations, reputation, or regulatory standing.
+This plan defines how {{ client_name }} detects, escalates, and manages crises. **Operational detail lives in the role-based playbook** — use this document for orientation and governance; use the playbook during live incidents.
 
-## 2. Scope
+**Planning readiness:** {{ discovery.planning_readiness_score }}/100
 
-Applies to all employees, contractors, sites, and operations under the organization's crisis management governance structure.
+## Document set
 
-**Planning readiness score:** {{ discovery.planning_readiness_score }}/100
+| Document | Use when |
+|----------|----------|
+| [crisis_playbook.md](crisis_playbook.md) | **Primary reference during an emergency** — role responsibilities |
+| [scenario_activation_guide.md](scenario_activation_guide.md) | Determining which roles to activate for a given situation |
+| [escalation_matrix.md](escalation_matrix.md) | Who to notify, when, and how |
+| [risk_register.md](risk_register.md) | Context on identified risks |
+| `roles/` | Printable one-page role sheets |
 
-## 3. Governance
-
-### Crisis Severity Levels
+## Crisis severity model
 
 {% for level in governance.crisis_levels %}
-- **Level {{ level.level }} — {{ level.name }}:** {{ level.description }}
+**Level {{ level.level }} — {{ level.name }}:** {{ level.description }} Typical triggers include {{ level.activation_triggers | join(', ') }}.
 {% endfor %}
 
-### Crisis Management Team Roles
+## Governance overview
 
-{% for role in governance.crisis_team_roles %}
-#### {{ role.role }}
-{% for item in role.responsibilities %}
-- {{ item }}
-{% endfor %}
-{% endfor %}
+The Crisis Management Team (CMT) is activated by severity, not by emergency type. When a situation matches a scenario in the activation guide, the crisis lead declares the level and convenes the listed roles. Each role executes their section in the playbook — there is no separate procedure per emergency type.
 
-### Decision Authorities
+**Crisis lead:** {{ governance.crisis_team_roles[0].role }}{% if governance.crisis_team_roles[0].alternate_role %} (alternate: {{ governance.crisis_team_roles[0].alternate_role }}){% endif %}
 
-| Decision | Authority | Backup |
-|----------|-----------|--------|
+## Decision authorities
+
 {% for d in governance.decision_authorities %}
-| {{ d.decision_type }} | {{ d.authority_role }} | {{ d.backup_role or '—' }} |
+- **{{ d.decision_type }}** — {{ d.authority_role }}{% if d.backup_role %}, backup {{ d.backup_role }}{% endif %}{% if d.notes %}. {{ d.notes }}{% endif %}
 {% endfor %}
 
-### Escalation Matrix
+## Communications and recovery
 
-| Severity | Notify Within | Roles | Channel |
-|----------|---------------|-------|---------|
-{% for step in governance.escalation_matrix %}
-| {{ step.severity }} | {{ step.notify_within_minutes }} min | {{ step.roles | join(', ') }} | {{ step.channel }} |
-{% endfor %}
+All external statements require approval from the crisis lead and communications lead. Recovery begins with a formal stand-down, a hot wash within 48 hours, and documented follow-up actions.
 
-## 4. Activation Criteria
+## Standards alignment
 
-Formal crisis activation is required when Level 3 or Level 4 criteria are met. Site managers may take immediate life-safety actions without prior CMT approval.
-
-## 5. Incident Response Procedures
-
-{% for proc in procedures.procedures %}
-### {{ proc.title }}
-
-**Purpose:** {{ proc.procedure.purpose }}
-
-**Scope:** {{ proc.procedure.scope }}
-
-**Activation criteria:**
-{% for item in proc.procedure.activation_criteria %}
-- {{ item }}
-{% endfor %}
-
-**Immediate actions:**
-{% for item in proc.procedure.immediate_actions %}
-- {{ item }}
-{% endfor %}
-
-**Ongoing actions:**
-{% for item in proc.procedure.ongoing_actions %}
-- {{ item }}
-{% endfor %}
-
-**Escalation triggers:**
-{% for item in proc.procedure.escalation_triggers %}
-- {{ item }}
-{% endfor %}
-
-**Recovery considerations:**
-{% for item in proc.procedure.recovery_considerations %}
-- {{ item }}
-{% endfor %}
-
-{% endfor %}
-
-## 6. Communications
-
-Communications Lead coordinates all internal and external messaging. Unauthorized statements are prohibited during Level 2+ events.
-
-## 7. Recovery
-
-Termination of crisis response requires Crisis Director approval, hot-wash within 48 hours, and documentation of unresolved issues.
-
-## 8. Standards Review Summary
-
-**Framework coverage score:** {{ review.framework_coverage_score }}/100
-
-**Strengths:**
-{% for s in review.strengths %}
-- {{ s }}
-{% endfor %}
-
-**Gaps:**
-{% for g in review.gaps %}
-- {{ g }}
-{% endfor %}
-
-### ISO 22361 Checklist Verifications
-
-| Item | Status |
-|------|--------|
-{% for check in review.checklist_verifications %}
-| {{ check.item }} | {{ check.status | upper }} |
-{% endfor %}
+Framework coverage: {{ review.framework_coverage_score }}/100. See gap analysis for consultant remediation items.

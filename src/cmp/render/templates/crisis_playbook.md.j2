@@ -1,0 +1,65 @@
+# Crisis Response Playbook — {{ client_name }}
+
+> **DRAFT — For consultant review. Not ISO certification.**
+
+This playbook is organized **by role**, not by emergency type. When an incident occurs, declare the crisis level, activate the roles listed in the [Scenario Activation Guide](scenario_activation_guide.md), and each role follows their section below.
+
+---
+
+## How to use this playbook in an emergency
+
+1. **Ensure life safety** — Anyone on scene acts immediately; do not wait for a meeting.
+2. **Notify the site or programme lead** — They assess severity and recommend a crisis level.
+3. **Activate roles** — The crisis lead declares the level and convenes the roles listed for that scenario.
+4. **Work from your role section** — Each activated role follows *First 15 minutes* then *During the response*.
+5. **Escalate** — If triggers in the scenario card are met, move to the next crisis level and activate additional roles.
+6. **Stand down** — The crisis lead closes the response when objectives are met.
+
+**Severity model:** {% for level in governance.crisis_levels %}Level {{ level.level }} ({{ level.name }}){% if not loop.last %}; {% endif %}{% endfor %}.
+
+---
+
+{% for role in playbook.roles %}
+## Role: {{ role.role }}
+
+{% if role.alternate_role %}**Alternate:** {{ role.alternate_role }}  
+{% endif %}
+**Activates when:** {{ role.activates_when }}
+
+### Purpose
+
+{{ role.purpose }}
+
+### First 15 minutes
+
+{{ role.first_15_minutes }}
+
+### During the response
+
+{{ role.during_response }}
+
+### Decisions you own
+
+{% for item in role.decisions %}
+{{ loop.index }}. {{ item }}
+{% endfor %}
+
+### Coordinate with
+
+{{ role.coordinates_with | join(', ') }}.
+
+### Stand-down
+
+{{ role.stand_down }}
+
+---
+
+{% endfor %}
+
+## Quick reference: who to notify
+
+See [escalation_matrix.md](escalation_matrix.md) for notification timeframes and channels.
+
+## Scenario index
+
+See [scenario_activation_guide.md](scenario_activation_guide.md) for which roles activate for each identified risk scenario.

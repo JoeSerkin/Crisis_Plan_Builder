@@ -1,0 +1,24 @@
+# Scenario Activation Guide — {{ client_name }}
+
+> **DRAFT — For consultant review. Not ISO certification.**
+
+This guide maps **identified risk scenarios** to **crisis levels** and **activated roles**. It does not repeat full role procedures — each role's playbook is in [crisis_playbook.md](crisis_playbook.md).
+
+## At a glance
+
+| Scenario | Level | Roles activated |
+|----------|-------|-----------------|
+{% for proc in procedures.procedures %}
+| {{ proc.title }} | {{ proc.procedure.crisis_level }} — {{ proc.procedure.crisis_level_name }} | {{ proc.procedure.activated_roles | join(', ') }} |
+{% endfor %}
+
+---
+
+{% for proc in procedures.procedures %}
+{% include 'scenario_card.md.j2' %}
+{% if not loop.last %}
+
+---
+
+{% endif %}
+{% endfor %}

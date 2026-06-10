@@ -1,0 +1,28 @@
+## {{ proc.title }}
+
+**Risk ID:** {{ proc.risk_id }} · **Crisis level:** {{ proc.procedure.crisis_level }} ({{ proc.procedure.crisis_level_name }})
+
+### When this scenario applies
+
+{{ proc.procedure.activation_summary }}
+
+### Before roles are online (anyone on scene)
+
+{{ proc.procedure.opening_steps }}
+
+### Activated roles — scenario focus
+
+Each role's full playbook is in [crisis_playbook.md](crisis_playbook.md). When this scenario is declared, activated roles add the following focus on top of their standard procedures:
+
+{% for action in proc.procedure.role_actions %}
+**{{ action.role }}** — {{ action.summary }}
+
+{% endfor %}
+
+### Escalation
+
+{{ proc.procedure.escalation_summary }}
+
+### Recovery
+
+{{ proc.procedure.recovery_summary }}

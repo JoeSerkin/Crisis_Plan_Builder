@@ -19,6 +19,7 @@ const btnDocx = document.getElementById("btn-docx");
 const gapsList = document.getElementById("gaps-list");
 const gapsSummary = document.getElementById("gaps-summary");
 const mergeJson = document.getElementById("merge-json");
+const mergeStatus = document.getElementById("merge-status");
 const documentsList = document.getElementById("documents-list");
 const proposalsPanel = document.getElementById("proposals-panel");
 const proposalsList = document.getElementById("proposals-list");
@@ -241,8 +242,17 @@ async function loadGaps() {
   renderGaps(data);
 }
 
+function setMergeStatus(message, isError = false) {
+  if (!mergeStatus) return;
+  mergeStatus.textContent = message || "";
+  mergeStatus.className = isError ? "merge-status error" : "merge-status";
+}
+
 async function applyMerge(updates, resolve, rerunDiscovery = true) {
-  if (!currentEngagementId) return;
+  if (!currentEngagementId) {
+    setMergeStatus("Select an engagement first.", true);
+    return;
+  }
   const result = await api(`/api/v1/engagements/${encodeURIComponent(currentEngagementId)}/merge`, {
     method: "POST",
     body: JSON.stringify({ updates, resolve, rerun_discovery: rerunDiscovery }),
@@ -250,6 +260,44 @@ async function applyMerge(updates, resolve, rerunDiscovery = true) {
   showRaw(result);
   await refreshEngagementViews();
   return result;
+}
+
+async function extractAndMergeDocumentText(text) {
+  const data = await api(
+    `/api/v1/engagements/${encodeURIComponent(currentEngagementId)}/documents/extract-text`,
+    { method: "POST", body: JSON.stringify({ text }) }
+  );
+  showRaw(data);
+
+  const docNote = {
+    client_provided_documents: [
+      {
+        source: "manual_paste",
+        captured_at: new Date().toISOString(),
+        text_length: text.length,
+        excerpt: text.slice(0, 5000),
+      },
+    ],
+  };
+
+  if (data.proposals?.length) {
+    renderProposals(data);
+    proposalsPanel.hidden = false;
+    switchTab("documents");
+    setMergeStatus(
+      `Found ${data.proposal_count} matching field(s). Review proposals in the Documents tab, then apply selected ones. Saving document excerpt to intake.`
+    );
+    await applyMerge(docNote, [], false);
+    return data;
+  }
+
+  await applyMerge(docNote, [], true);
+  setMergeStatus(
+    data.open_gaps
+      ? "No field matches found in the pasted text. Document excerpt saved and discovery re-ran."
+      : "No open gaps to match against. Document excerpt saved to intake."
+  );
+  return data;
 }
 
 async function loadDocuments() {
@@ -462,12 +510,37 @@ document.getElementById("btn-resolve-selected").addEventListener("click", async 
   await applyMerge({}, resolve);
 });
 document.getElementById("btn-apply-merge").addEventListener("click", async () => {
+  if (!currentEngagementId) {
+    setMergeStatus("Select an engagement first.", true);
+    return;
+  }
+  const raw = mergeJson.value.trim();
+  if (!raw) {
+    setMergeStatus("Paste JSON field updates or document text first.", true);
+    return;
+  }
+
   try {
-    const updates = JSON.parse(mergeJson.value || "{}");
+    const updates = JSON.parse(raw);
+    if (typeof updates !== "object" || updates === null || Array.isArray(updates)) {
+      throw new Error("JSON must be an object");
+    }
+    if (!Object.keys(updates).length) {
+      setMergeStatus("JSON object is empty. Add at least one field or paste document text.", true);
+      return;
+    }
     await applyMerge(updates, []);
     mergeJson.value = "";
-  } catch (error) {
-    showRaw(`Invalid JSON: ${error.message || error}`);
+    setMergeStatus(`Merged ${Object.keys(updates).length} field(s). Discovery re-ran.`);
+  } catch {
+    try {
+      await extractAndMergeDocumentText(raw);
+      mergeJson.value = "";
+    } catch (error) {
+      const message = String(error.message || error);
+      setMergeStatus(message, true);
+      showRaw(message);
+    }
   }
 });
 

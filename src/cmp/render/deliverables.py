@@ -10,12 +10,14 @@ from cmp.models.requirements import repo_root
 from cmp.models.schemas import (
     DiscoveryOutput,
     GovernanceOutput,
+    PlaybookBundle,
     ProcedureOutput,
     ProceduresBundle,
     RiskProfileOutput,
     StandardsReviewOutput,
     TabletopOutput,
 )
+from cmp.render.playbook_builder import build_role_playbook, role_slug
 
 DRAFT_LABEL = "DRAFT — For consultant review. Not ISO certification."
 
@@ -26,6 +28,28 @@ def _template_env() -> Environment:
         loader=FileSystemLoader(str(templates_dir)),
         autoescape=select_autoescape(enabled_extensions=()),
     )
+
+
+def render_crisis_playbook(
+    playbook: PlaybookBundle,
+    governance: GovernanceOutput,
+    client_name: str,
+) -> str:
+    env = _template_env()
+    template = env.get_template("crisis_playbook.md.j2")
+    return template.render(client_name=client_name, playbook=playbook, governance=governance)
+
+
+def render_scenario_activation_guide(procedures: ProceduresBundle, client_name: str) -> str:
+    env = _template_env()
+    template = env.get_template("scenario_activation_guide.md.j2")
+    return template.render(client_name=client_name, procedures=procedures)
+
+
+def render_role_sheet(role, client_name: str) -> str:
+    env = _template_env()
+    template = env.get_template("role_sheet.md.j2")
+    return template.render(client_name=client_name, role=role)
 
 
 def render_crisis_management_plan(
@@ -87,6 +111,7 @@ def render_risk_register(
 def render_escalation_matrix(
     governance: GovernanceOutput,
     client_name: str,
+    playbook: PlaybookBundle,
     discovery: DiscoveryOutput | None = None,
 ) -> str:
     env = _template_env()
@@ -94,6 +119,7 @@ def render_escalation_matrix(
     return template.render(
         client_name=client_name,
         governance=governance,
+        playbook=playbook,
         discovery=discovery,
     )
 
@@ -112,14 +138,18 @@ def write_deliverables(
     root = output_dir or (repo_root() / "output" / engagement_id)
     root.mkdir(parents=True, exist_ok=True)
 
+    playbook = build_role_playbook(governance, engagement_id)
+
     files = {
+        "crisis_playbook.md": render_crisis_playbook(playbook, governance, client_name),
+        "scenario_activation_guide.md": render_scenario_activation_guide(procedures, client_name),
         "crisis_management_plan.md": render_crisis_management_plan(
             client_name, discovery, governance, procedures, review
         ),
         "gap_analysis_report.md": render_gap_analysis(discovery, client_name),
         "tabletop_exercise.md": render_tabletop_package(tabletop, client_name),
         "risk_register.md": render_risk_register(risk_profile, client_name, discovery),
-        "escalation_matrix.md": render_escalation_matrix(governance, client_name, discovery),
+        "escalation_matrix.md": render_escalation_matrix(governance, client_name, playbook, discovery),
         "incident_procedures.md": render_procedures_document(procedures, client_name),
     }
     paths: dict[str, Path] = {}
@@ -136,5 +166,13 @@ def write_deliverables(
         proc_path = procedures_dir / filename
         proc_path.write_text(render_procedure(proc, client_name), encoding="utf-8")
         paths[f"procedures/{filename}"] = proc_path
+
+    roles_dir = root / "roles"
+    roles_dir.mkdir(exist_ok=True)
+    for role in playbook.roles:
+        slug = role_slug(role.role)
+        role_path = roles_dir / f"{slug}.md"
+        role_path.write_text(render_role_sheet(role, client_name), encoding="utf-8")
+        paths[f"roles/{slug}.md"] = role_path
 
     return paths

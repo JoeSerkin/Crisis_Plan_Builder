@@ -1,0 +1,39 @@
+# Role Sheet — {{ role.role }}
+
+> **{{ client_name }}** · DRAFT — For consultant review
+
+**Alternate:** {{ role.alternate_role or 'See escalation matrix' }}
+
+## When you are activated
+
+{{ role.activates_when }}
+
+## Your purpose
+
+{{ role.purpose }}
+
+## First 15 minutes
+
+{{ role.first_15_minutes }}
+
+## During the response
+
+{{ role.during_response }}
+
+## Decisions you own
+
+{% for item in role.decisions %}
+- {{ item }}
+{% endfor %}
+
+## Coordinate with
+
+{{ role.coordinates_with | join(', ') }}
+
+## Stand-down
+
+{{ role.stand_down }}
+
+---
+
+*Carry this sheet during exercises. Replace role titles with named individuals and phone numbers before live use.*

@@ -21,6 +21,7 @@ from cmp.render.deliverables import (
     render_risk_register,
     write_deliverables,
 )
+from cmp.render.playbook_builder import build_role_playbook
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -49,11 +50,13 @@ def test_governance_structure(manufacturing_intake: ClientIntake) -> None:
 def test_procedures_from_risks(manufacturing_intake: ClientIntake) -> None:
     discovery = run_discovery(manufacturing_intake, use_llm_questions=False)
     profile = run_risk_profile(manufacturing_intake, discovery)
-    procs = run_procedures(profile)
+    gov = run_governance(discovery)
+    procs = run_procedures(profile, governance=gov)
     assert len(procs.procedures) >= 3
     for proc in procs.procedures:
-        assert proc.procedure.immediate_actions
-        assert proc.procedure.escalation_triggers
+        assert proc.procedure.role_actions
+        assert proc.procedure.activated_roles
+        assert proc.procedure.crisis_level >= 1
 
 
 def test_standards_review(manufacturing_intake: ClientIntake) -> None:
@@ -103,9 +106,11 @@ def test_render_deliverables(manufacturing_intake: ClientIntake) -> None:
     )
     gap = render_gap_analysis(discovery, manufacturing_intake.company_name)
     risk_reg = render_risk_register(profile, manufacturing_intake.company_name, discovery)
-    escalation = render_escalation_matrix(gov, manufacturing_intake.company_name, discovery)
+    playbook = build_role_playbook(gov)
+    escalation = render_escalation_matrix(gov, manufacturing_intake.company_name, playbook, discovery)
     assert "Example Manufacturing" in plan
     assert "DRAFT" in plan
+    assert "crisis_playbook.md" in plan
     assert "Planning readiness score" in gap
     assert "Tier 1" in risk_reg
-    assert "Notification Matrix" in escalation
+    assert "Notification sequence" in escalation
